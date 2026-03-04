@@ -17,6 +17,10 @@ export default function AdminLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
+    if (pathname === "/admin/login") {
+      setLoading(false);
+      return;
+    }
     const supabase = createClient();
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (!user) {
@@ -25,13 +29,17 @@ export default function AdminLayout({
         setLoading(false);
       }
     });
-  }, [router]);
+  }, [router, pathname]);
 
   const handleLogout = async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
     router.replace("/admin/login");
   };
+
+  if (pathname === "/admin/login") {
+    return <>{children}</>;
+  }
 
   if (loading) {
     return (
