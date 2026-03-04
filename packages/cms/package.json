@@ -1,0 +1,65 @@
+{
+  "name": "@ptrdbrbndr/cms",
+  "version": "0.1.0",
+  "description": "Shared CMS package for bedrijfsarchitectuur.nl and businessanalyse.nl",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./components/admin": {
+      "import": "./dist/components/admin/index.js",
+      "require": "./dist/components/admin/index.cjs",
+      "types": "./dist/components/admin/index.d.ts"
+    },
+    "./components/editor": {
+      "import": "./dist/components/editor/index.js",
+      "require": "./dist/components/editor/index.cjs",
+      "types": "./dist/components/editor/index.d.ts"
+    },
+    "./components/public": {
+      "import": "./dist/components/public/index.js",
+      "require": "./dist/components/public/index.cjs",
+      "types": "./dist/components/public/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "migrations",
+    "tsup.config.ts",
+    "tsconfig.json"
+  ],
+  "scripts": {},
+  "peerDependencies": {
+    "@supabase/supabase-js": "^2.0.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "dependencies": {
+    "@tiptap/extension-code-block-lowlight": "^2.11.0",
+    "@tiptap/extension-image": "^2.11.0",
+    "@tiptap/extension-link": "^2.11.0",
+    "@tiptap/extension-placeholder": "^2.11.0",
+    "@tiptap/pm": "^2.11.0",
+    "@tiptap/react": "^2.11.0",
+    "@tiptap/starter-kit": "^2.11.0",
+    "lowlight": "^3.2.0",
+    "lucide-react": "^0.474.0"
+  },
+  "devDependencies": {},
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ptrdbrbndr/platform-cms.git"
+  },
+  "license": "UNLICENSED",
+  "private": false
+}
