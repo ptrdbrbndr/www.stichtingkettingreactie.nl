@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -32,6 +33,18 @@ export default function AshaFoundationPage() {
           </Link>
 
           <div className="mx-auto max-w-3xl">
+            {/* Hero afbeelding */}
+            <div className="mb-12 overflow-hidden rounded-2xl">
+              <Image
+                src="/images/projecten/asha-foundation/dr-glory.jpg"
+                alt="Dr. Glory Alexander van de ASHA Foundation"
+                width={1620}
+                height={1080}
+                className="w-full"
+                priority
+              />
+            </div>
+
             {/* Introductie */}
             <div className="mb-12">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary-50 px-4 py-1.5 text-sm font-medium text-primary-700">
@@ -48,6 +61,28 @@ export default function AshaFoundationPage() {
                 medische zorg aan vrouwen die anders geen toegang hebben tot
                 behandeling.
               </p>
+            </div>
+
+            {/* Foto's grid */}
+            <div className="mb-12 grid gap-4 sm:grid-cols-2">
+              <div className="overflow-hidden rounded-xl">
+                <Image
+                  src="/images/projecten/asha-foundation/blood-test.png"
+                  alt="Bloedtest bij ASHA Foundation"
+                  width={760}
+                  height={400}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="overflow-hidden rounded-xl">
+                <Image
+                  src="/images/projecten/asha-foundation/verpleegster.jpg"
+                  alt="Verpleegster bij ASHA Foundation"
+                  width={1080}
+                  height={1080}
+                  className="h-full w-full object-cover"
+                />
+              </div>
             </div>
 
             {/* ART Medicatie */}
@@ -71,6 +106,17 @@ export default function AshaFoundationPage() {
                   </p>
                 </div>
               </div>
+            </div>
+
+            {/* ART medicine foto */}
+            <div className="mb-12 overflow-hidden rounded-2xl">
+              <Image
+                src="/images/projecten/asha-foundation/art-medicine.jpeg"
+                alt="ART-medicatie uitgave bij ASHA Foundation"
+                width={1200}
+                height={1359}
+                className="w-full"
+              />
             </div>
 
             {/* PMTCT Programma */}
@@ -115,6 +161,17 @@ export default function AshaFoundationPage() {
                   </p>
                 </div>
               </div>
+            </div>
+
+            {/* Sytze en Jelly met Glory foto */}
+            <div className="mb-12 overflow-hidden rounded-2xl">
+              <Image
+                src="/images/projecten/asha-foundation/sytze-jelly-glory.jpg"
+                alt="Sytze en Jelly met Dr. Glory van ASHA Foundation"
+                width={1852}
+                height={1080}
+                className="w-full"
+              />
             </div>
 
             {/* Statistieken kaarten */}

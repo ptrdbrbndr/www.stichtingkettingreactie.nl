@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Building, ShieldCheck, GraduationCap } from "lucide-react";
 import Hero from "@/components/Hero";
@@ -26,6 +27,18 @@ export default function UwaHostelPage() {
           </Link>
 
           <div className="mx-auto max-w-3xl">
+            {/* Hero afbeelding */}
+            <div className="mb-12 overflow-hidden rounded-2xl">
+              <Image
+                src="/images/projecten/uwa-hostel/hostel-collage.jpg"
+                alt="Collage van het UWA Working Women's Hostel"
+                width={914}
+                height={341}
+                className="w-full"
+                priority
+              />
+            </div>
+
             {/* Introductie */}
             <div className="mb-12">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary-50 px-4 py-1.5 text-sm font-medium text-primary-700">
@@ -42,6 +55,28 @@ export default function UwaHostelPage() {
                 eerste keer dat zij hun dorp verlaten en op eigen benen staan
                 in de grote stad.
               </p>
+            </div>
+
+            {/* Foto's grid */}
+            <div className="mb-12 grid gap-4 sm:grid-cols-2">
+              <div className="overflow-hidden rounded-xl">
+                <Image
+                  src="/images/projecten/uwa-hostel/girls-audience.jpg"
+                  alt="Meisjes in het publiek bij een bijeenkomst"
+                  width={904}
+                  height={916}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="overflow-hidden rounded-xl">
+                <Image
+                  src="/images/projecten/uwa-hostel/alumni-meeting.jpg"
+                  alt="Alumni bijeenkomst van het UWA Hostel"
+                  width={1280}
+                  height={575}
+                  className="h-full w-full object-cover"
+                />
+              </div>
             </div>
 
             {/* UWA Bangalore */}

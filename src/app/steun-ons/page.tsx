@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   Heart,
   Landmark,
-  MousePointerClick,
   Receipt,
   Handshake,
 } from "lucide-react";
@@ -67,10 +67,20 @@ export default function SteunOnsPage() {
 
             {/* SponsorKliks */}
             <div className="mb-12 rounded-2xl border border-gray-100 bg-white p-8 shadow-sm">
-              <div className="flex items-start gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent-50 text-accent-700">
-                  <MousePointerClick className="h-6 w-6" />
-                </div>
+              <div className="flex flex-col gap-6">
+                <a
+                  href="https://www.sponsorkliks.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Image
+                    src="/images/logos/sponsorkliks.png"
+                    alt="SponsorKliks logo"
+                    width={400}
+                    height={175}
+                    className="w-48"
+                  />
+                </a>
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900">
                     SponsorKliks

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 interface ProjectCardProps {
@@ -5,6 +6,8 @@ interface ProjectCardProps {
   description: string;
   href: string;
   icon?: React.ReactNode;
+  image?: string;
+  imageAlt?: string;
 }
 
 export default function ProjectCard({
@@ -12,15 +15,28 @@ export default function ProjectCard({
   description,
   href,
   icon,
+  image,
+  imageAlt,
 }: ProjectCardProps) {
   return (
     <Link href={href} className="group block">
       <article className="h-full overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-        {/* Pink top border accent */}
-        <div className="h-1 bg-gradient-to-r from-primary-500 to-primary-700" />
+        {image ? (
+          <div className="relative h-48 w-full overflow-hidden">
+            <Image
+              src={image}
+              alt={imageAlt || title}
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            />
+          </div>
+        ) : (
+          <div className="h-1 bg-gradient-to-r from-primary-500 to-primary-700" />
+        )}
 
         <div className="p-6">
-          {icon && (
+          {icon && !image && (
             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary-50 text-primary-700 transition-colors group-hover:bg-primary-100">
               {icon}
             </div>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Home, Heart, Users, Car } from "lucide-react";
 import Hero from "@/components/Hero";
@@ -26,6 +27,18 @@ export default function AbayashramPage() {
           </Link>
 
           <div className="mx-auto max-w-3xl">
+            {/* Hero afbeelding */}
+            <div className="mb-12 overflow-hidden rounded-2xl">
+              <Image
+                src="/images/projecten/abayashram/abayashram-dak.jpg"
+                alt="Abayashram gezien vanaf het dak"
+                width={1620}
+                height={1080}
+                className="w-full"
+                priority
+              />
+            </div>
+
             {/* Introductie */}
             <div className="mb-12">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary-50 px-4 py-1.5 text-sm font-medium text-primary-700">
@@ -42,6 +55,28 @@ export default function AbayashramPage() {
                 kunnen. Veel van deze vrouwen zijn op straat gevonden of
                 achtergelaten door hun families.
               </p>
+            </div>
+
+            {/* Foto's grid */}
+            <div className="mb-12 grid gap-4 sm:grid-cols-2">
+              <div className="overflow-hidden rounded-xl">
+                <Image
+                  src="/images/projecten/abayashram/vrouwen-abayashram.jpg"
+                  alt="Vrouwen bij Abayashram"
+                  width={924}
+                  height={563}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="overflow-hidden rounded-xl">
+                <Image
+                  src="/images/projecten/abayashram/handwerk.jpg"
+                  alt="Handwerk van vrouwen bij Abayashram"
+                  width={1620}
+                  height={1080}
+                  className="h-full w-full object-cover"
+                />
+              </div>
             </div>
 
             {/* Vision India */}
@@ -85,6 +120,17 @@ export default function AbayashramPage() {
                   </p>
                 </div>
               </div>
+            </div>
+
+            {/* Sytze en Jelly foto */}
+            <div className="mb-12 overflow-hidden rounded-2xl">
+              <Image
+                src="/images/projecten/abayashram/sytze-jelly-abayashram.jpg"
+                alt="Sytze en Jelly bij de vrouwen van Abayashram"
+                width={1620}
+                height={1080}
+                className="w-full"
+              />
             </div>
 
             {/* Bijdrage SKR */}

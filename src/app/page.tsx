@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Home, Building, Users, Shield, Heart, HandHeart } from "lucide-react";
+import { Heart, HandHeart } from "lucide-react";
 import Hero from "@/components/Hero";
 import ProjectCard from "@/components/ProjectCard";
 
@@ -62,19 +62,22 @@ export default function HomePage() {
               title="Abayashram – Vision India"
               description="Een opvanghuis voor geestelijk zieke vrouwen nabij Bangalore. Hier krijgen zij medische en psychologische hulp en een veilig onderkomen."
               href="/projecten/abayashram"
-              icon={<Home className="h-6 w-6" />}
+              image="/images/projecten/abayashram/vrouwen-abayashram.jpg"
+              imageAlt="Vrouwen bij Abayashram"
             />
             <ProjectCard
               title="UWA – Working Women's Hostel"
               description="Huisvesting voor jonge werkende vrouwen uit landelijke gebieden die naar Bangalore komen om te werken. Een veilige plek om te wonen."
               href="/projecten/uwa-hostel"
-              icon={<Building className="h-6 w-6" />}
+              image="/images/projecten/uwa-hostel/hostel-collage.jpg"
+              imageAlt="UWA Working Women's Hostel"
             />
             <ProjectCard
               title="ASHA Foundation"
               description="HIV-preventie en behandeling voor vrouwen. Medicatie voor weduwen en jonge HIV-positieve vrouwen, en een programma om moeder-kind-overdracht te voorkomen."
               href="/projecten/asha-foundation"
-              icon={<Shield className="h-6 w-6" />}
+              image="/images/projecten/asha-foundation/dr-glory.jpg"
+              imageAlt="Dr. Glory Alexander van ASHA Foundation"
             />
           </div>
 
