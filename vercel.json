@@ -2,28 +2,5 @@
   "buildCommand": "next build --webpack",
   "devCommand": "next dev --webpack",
   "installCommand": "npm install",
-  "framework": "nextjs",
-  "env": [
-    {
-      "key": "NEXT_PUBLIC_SUPABASE_URL",
-      "value": "https://asduvdwqibdcfivdftfs.supabase.co"
-    },
-    {
-      "key": "NEXT_PUBLIC_SUPABASE_ANON_KEY",
-      "value": "@NEXT_PUBLIC_SUPABASE_ANON_KEY"
-    }
-  ],
-  "buildIgnore": "git diff --quiet HEAD~ HEAD -- --",
-  "github": {
-    "enabled": true,
-    "autoAlias": true,
-    "autoJobCancelPreviousOnPush": true
-  },
-  "projectSettings": {
-    "framework": "nextjs",
-    "nodeVersion": "20.x"
-  },
-  "preview": {
-    "previewBranches": ["test"]
-  }
+  "framework": "nextjs"
 }
