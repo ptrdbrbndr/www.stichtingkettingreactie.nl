@@ -16,10 +16,11 @@ test.describe('Homepage', () => {
   });
 
   test('should have navigation menu', async ({ page }) => {
+    const nav = page.locator('nav').first();
     const navItems = ['Home', 'Over Ons', 'Projecten', 'Nieuws', 'Steun Ons', 'Verantwoording'];
 
     for (const item of navItems) {
-      const link = page.getByRole('link', { name: item });
+      const link = nav.getByRole('link', { name: item });
       await expect(link).toBeVisible();
     }
   });
@@ -30,7 +31,8 @@ test.describe('Homepage', () => {
   });
 
   test('should have call-to-action button', async ({ page }) => {
-    const ctaButton = page.getByRole('link', { name: /Steun ons/i });
+    const mainContent = page.locator('main').first();
+    const ctaButton = mainContent.locator('a[href="/steun-ons"]').first();
     await expect(ctaButton).toBeVisible();
   });
 
