@@ -13,6 +13,9 @@ packages/*/node_modules
 
 # testing
 /coverage
+/playwright-report
+/test-results
+playwright.config.ts
 
 # next.js
 /.next/
