@@ -48,7 +48,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             <img
-              src="/logo-skr.svg"
+              src="/logo-skr.png"
               alt="Stichting Kettingreactie"
               className="h-12 w-auto transition-transform group-hover:scale-105"
             />
