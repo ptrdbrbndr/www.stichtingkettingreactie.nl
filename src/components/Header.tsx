@@ -47,11 +47,11 @@ export default function Header() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <Link2 className="h-7 w-7 text-primary-700 transition-transform group-hover:rotate-12" />
-            <span className="text-lg font-bold text-gray-900">
-              Stichting{" "}
-              <span className="text-primary-700">Kettingreactie</span>
-            </span>
+            <img
+              src="/logo-skr.svg"
+              alt="Stichting Kettingreactie"
+              className="h-12 w-auto transition-transform group-hover:scale-105"
+            />
           </Link>
 
           {/* Desktop navigation */}
