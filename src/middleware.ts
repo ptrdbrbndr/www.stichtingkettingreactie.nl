@@ -1,7 +1,32 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+// Test environment gate: only active when TEST_GATE_ENABLED=true
+function handleTestGate(request: NextRequest): NextResponse | null {
+  if (process.env.TEST_GATE_ENABLED !== "true") return null;
+
+  const { pathname } = request.nextUrl;
+
+  // Allow login page and auth API through
+  if (pathname === "/test-login" || pathname.startsWith("/api/test-auth")) {
+    return null;
+  }
+
+  const session = request.cookies.get("test_gate_session");
+  if (session?.value === process.env.TEST_GATE_SESSION_SECRET) {
+    return null; // authenticated
+  }
+
+  const loginUrl = request.nextUrl.clone();
+  loginUrl.pathname = "/test-login";
+  loginUrl.searchParams.set("from", pathname);
+  return NextResponse.redirect(loginUrl);
+}
+
 export async function middleware(request: NextRequest) {
+  const gateResponse = handleTestGate(request);
+  if (gateResponse) return gateResponse;
+
   let supabaseResponse = NextResponse.next({
     request,
   });
@@ -23,7 +48,7 @@ export async function middleware(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
+          cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           );
           supabaseResponse = NextResponse.next({
