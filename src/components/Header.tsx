@@ -46,12 +46,20 @@ export default function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center gap-3 group">
             <img
               src="/logo-skr.png"
-              alt="Stichting Kettingreactie"
-              className="h-16 w-auto transition-transform group-hover:scale-105"
+              alt=""
+              className="h-12 w-auto shrink-0"
             />
+            <div className="flex flex-col leading-tight">
+              <span className="text-xs font-semibold uppercase tracking-widest text-gray-400">
+                Stichting
+              </span>
+              <span className="text-xl font-bold text-gray-900 group-hover:text-primary-700 transition-colors">
+                Kettingreactie
+              </span>
+            </div>
           </Link>
 
           {/* Desktop navigation */}
