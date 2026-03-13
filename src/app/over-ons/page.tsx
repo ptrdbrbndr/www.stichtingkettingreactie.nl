@@ -169,7 +169,7 @@ export default function OverOnsPage() {
                   vrijwilligers. Het bestuur en alle medewerkers zetten zich
                   belangeloos in, zodat elke gedoneerde euro volledig ten goede
                   komt aan de projecten in India. De stichting is gevestigd in
-                  Amsterdam en heeft een ANBI-status, waardoor giften
+                  Amsterdam (statutaire vestiging) en heeft een ANBI-status, waardoor giften
                   aftrekbaar zijn van de belasting.
                 </p>
               </div>
