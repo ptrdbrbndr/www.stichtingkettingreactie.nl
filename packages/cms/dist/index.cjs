@@ -180,6 +180,86 @@ async function getTotalViews(supabase, days = 30) {
   return count ?? 0;
 }
 
+// src/queries/pages.ts
+async function getPages(supabase, options = {}) {
+  const { includeBlocks = false, includeDrafts = false } = options;
+  let query = supabase.from("pages").select("*").order("title", { ascending: true });
+  if (!includeDrafts) {
+    query = query.eq("status", "published");
+  }
+  const { data, error } = await query;
+  if (error) throw error;
+  const pages = data ?? [];
+  if (includeBlocks && pages.length > 0) {
+    const pageIds = pages.map((p) => p.id);
+    const { data: blocks } = await supabase.from("page_blocks").select("*").in("page_id", pageIds).order("sort_order", { ascending: true });
+    return pages.map((p) => ({
+      ...p,
+      blocks: (blocks ?? []).filter((b) => b.page_id === p.id)
+    }));
+  }
+  return pages;
+}
+async function getPageBySlug(supabase, slug, options = {}) {
+  const { includeDrafts = false } = options;
+  let query = supabase.from("pages").select("*").eq("slug", slug);
+  if (!includeDrafts) {
+    query = query.eq("status", "published");
+  }
+  const { data, error } = await query.maybeSingle();
+  if (error) throw error;
+  if (!data) return null;
+  const page = data;
+  const { data: blocks } = await supabase.from("page_blocks").select("*").eq("page_id", page.id).order("sort_order", { ascending: true });
+  return { ...page, blocks: blocks ?? [] };
+}
+async function getPageById(supabase, id) {
+  const { data, error } = await supabase.from("pages").select("*").eq("id", id).single();
+  if (error) throw error;
+  const page = data;
+  const { data: blocks } = await supabase.from("page_blocks").select("*").eq("page_id", id).order("sort_order", { ascending: true });
+  return { ...page, blocks: blocks ?? [] };
+}
+
+// src/queries/homepage.ts
+async function getHomepageConfig(supabase) {
+  const { data, error } = await supabase.from("homepage_config").select("*").order("updated_at", { ascending: false }).limit(1).maybeSingle();
+  if (error) throw error;
+  return data;
+}
+
+// src/queries/team.ts
+async function getTeamMembers(supabase, options = {}) {
+  const { includeInactive = false } = options;
+  let query = supabase.from("team_members").select("*").order("sort_order", { ascending: true });
+  if (!includeInactive) {
+    query = query.eq("active", true);
+  }
+  const { data, error } = await query;
+  if (error) throw error;
+  return data ?? [];
+}
+async function getTeamMemberById(supabase, id) {
+  const { data, error } = await supabase.from("team_members").select("*").eq("id", id).single();
+  if (error) throw error;
+  return data;
+}
+
+// src/queries/navigation.ts
+async function getNavigationItems(supabase, options = {}) {
+  const { location, includeInactive = false } = options;
+  let query = supabase.from("navigation_items").select("*").order("sort_order", { ascending: true });
+  if (location) {
+    query = query.eq("location", location);
+  }
+  if (!includeInactive) {
+    query = query.eq("active", true);
+  }
+  const { data, error } = await query;
+  if (error) throw error;
+  return data ?? [];
+}
+
 // src/utils/reading-time.ts
 var WORDS_PER_MINUTE = 200;
 function calculateReadingTime(html) {
@@ -360,6 +440,165 @@ async function trackView(supabase, data) {
   if (error) throw error;
 }
 
+// src/mutations/pages.ts
+async function createPage(supabase, data) {
+  const { data: page, error } = await supabase.from("pages").insert(data).select().single();
+  if (error) throw error;
+  return page;
+}
+async function updatePage(supabase, id, data) {
+  const { data: page, error } = await supabase.from("pages").update(data).eq("id", id).select().single();
+  if (error) throw error;
+  return page;
+}
+async function deletePage(supabase, id) {
+  const { error } = await supabase.from("pages").delete().eq("id", id);
+  if (error) throw error;
+}
+async function createPageBlock(supabase, data) {
+  const { data: block, error } = await supabase.from("page_blocks").insert(data).select().single();
+  if (error) throw error;
+  return block;
+}
+async function updatePageBlock(supabase, id, data) {
+  const { data: block, error } = await supabase.from("page_blocks").update(data).eq("id", id).select().single();
+  if (error) throw error;
+  return block;
+}
+async function deletePageBlock(supabase, id) {
+  const { error } = await supabase.from("page_blocks").delete().eq("id", id);
+  if (error) throw error;
+}
+async function reorderPageBlocks(supabase, orderedIds) {
+  const updates = orderedIds.map(
+    (id, index) => supabase.from("page_blocks").update({ sort_order: index }).eq("id", id)
+  );
+  await Promise.all(updates);
+}
+
+// src/mutations/homepage.ts
+async function upsertHomepageConfig(supabase, data) {
+  const { data: existing } = await supabase.from("homepage_config").select("id").limit(1).maybeSingle();
+  if (existing) {
+    const { data: updated, error: error2 } = await supabase.from("homepage_config").update({ ...data, updated_at: (/* @__PURE__ */ new Date()).toISOString() }).eq("id", existing.id).select().single();
+    if (error2) throw error2;
+    return updated;
+  }
+  const { data: created, error } = await supabase.from("homepage_config").insert(data).select().single();
+  if (error) throw error;
+  return created;
+}
+
+// src/mutations/team.ts
+async function createTeamMember(supabase, data) {
+  const { data: member, error } = await supabase.from("team_members").insert(data).select().single();
+  if (error) throw error;
+  return member;
+}
+async function updateTeamMember(supabase, id, data) {
+  const { data: member, error } = await supabase.from("team_members").update(data).eq("id", id).select().single();
+  if (error) throw error;
+  return member;
+}
+async function deleteTeamMember(supabase, id) {
+  const { error } = await supabase.from("team_members").delete().eq("id", id);
+  if (error) throw error;
+}
+async function reorderTeamMembers(supabase, orderedIds) {
+  const updates = orderedIds.map(
+    (id, index) => supabase.from("team_members").update({ sort_order: index }).eq("id", id)
+  );
+  await Promise.all(updates);
+}
+
+// src/mutations/navigation.ts
+async function createNavigationItem(supabase, data) {
+  const { data: item, error } = await supabase.from("navigation_items").insert(data).select().single();
+  if (error) throw error;
+  return item;
+}
+async function updateNavigationItem(supabase, id, data) {
+  const { data: item, error } = await supabase.from("navigation_items").update(data).eq("id", id).select().single();
+  if (error) throw error;
+  return item;
+}
+async function deleteNavigationItem(supabase, id) {
+  const { error } = await supabase.from("navigation_items").delete().eq("id", id);
+  if (error) throw error;
+}
+async function reorderNavigationItems(supabase, orderedIds) {
+  const updates = orderedIds.map(
+    (id, index) => supabase.from("navigation_items").update({ sort_order: index }).eq("id", id)
+  );
+  await Promise.all(updates);
+}
+
+// src/queries/issues.ts
+async function getIssues(supabase, filters = {}) {
+  const {
+    status,
+    category,
+    source,
+    priority,
+    search,
+    limit = 50,
+    offset = 0
+  } = filters;
+  let query = supabase.from("issues").select("*", { count: "exact" }).order("created_at", { ascending: false }).range(offset, offset + limit - 1);
+  if (status) {
+    if (Array.isArray(status)) {
+      query = query.in("status", status);
+    } else {
+      query = query.eq("status", status);
+    }
+  }
+  if (category) query = query.eq("category", category);
+  if (source) query = query.eq("source", source);
+  if (priority) query = query.eq("priority", priority);
+  if (search) {
+    query = query.or(
+      `title.ilike.%${search}%,description.ilike.%${search}%,reporter_name.ilike.%${search}%`
+    );
+  }
+  const { data, error, count } = await query;
+  if (error) throw error;
+  return { issues: data ?? [], total: count ?? 0 };
+}
+async function getIssueById(supabase, id) {
+  const { data, error } = await supabase.from("issues").select("*").eq("id", id).single();
+  if (error) throw error;
+  return data;
+}
+async function getIssueCountByStatus(supabase) {
+  const { data, error } = await supabase.from("issues").select("status");
+  if (error) throw error;
+  const counts = {};
+  (data ?? []).forEach((row) => {
+    counts[row.status] = (counts[row.status] ?? 0) + 1;
+  });
+  return counts;
+}
+
+// src/mutations/issues.ts
+async function createIssue(supabase, data) {
+  const { data: issue, error } = await supabase.from("issues").insert(data).select().single();
+  if (error) throw error;
+  return issue;
+}
+async function updateIssue(supabase, id, data) {
+  const payload = { ...data };
+  if (data.status === "opgelost" && !data.resolved_at) {
+    payload.resolved_at = (/* @__PURE__ */ new Date()).toISOString();
+  }
+  const { data: issue, error } = await supabase.from("issues").update(payload).eq("id", id).select().single();
+  if (error) throw error;
+  return issue;
+}
+async function deleteIssue(supabase, id) {
+  const { error } = await supabase.from("issues").delete().eq("id", id);
+  if (error) throw error;
+}
+
 // src/utils/slugify.ts
 function slugify(text) {
   return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
@@ -369,11 +608,21 @@ exports.archiveArticle = archiveArticle;
 exports.calculateReadingTime = calculateReadingTime;
 exports.createArticle = createArticle;
 exports.createCategory = createCategory;
+exports.createIssue = createIssue;
+exports.createNavigationItem = createNavigationItem;
+exports.createPage = createPage;
+exports.createPageBlock = createPageBlock;
 exports.createTag = createTag;
+exports.createTeamMember = createTeamMember;
 exports.deleteArticle = deleteArticle;
 exports.deleteCategory = deleteCategory;
+exports.deleteIssue = deleteIssue;
 exports.deleteMedia = deleteMedia;
+exports.deleteNavigationItem = deleteNavigationItem;
+exports.deletePage = deletePage;
+exports.deletePageBlock = deletePageBlock;
 exports.deleteTag = deleteTag;
+exports.deleteTeamMember = deleteTeamMember;
 exports.formatReadingTime = formatReadingTime;
 exports.getArticleById = getArticleById;
 exports.getArticleBySlug = getArticleBySlug;
@@ -383,21 +632,40 @@ exports.getArticles = getArticles;
 exports.getCategories = getCategories;
 exports.getCategoriesWithCounts = getCategoriesWithCounts;
 exports.getCategoryBySlug = getCategoryBySlug;
+exports.getHomepageConfig = getHomepageConfig;
+exports.getIssueById = getIssueById;
+exports.getIssueCountByStatus = getIssueCountByStatus;
+exports.getIssues = getIssues;
 exports.getMediaFiles = getMediaFiles;
+exports.getNavigationItems = getNavigationItems;
+exports.getPageById = getPageById;
+exports.getPageBySlug = getPageBySlug;
+exports.getPages = getPages;
 exports.getPopularArticles = getPopularArticles;
 exports.getPopularTags = getPopularTags;
 exports.getTags = getTags;
 exports.getTagsForArticle = getTagsForArticle;
+exports.getTeamMemberById = getTeamMemberById;
+exports.getTeamMembers = getTeamMembers;
 exports.getTotalViews = getTotalViews;
 exports.publishArticle = publishArticle;
 exports.reorderCategories = reorderCategories;
+exports.reorderNavigationItems = reorderNavigationItems;
+exports.reorderPageBlocks = reorderPageBlocks;
+exports.reorderTeamMembers = reorderTeamMembers;
 exports.scheduleArticle = scheduleArticle;
 exports.slugify = slugify;
 exports.trackView = trackView;
 exports.unpublishArticle = unpublishArticle;
 exports.updateArticle = updateArticle;
 exports.updateCategory = updateCategory;
+exports.updateIssue = updateIssue;
+exports.updateNavigationItem = updateNavigationItem;
+exports.updatePage = updatePage;
+exports.updatePageBlock = updatePageBlock;
+exports.updateTeamMember = updateTeamMember;
 exports.uploadMedia = uploadMedia;
+exports.upsertHomepageConfig = upsertHomepageConfig;
 exports.upsertTag = upsertTag;
 //# sourceMappingURL=index.cjs.map
 //# sourceMappingURL=index.cjs.map

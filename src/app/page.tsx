@@ -3,6 +3,9 @@ import Link from "next/link";
 import { Heart, HandHeart } from "lucide-react";
 import Hero from "@/components/Hero";
 import ProjectCard from "@/components/ProjectCard";
+import BlogPostCard from "@/components/BlogPostCard";
+import { createClient } from "@/lib/supabase/server";
+import { getHomepageConfig, getArticles } from "@ptrdbrbndr/cms";
 
 export const metadata: Metadata = {
   title: "Stichting Kettingreactie - Samen voor kansarme vrouwen in India",
@@ -10,16 +13,46 @@ export const metadata: Metadata = {
     "Stichting Kettingreactie zet zich in voor het verbeteren van de positie van kansarme vrouwen in India door lokale initiatieven te ondersteunen.",
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const supabase = await createClient();
+
+  const [config, { articles: latestNews }] = await Promise.all([
+    getHomepageConfig(supabase),
+    getArticles(supabase, {
+      status: "published",
+      orderBy: "published_at",
+      orderDirection: "desc",
+      limit: 9,
+    }),
+  ]);
+
+  const heroTitle = config?.hero_title ?? "Samen voor kansarme vrouwen in India";
+  const heroSubtitle = config?.hero_subtitle ?? "Stichting Kettingreactie ondersteunt lokale initiatieven die het leven van kansarme vrouwen in India verbeteren. Samen maken wij het verschil.";
+  const heroCta = config?.hero_cta_text ?? "Steun ons";
+  const heroCtaHref = config?.hero_cta_href ?? "/steun-ons";
+  const missionBadge = config?.mission_badge ?? "Onze Missie";
+  const missionTitle = config?.mission_title ?? "Het verbeteren van de positie van kansarme vrouwen in India";
+  const missionText = config?.mission_text ?? "Stichting Kettingreactie zet zich in voor het verbeteren van de positie van kansarme vrouwen in India. Wij doen dit door lokale initiatieven in India te ondersteunen met fondsenwerving in Nederland. Elke gedoneerde euro gaat volledig naar de projecten.";
+  const projectsBadge = config?.projects_badge ?? "Onze Projecten";
+  const projectsTitle = config?.projects_title ?? "Waar wij ons voor inzetten";
+  const projectsSubtitle = config?.projects_subtitle ?? "Wij ondersteunen drie projecten in en rondom Bangalore, India.";
+  const newsBadge = config?.news_badge ?? "Laatste Nieuws";
+  const newsTitle = config?.news_title ?? "Blijf op de hoogte";
+  const donateTitle = config?.donate_title ?? "Steun ons werk";
+  const donateText = config?.donate_text ?? "Elke donatie maakt een verschil. 100% van uw gift gaat direct naar de projecten in India. U kunt doneren via onze bankrekening.";
+  const donateIban = config?.donate_iban ?? "NL87 INGB 0005313860";
+  const donateIbanName = config?.donate_iban_name ?? "Stichting Kettingreactie Amsterdam";
+  const newsLimit = config?.news_limit ?? 3;
+
   return (
     <>
       {/* Hero */}
       <Hero
-        title="Samen voor kansarme vrouwen in India"
-        subtitle="Stichting Kettingreactie ondersteunt lokale initiatieven die het leven van kansarme vrouwen in India verbeteren. Samen maken wij het verschil."
+        title={heroTitle}
+        subtitle={heroSubtitle}
         showCta
-        ctaText="Steun ons"
-        ctaHref="/steun-ons"
+        ctaText={heroCta}
+        ctaHref={heroCtaHref}
       />
 
       {/* Onze Missie */}
@@ -27,16 +60,13 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <div className="mb-4 inline-flex rounded-full bg-primary-50 px-4 py-1.5 text-sm font-medium text-primary-700">
-              Onze Missie
+              {missionBadge}
             </div>
             <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-              Het verbeteren van de positie van kansarme vrouwen in India
+              {missionTitle}
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-gray-600">
-              Stichting Kettingreactie zet zich in voor het verbeteren van de
-              positie van kansarme vrouwen in India. Wij doen dit door lokale
-              initiatieven in India te ondersteunen met fondsenwerving in
-              Nederland. Elke gedoneerde euro gaat volledig naar de projecten.
+              {missionText}
             </p>
           </div>
         </div>
@@ -47,14 +77,12 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <div className="mb-4 inline-flex rounded-full bg-primary-50 px-4 py-1.5 text-sm font-medium text-primary-700">
-              Onze Projecten
+              {projectsBadge}
             </div>
             <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-              Waar wij ons voor inzetten
+              {projectsTitle}
             </h2>
-            <p className="mt-4 text-gray-600">
-              Wij ondersteunen drie projecten in en rondom Bangalore, India.
-            </p>
+            <p className="mt-4 text-gray-600">{projectsSubtitle}</p>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -97,18 +125,43 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <div className="mb-4 inline-flex rounded-full bg-primary-50 px-4 py-1.5 text-sm font-medium text-primary-700">
-              Laatste Nieuws
+              {newsBadge}
             </div>
             <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-              Blijf op de hoogte
+              {newsTitle}
             </h2>
           </div>
 
-          <div className="mx-auto max-w-2xl rounded-2xl border border-gray-100 bg-white p-8 text-center shadow-sm">
-            <p className="text-gray-500">
-              Binnenkort verschijnen hier onze nieuwsberichten.
-            </p>
-          </div>
+          {latestNews.length === 0 ? (
+            <div className="mx-auto max-w-2xl rounded-2xl border border-gray-100 bg-white p-8 text-center shadow-sm">
+              <p className="text-gray-500">
+                Binnenkort verschijnen hier onze nieuwsberichten.
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                {latestNews.slice(0, newsLimit).map((article) => (
+                  <BlogPostCard
+                    key={article.id}
+                    title={article.title}
+                    excerpt={article.excerpt ?? ""}
+                    slug={article.slug}
+                    date={article.published_at ?? article.created_at}
+                    category={article.category?.name}
+                  />
+                ))}
+              </div>
+              <div className="mt-10 text-center">
+                <Link
+                  href="/nieuws"
+                  className="inline-flex items-center gap-2 rounded-full border-2 border-primary-600 px-6 py-2.5 text-sm font-semibold text-primary-700 transition-colors hover:bg-primary-50"
+                >
+                  Alle nieuwsberichten
+                </Link>
+              </div>
+            </>
+          )}
         </div>
       </section>
 
@@ -117,18 +170,17 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
           <HandHeart className="mx-auto mb-6 h-12 w-12 text-white/80" />
           <h2 className="text-2xl font-bold text-white sm:text-3xl">
-            Steun ons werk
+            {donateTitle}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-primary-100">
-            Elke donatie maakt een verschil. 100% van uw gift gaat direct naar
-            de projecten in India. U kunt doneren via onze bankrekening.
+            {donateText}
           </p>
           <div className="mt-6 rounded-xl bg-white/10 p-4 backdrop-blur-sm inline-block">
             <p className="font-mono text-lg font-semibold text-white">
-              NL87 INGB 0005313860
+              {donateIban}
             </p>
             <p className="mt-1 text-sm text-primary-200">
-              t.n.v. Stichting Kettingreactie Amsterdam
+              t.n.v. {donateIbanName}
             </p>
           </div>
           <div className="mt-8">
