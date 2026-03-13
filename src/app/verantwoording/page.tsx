@@ -58,9 +58,22 @@ export default function VerantwoordingPage() {
                     Fiscaal nummer
                   </h2>
                   <p className="mt-3 leading-relaxed text-gray-600">
-                    Het RSIN/fiscaal nummer van Stichting Kettingreactie is
-                    gepubliceerd conform de ANBI-vereisten. Neem voor meer
-                    informatie contact met ons op.
+                    Het RSIN/fiscaal nummer van Stichting Kettingreactie is:
+                  </p>
+                  <p className="mt-2 font-mono text-xl font-semibold text-primary-700">
+                    821887300
+                  </p>
+                  <p className="mt-3 leading-relaxed text-gray-600">
+                    U kunt de ANBI-status van onze stichting controleren via de{" "}
+                    <a
+                      href="https://www.belastingdienst.nl/wps/wcm/connect/nl/aftrek-en-kortingen/content/anbi-status-controleren"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-primary-700 underline hover:text-primary-800"
+                    >
+                      ANBI-zoektoepassing van de Belastingdienst
+                    </a>
+                    .
                   </p>
                 </div>
               </div>

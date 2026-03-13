@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Link2, Menu, X } from "lucide-react";
+import { Link2, Menu, X, User } from "lucide-react";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -44,13 +44,13 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-20 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             <img
               src="/logo-skr.png"
               alt="Stichting Kettingreactie"
-              className="h-12 w-auto transition-transform group-hover:scale-105"
+              className="h-16 w-auto transition-transform group-hover:scale-105"
             />
           </Link>
 
@@ -70,6 +70,16 @@ export default function Header() {
               </Link>
             ))}
           </nav>
+
+          {/* Leden-portal button */}
+          <Link
+            href="/leden"
+            className="hidden items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:border-primary-200 hover:bg-primary-50 hover:text-primary-700 md:inline-flex"
+            title="Leden-portal"
+          >
+            <User className="h-4 w-4" />
+            Leden
+          </Link>
 
           {/* Mobile menu button */}
           <button
@@ -105,6 +115,17 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
+            <Link
+              href="/leden"
+              className={`flex items-center gap-2 rounded-lg px-3 py-2 text-base font-medium transition-colors ${
+                isActive("/leden")
+                  ? "bg-primary-50 text-primary-700"
+                  : "text-gray-600 hover:bg-gray-50 hover:text-primary-700"
+              }`}
+            >
+              <User className="h-4 w-4" />
+              Leden-portal
+            </Link>
           </nav>
         </div>
       )}

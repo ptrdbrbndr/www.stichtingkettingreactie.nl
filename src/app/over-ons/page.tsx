@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Home, Building, Shield, Users } from "lucide-react";
+import { Home, Building, Shield, Users, History } from "lucide-react";
 import Hero from "@/components/Hero";
 
 export const metadata: Metadata = {
@@ -39,8 +39,42 @@ export default function OverOnsPage() {
         </div>
       </section>
 
-      {/* Projecten Overzicht */}
+      {/* Geschiedenis */}
       <section className="bg-gray-50 py-16 sm:py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl">
+            <div className="flex items-start gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-700">
+                <History className="h-6 w-6" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">
+                  Onze geschiedenis
+                </h2>
+                <p className="mt-4 leading-relaxed text-gray-600">
+                  Stichting Kettingreactie is opgericht vanuit een persoonlijke
+                  betrokkenheid bij de situatie van vrouwen in India. Na een
+                  bezoek aan de projecten in en rondom Bangalore ontstond het
+                  idee om vanuit Nederland structureel steun te organiseren.
+                  Wat begon als een klein initiatief groeide uit tot een
+                  stichting met een trouwe achterban van donateurs en
+                  vrijwilligers.
+                </p>
+                <p className="mt-4 leading-relaxed text-gray-600">
+                  Door de jaren heen heeft Stichting Kettingreactie honderden
+                  vrouwen kunnen bereiken via de drie projecten die zij
+                  ondersteunt. De naam &ldquo;Kettingreactie&rdquo; verwijst
+                  naar het idee dat iedere bijdrage een reactie in gang zet
+                  die verder reikt dan je op het eerste gezicht verwacht.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Projecten Overzicht */}
+      <section className="py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <h2 className="mb-12 text-center text-2xl font-bold text-gray-900 sm:text-3xl">
             De projecten die wij ondersteunen

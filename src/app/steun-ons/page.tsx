@@ -7,6 +7,9 @@ import {
   Handshake,
 } from "lucide-react";
 import Hero from "@/components/Hero";
+import DonateForm from "@/components/DonateForm";
+import DonatieBedankt from "./DonatieBedankt";
+import { features } from "@/lib/features";
 
 export const metadata: Metadata = {
   title: "Steun Ons - Stichting Kettingreactie",
@@ -22,10 +25,19 @@ export default function SteunOnsPage() {
         subtitle="Elke bijdrage maakt een verschil voor kansarme vrouwen in India."
       />
 
+      <DonatieBedankt />
+
       {/* Donatie info */}
       <section className="py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl">
+            {/* Online doneren via Mollie (feature toggle) */}
+            {features.mollieDonations && (
+              <div className="mb-12">
+                <DonateForm />
+              </div>
+            )}
+
             {/* Doneren */}
             <div className="mb-12">
               <div className="flex items-start gap-4">
@@ -59,6 +71,9 @@ export default function SteunOnsPage() {
                     </p>
                     <p className="mt-1 text-sm text-gray-600">
                       t.n.v. Stichting Kettingreactie Amsterdam
+                    </p>
+                    <p className="mt-2 text-sm text-gray-600">
+                      RSIN: <span className="font-mono font-medium">821887300</span>
                     </p>
                   </div>
                 </div>
@@ -120,6 +135,18 @@ export default function SteunOnsPage() {
                     aftrekbaar zijn van de inkomstenbelasting. U kunt uw
                     giften opgeven in uw belastingaangifte, waardoor uw
                     donatie u effectief minder kost.
+                  </p>
+                  <p className="mt-3 text-sm text-gray-600">
+                    RSIN: <span className="font-mono font-medium">821887300</span>
+                    {" · "}
+                    <a
+                      href="https://www.belastingdienst.nl/wps/wcm/connect/nl/aftrek-en-kortingen/content/anbi-status-controleren"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-primary-700 underline hover:text-primary-800"
+                    >
+                      Controleer ANBI-status
+                    </a>
                   </p>
                 </div>
               </div>

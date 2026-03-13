@@ -3,14 +3,11 @@ import { Link2, Heart } from "lucide-react";
 
 const projectLinks = [
   { label: "Alle Projecten", href: "/projecten" },
-  { label: "Onderwijs", href: "/projecten#onderwijs" },
-  { label: "Gezondheidszorg", href: "/projecten#gezondheidszorg" },
-  { label: "Empowerment", href: "/projecten#empowerment" },
 ];
 
 const steunLinks = [
   { label: "Doneren", href: "/steun-ons" },
-  { label: "Vrijwilliger worden", href: "/steun-ons#vrijwilliger" },
+  { label: "Vrijwilliger worden", href: "/vrijwilliger" },
   { label: "Verantwoording", href: "/verantwoording" },
 ];
 
@@ -30,13 +27,12 @@ export default function Footer() {
               </span>
             </div>
             <p className="mb-4 text-sm leading-relaxed text-gray-400">
-              Stichting Kettingreactie zet zich in voor de verbetering van het
-              leven van vrouwen in India door onderwijs, gezondheidszorg en
-              empowerment. Samen maken wij een verschil.
+              Stichting Kettingreactie zet zich in voor het verbeteren van de
+              positie van kansarme vrouwen in India.
             </p>
-            <p className="text-xs text-gray-500">
-              ANBI-geregistreerde instelling
-            </p>
+            <span className="inline-block rounded border border-gray-600 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-gray-400">
+              ANBI
+            </span>
           </div>
 
           {/* Projecten column */}
