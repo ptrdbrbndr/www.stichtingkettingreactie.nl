@@ -168,4 +168,21 @@ test.describe("Leden dashboard", () => {
 
     await page.vibeCheck("issues-panel-geopend");
   });
+
+  test("filteropties zijn zichtbaar in het issuepanel", async ({ page }) => {
+    await mockLedenAuth(page);
+    await page.goto(`${BASE}/leden`);
+    await waitForDashboard(page);
+
+    await page.getByTestId("issues-tile").click();
+    await expect(page.getByTestId("issue-list-panel")).toBeVisible();
+
+    await expect(page.getByTestId("issue-filter-search")).toBeVisible();
+    await expect(page.getByTestId("issue-filter-status")).toBeVisible();
+    await expect(page.getByTestId("issue-filter-category")).toBeVisible();
+    await expect(page.getByTestId("issue-filter-priority")).toBeVisible();
+    await expect(page.getByTestId("issue-filter-sort")).toBeVisible();
+
+    await page.vibeCheck("issue-filters-zichtbaar");
+  });
 });
