@@ -45,7 +45,7 @@ export default function LedenDashboardPage() {
 
   return (
     <div className="py-16 sm:py-20">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Welcome header */}
         <div className="mb-10 flex items-center justify-between">
           <div>
