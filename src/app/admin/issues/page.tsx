@@ -37,6 +37,8 @@ export default function IssuesAdminPage() {
   const [statusFilter, setStatusFilter] = useState<IssueStatus | "">("");
   const [expanded, setExpanded] = useState<string | null>(null);
   const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
+  const [updatingPriority, setUpdatingPriority] = useState<string | null>(null);
+  const [updatingCategory, setUpdatingCategory] = useState<string | null>(null);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [adminNotes, setAdminNotes] = useState<Record<string, string>>({});
 
@@ -72,6 +74,34 @@ export default function IssuesAdminPage() {
       alert("Status bijwerken mislukt.");
     } finally {
       setUpdatingStatus(null);
+    }
+  };
+
+  const handlePriorityChange = async (id: string, priority: IssuePriority) => {
+    setUpdatingPriority(id);
+    try {
+      const supabase = createClient();
+      await updateIssue(supabase, id, { priority });
+      setIssues((prev) => prev.map((i) => (i.id === id ? { ...i, priority } : i)));
+    } catch (err) {
+      console.error("Failed to update priority:", err);
+      alert("Prioriteit bijwerken mislukt.");
+    } finally {
+      setUpdatingPriority(null);
+    }
+  };
+
+  const handleCategoryChange = async (id: string, category: IssueCategory) => {
+    setUpdatingCategory(id);
+    try {
+      const supabase = createClient();
+      await supabase.from("issues").update({ category }).eq("id", id);
+      setIssues((prev) => prev.map((i) => (i.id === id ? { ...i, category } : i)));
+    } catch (err) {
+      console.error("Failed to update category:", err);
+      alert("Onderwerp bijwerken mislukt.");
+    } finally {
+      setUpdatingCategory(null);
     }
   };
 
@@ -226,17 +256,46 @@ export default function IssuesAdminPage() {
                       </div>
                     )}
 
-                    <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="grid gap-4 sm:grid-cols-3">
                       <div>
                         <label className="mb-1 block text-xs font-semibold uppercase tracking-wider text-gray-400">Status</label>
                         <select
                           value={issue.status}
                           onChange={(e) => handleStatusChange(issue.id, e.target.value as IssueStatus)}
                           disabled={updatingStatus === issue.id}
+                          data-testid="admin-issue-status"
                           className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-pink-500 focus:outline-none disabled:opacity-50"
                         >
                           {(Object.entries(statusConfig) as [IssueStatus, typeof statusConfig[IssueStatus]][]).map(([value, cfg]) => (
                             <option key={value} value={value}>{cfg.label}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="mb-1 block text-xs font-semibold uppercase tracking-wider text-gray-400">Prioriteit</label>
+                        <select
+                          value={issue.priority}
+                          onChange={(e) => handlePriorityChange(issue.id, e.target.value as IssuePriority)}
+                          disabled={updatingPriority === issue.id}
+                          data-testid="admin-issue-priority"
+                          className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-pink-500 focus:outline-none disabled:opacity-50"
+                        >
+                          {(Object.entries(priorityConfig) as [IssuePriority, typeof priorityConfig[IssuePriority]][]).map(([value, cfg]) => (
+                            <option key={value} value={value}>{cfg.label}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="mb-1 block text-xs font-semibold uppercase tracking-wider text-gray-400">Onderwerp</label>
+                        <select
+                          value={issue.category}
+                          onChange={(e) => handleCategoryChange(issue.id, e.target.value as IssueCategory)}
+                          disabled={updatingCategory === issue.id}
+                          data-testid="admin-issue-category"
+                          className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-pink-500 focus:outline-none disabled:opacity-50"
+                        >
+                          {(Object.entries(categoryLabels) as [IssueCategory, string][]).map(([value, label]) => (
+                            <option key={value} value={value}>{label}</option>
                           ))}
                         </select>
                       </div>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { createIssue } from "@ptrdbrbndr/cms";
-import type { IssueCategory } from "@ptrdbrbndr/cms";
+import type { IssueCategory, IssuePriority } from "@ptrdbrbndr/cms";
 import { AlertCircle, X, Send, Check } from "lucide-react";
 
 interface IssueReportButtonProps {
@@ -19,11 +19,19 @@ const categoryLabels: Record<IssueCategory, string> = {
   overig: "Overig",
 };
 
+const priorityLabels: Record<IssuePriority, string> = {
+  laag: "Laag — kleine storing, geen haast",
+  normaal: "Normaal — werkt niet zoals verwacht",
+  hoog: "Hoog — belemmert mijn gebruik",
+  kritiek: "Kritiek — volledig geblokkeerd",
+};
+
 export default function IssueReportButton({ source }: IssueReportButtonProps) {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState<IssueCategory>("bug");
+  const [priority, setPriority] = useState<IssuePriority>("normaal");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [sending, setSending] = useState(false);
@@ -34,6 +42,7 @@ export default function IssueReportButton({ source }: IssueReportButtonProps) {
     setTitle("");
     setDescription("");
     setCategory("bug");
+    setPriority("normaal");
     setName("");
     setEmail("");
     setError(null);
@@ -60,6 +69,7 @@ export default function IssueReportButton({ source }: IssueReportButtonProps) {
         title: title.trim(),
         description: description.trim(),
         category,
+        priority,
         reporter_name: name.trim() || null,
         reporter_email: email.trim() || null,
         reporter_user_id: user?.id ?? null,
@@ -79,7 +89,7 @@ export default function IssueReportButton({ source }: IssueReportButtonProps) {
     }
   };
 
-  const inputClass = "w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-500/20";
+  const inputClass = "w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-400/20";
 
   return (
     <>
@@ -106,7 +116,7 @@ export default function IssueReportButton({ source }: IssueReportButtonProps) {
             {/* Header */}
             <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
               <div className="flex items-center gap-2.5">
-                <AlertCircle className="h-5 w-5 text-pink-600" />
+                <AlertCircle className="h-5 w-5 text-orange-500" />
                 <h2 className="text-base font-semibold text-gray-900">Probleem melden</h2>
               </div>
               <button
@@ -158,18 +168,33 @@ export default function IssueReportButton({ source }: IssueReportButtonProps) {
                     </div>
                   </div>
 
-                  <div>
-                    <label className="mb-1 block text-sm font-medium text-gray-700">Categorie</label>
-                    <select
-                      value={category}
-                      onChange={(e) => setCategory(e.target.value as IssueCategory)}
-                      data-testid="issue-category"
-                      className={inputClass}
-                    >
-                      {(Object.entries(categoryLabels) as [IssueCategory, string][]).map(([value, label]) => (
-                        <option key={value} value={value}>{label}</option>
-                      ))}
-                    </select>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label className="mb-1 block text-sm font-medium text-gray-700">Onderwerp</label>
+                      <select
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value as IssueCategory)}
+                        data-testid="issue-category"
+                        className={inputClass}
+                      >
+                        {(Object.entries(categoryLabels) as [IssueCategory, string][]).map(([value, label]) => (
+                          <option key={value} value={value}>{label}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="mb-1 block text-sm font-medium text-gray-700">Ernst</label>
+                      <select
+                        value={priority}
+                        onChange={(e) => setPriority(e.target.value as IssuePriority)}
+                        data-testid="issue-priority"
+                        className={inputClass}
+                      >
+                        {(Object.entries(priorityLabels) as [IssuePriority, string][]).map(([value, label]) => (
+                          <option key={value} value={value}>{label}</option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
 
                   <div>
@@ -210,7 +235,7 @@ export default function IssueReportButton({ source }: IssueReportButtonProps) {
                       type="submit"
                       disabled={sending}
                       data-testid="submit-issue-btn"
-                      className="inline-flex items-center gap-2 rounded-lg bg-pink-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-pink-700 disabled:opacity-50"
+                      className="inline-flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-orange-600 disabled:opacity-50"
                     >
                       {sending ? (
                         <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
