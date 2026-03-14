@@ -5,13 +5,15 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { User } from "@supabase/supabase-js";
-import { Heart, Newspaper, FileText, ExternalLink } from "lucide-react";
+import { Heart, Newspaper, FileText, ExternalLink, ClipboardList } from "lucide-react";
 import IssueReportButton from "@/components/IssueReportButton";
+import IssueListPanel from "@/components/IssueListPanel";
 
 export default function LedenDashboardPage() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showIssues, setShowIssues] = useState(false);
 
   useEffect(() => {
     const supabase = createClient();
@@ -57,8 +59,9 @@ export default function LedenDashboardPage() {
           <div className="flex items-center gap-3">
             <IssueReportButton source="leden" />
             <button
+              data-testid="logout-btn"
               onClick={handleLogout}
-              className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50"
+              className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700"
             >
               Uitloggen
             </button>
@@ -124,7 +127,29 @@ export default function LedenDashboardPage() {
               <ExternalLink className="h-3.5 w-3.5" />
             </Link>
           </div>
+
+          {/* Openstaande meldingen */}
+          <button
+            data-testid="issues-tile"
+            onClick={() => setShowIssues((v) => !v)}
+            className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm text-left transition-colors hover:border-amber-200 hover:bg-amber-50 sm:col-span-2 lg:col-span-1"
+          >
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+              <ClipboardList className="h-6 w-6" />
+            </div>
+            <h2 className="text-lg font-semibold text-gray-900">
+              Openstaande meldingen
+            </h2>
+            <p className="mt-2 text-sm text-gray-500">
+              Bekijk welke problemen en suggesties al zijn ingediend.
+            </p>
+            <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-amber-700">
+              {showIssues ? "Verberg lijst" : "Bekijk meldingen"}
+            </span>
+          </button>
         </div>
+
+        {showIssues && <IssueListPanel />}
 
         {/* Account info */}
         <div className="mt-10 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">

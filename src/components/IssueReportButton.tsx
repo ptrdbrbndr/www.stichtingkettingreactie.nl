@@ -86,7 +86,7 @@ export default function IssueReportButton({ source }: IssueReportButtonProps) {
       <button
         onClick={() => setOpen(true)}
         data-testid="report-issue-btn"
-        className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 shadow-sm transition-colors hover:bg-gray-50 hover:text-gray-900"
+        className="inline-flex items-center gap-2 rounded-lg bg-orange-500 px-3 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-orange-600"
         title="Meld een probleem"
       >
         <AlertCircle className="h-4 w-4" />
