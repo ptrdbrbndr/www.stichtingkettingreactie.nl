@@ -28,7 +28,7 @@ export default function Hero({
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto flex min-h-[320px] max-w-7xl items-center justify-center px-4 py-16 sm:min-h-[400px] sm:px-6 sm:py-24 lg:px-8">
+      <div className="relative mx-auto flex min-h-[160px] max-w-7xl items-center justify-center px-4 py-10 sm:min-h-[200px] sm:px-6 sm:py-14 lg:px-8">
         <div className="text-center">
           <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
             {title}
