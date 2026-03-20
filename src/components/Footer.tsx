@@ -1,55 +1,47 @@
 import Link from "next/link";
-import { Heart } from "lucide-react";
+import { Link2, Heart } from "lucide-react";
 
-const navLinks = [
-  { label: "Over Ons", href: "/over-ons" },
-  { label: "Projecten", href: "/projecten" },
-  { label: "Nieuws", href: "/nieuws" },
-  { label: "Verantwoording", href: "/verantwoording" },
+const projectLinks = [
+  { label: "Alle Projecten", href: "/projecten" },
 ];
 
 const steunLinks = [
   { label: "Doneren", href: "/steun-ons" },
+  { label: "Vrijwilliger worden", href: "/vrijwilliger" },
   { label: "Verantwoording", href: "/verantwoording" },
-  { label: "Leden-portal", href: "/leden" },
 ];
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-950 text-gray-400">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          {/* Brand */}
-          <div className="lg:col-span-2">
-            <div className="mb-4 flex items-center gap-2.5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary-500 to-accent-600">
-                <Heart className="h-4 w-4 text-white" />
-              </div>
+    <footer className="bg-gray-900 text-gray-300">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {/* About column */}
+          <div>
+            <div className="mb-4 flex items-center gap-2">
+              <Link2 className="h-6 w-6 text-primary-400" />
               <span className="text-lg font-bold text-white">
                 Stichting Kettingreactie
               </span>
             </div>
-            <p className="mb-5 max-w-sm text-sm leading-relaxed text-gray-400">
+            <p className="mb-4 text-sm leading-relaxed text-gray-400">
               Stichting Kettingreactie zet zich in voor het verbeteren van de
-              positie van kansarme vrouwen in India door lokale initiatieven te ondersteunen.
+              positie van kansarme vrouwen in India.
             </p>
-            <div className="flex items-center gap-3">
-              <span className="rounded border border-gray-700 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-gray-500">
-                ANBI
-              </span>
-              <span className="text-xs text-gray-600">Erkend door de Belastingdienst</span>
-            </div>
+            <span className="inline-block rounded border border-gray-600 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-gray-400">
+              ANBI
+            </span>
           </div>
 
-          {/* Navigatie */}
+          {/* Projecten column */}
           <div>
-            <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-300">
-              Navigatie
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">
+              Projecten
             </h3>
-            <ul className="space-y-2.5">
-              {navLinks.map((link) => (
+            <ul className="space-y-2">
+              {projectLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -62,12 +54,12 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Steun & contact */}
+          {/* Steun Ons column */}
           <div>
-            <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-300">
-              Steun & Contact
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">
+              Steun Ons
             </h3>
-            <ul className="mb-5 space-y-2.5">
+            <ul className="space-y-2">
               {steunLinks.map((link) => (
                 <li key={link.href}>
                   <Link
@@ -78,32 +70,57 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+            </ul>
+            <div className="mt-4 rounded-lg bg-gray-800 p-3">
+              <p className="mb-1 text-xs font-medium text-gray-300">
+                Bankrekening
+              </p>
+              <p className="font-mono text-sm text-primary-400">
+                NL87 INGB 0005313860
+              </p>
+              <p className="mt-1 text-xs text-gray-500">
+                t.n.v. Stichting Kettingreactie
+              </p>
+            </div>
+          </div>
+
+          {/* Contact column */}
+          <div>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">
+              Contact
+            </h3>
+            <ul className="space-y-2 text-sm text-gray-400">
               <li>
                 <Link
                   href="mailto:info@stichtingkettingreactie.nl"
-                  className="text-sm text-gray-400 transition-colors hover:text-primary-400"
+                  className="transition-colors hover:text-primary-400"
                 >
                   info@stichtingkettingreactie.nl
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/nieuws"
+                  className="transition-colors hover:text-primary-400"
+                >
+                  Laatste nieuws
+                </Link>
+              </li>
             </ul>
-            <div className="rounded-xl bg-gray-900 px-4 py-3">
-              <p className="mb-0.5 text-xs text-gray-500">Bankrekening</p>
-              <p className="font-mono text-sm font-semibold text-primary-400">
-                NL87 INGB 0005313860
-              </p>
-            </div>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 border-t border-gray-800 pt-6">
-          <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-            <p className="text-xs text-gray-600">
-              &copy; {currentYear} Stichting Kettingreactie. Alle rechten voorbehouden.
+        <div className="mt-10 border-t border-gray-800 pt-6">
+          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <p className="text-xs text-gray-500">
+              &copy; {currentYear} Stichting Kettingreactie. Alle rechten
+              voorbehouden.
             </p>
-            <p className="flex items-center gap-1 text-xs text-gray-600">
-              Gemaakt met <Heart className="inline h-3 w-3 text-primary-500" /> voor een betere wereld
+            <p className="flex items-center gap-1 text-xs text-gray-500">
+              Gemaakt met{" "}
+              <Heart className="inline h-3 w-3 text-primary-500" /> voor een
+              betere wereld
             </p>
           </div>
         </div>
