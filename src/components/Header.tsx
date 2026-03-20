@@ -44,13 +44,13 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-28 items-center justify-between">
+        <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
+          <Link href="/" className="flex items-center gap-2.5 group">
             <img
               src="/logo-skr.png"
-              alt=""
-              className="h-24 w-auto shrink-0"
+              alt="Stichting Kettingreactie"
+              className="h-10 w-auto shrink-0"
             />
             <div className="flex flex-col leading-tight">
               <span className="text-xs font-semibold uppercase tracking-widest text-gray-400">

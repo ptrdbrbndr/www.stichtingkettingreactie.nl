@@ -24,24 +24,23 @@ export default function BlogPostCard({
   return (
     <Link href={`/nieuws/${slug}`} className="group block">
       <article className="h-full overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+        <div className="h-1 bg-gradient-to-r from-primary-500 to-accent-600" />
         <div className="p-6">
           {/* Date badge and category */}
-          <div className="mb-3 flex items-center gap-3">
-            <span className="inline-flex items-center rounded-full bg-primary-50 px-3 py-1 text-xs font-semibold text-primary-700">
-              {formattedDate}
-            </span>
+          <div className="mb-3 flex items-center gap-2 flex-wrap">
             {category && (
               <span className="inline-flex items-center rounded-full bg-accent-50 px-3 py-1 text-xs font-medium text-accent-700">
                 {category}
               </span>
             )}
+            <span className="text-xs text-gray-400">{formattedDate}</span>
           </div>
 
-          <h3 className="mb-2 text-lg font-semibold text-gray-900 transition-colors group-hover:text-primary-700">
+          <h3 className="mb-2 text-lg font-semibold leading-snug text-gray-900 transition-colors group-hover:text-primary-700">
             {title}
           </h3>
 
-          <p className="line-clamp-3 text-sm leading-relaxed text-gray-600">
+          <p className="line-clamp-3 text-sm leading-relaxed text-gray-500">
             {excerpt}
           </p>
 

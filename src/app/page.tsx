@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Heart, HandHeart } from "lucide-react";
+import { Heart, HandHeart, Users, Globe, CheckCircle, ArrowRight } from "lucide-react";
 import Hero from "@/components/Hero";
 import ProjectCard from "@/components/ProjectCard";
 import BlogPostCard from "@/components/BlogPostCard";
@@ -55,19 +55,69 @@ export default async function HomePage() {
         ctaHref={heroCtaHref}
       />
 
-      {/* Onze Missie */}
-      <section className="py-16 sm:py-20">
+      {/* Impact-balk */}
+      <section className="border-b border-gray-100 bg-white">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-4 inline-flex rounded-full bg-primary-50 px-4 py-1.5 text-sm font-medium text-primary-700">
-              {missionBadge}
+          <div className="grid grid-cols-3 divide-x divide-gray-100">
+            <div className="flex flex-col items-center py-8 text-center sm:py-10">
+              <span className="text-2xl font-bold text-primary-700 sm:text-3xl">3</span>
+              <span className="mt-1 text-xs font-medium uppercase tracking-wide text-gray-500 sm:text-sm">Projecten in India</span>
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-              {missionTitle}
-            </h2>
-            <p className="mt-4 text-lg leading-relaxed text-gray-600">
-              {missionText}
-            </p>
+            <div className="flex flex-col items-center py-8 text-center sm:py-10">
+              <span className="text-2xl font-bold text-primary-700 sm:text-3xl">100%</span>
+              <span className="mt-1 text-xs font-medium uppercase tracking-wide text-gray-500 sm:text-sm">Naar de projecten</span>
+            </div>
+            <div className="flex flex-col items-center py-8 text-center sm:py-10">
+              <span className="text-2xl font-bold text-primary-700 sm:text-3xl">ANBI</span>
+              <span className="mt-1 text-xs font-medium uppercase tracking-wide text-gray-500 sm:text-sm">Erkend door Belastingdienst</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Onze Missie */}
+      <section className="py-16 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+            {/* Tekst */}
+            <div>
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary-50 px-4 py-1.5 text-sm font-medium text-primary-700">
+                <Heart className="h-3.5 w-3.5" />
+                Onze Missie
+              </div>
+              <h2 className="text-2xl font-bold leading-snug text-gray-900 sm:text-3xl">
+                {missionTitle}
+              </h2>
+              <p className="mt-5 text-lg leading-relaxed text-gray-600">
+                {missionText}
+              </p>
+              <Link
+                href="/over-ons"
+                className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-primary-700 hover:text-primary-800 transition-colors"
+              >
+                Meer over ons verhaal
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+
+            {/* Visuele kaartjes */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="rounded-2xl bg-primary-50 p-6">
+                <Users className="mb-3 h-7 w-7 text-primary-600" />
+                <p className="text-sm font-semibold text-gray-900">Lokale initiatieven</p>
+                <p className="mt-1 text-sm text-gray-500">Samenwerking met lokale organisaties in Bangalore</p>
+              </div>
+              <div className="rounded-2xl bg-accent-50 p-6">
+                <Globe className="mb-3 h-7 w-7 text-accent-600" />
+                <p className="text-sm font-semibold text-gray-900">Directe impact</p>
+                <p className="mt-1 text-sm text-gray-500">Elke euro gaat rechtstreeks naar de projecten</p>
+              </div>
+              <div className="col-span-2 rounded-2xl bg-gray-50 p-6">
+                <CheckCircle className="mb-3 h-7 w-7 text-green-600" />
+                <p className="text-sm font-semibold text-gray-900">Transparante verantwoording</p>
+                <p className="mt-1 text-sm text-gray-500">Wij leggen volledig verantwoording af over de besteding van donaties</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

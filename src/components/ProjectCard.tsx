@@ -30,9 +30,10 @@ export default function ProjectCard({
               className="object-cover transition-transform duration-300 group-hover:scale-105"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
           </div>
         ) : (
-          <div className="h-1 bg-gradient-to-r from-primary-500 to-primary-700" />
+          <div className="h-1 bg-gradient-to-r from-primary-500 to-accent-600" />
         )}
 
         <div className="p-6">
