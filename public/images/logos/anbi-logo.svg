@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" width="120" height="60">
+  <rect width="120" height="60" rx="4" fill="#1a3a6b"/>
+  <text x="60" y="26" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="middle">ANBI</text>
+  <text x="60" y="46" font-family="Arial, sans-serif" font-size="7" fill="#a0b8d8" text-anchor="middle">Algemeen Nut Beogende Instelling</text>
+</svg>

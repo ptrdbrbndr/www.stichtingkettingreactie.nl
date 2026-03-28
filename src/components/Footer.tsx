@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Link2, Heart } from "lucide-react";
+import Image from "next/image";
+import { Heart } from "lucide-react";
 
 const projectLinks = [
   { label: "Alle Projecten", href: "/projecten" },
@@ -20,19 +21,26 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* About column */}
           <div>
-            <div className="mb-4 flex items-center gap-2">
-              <Link2 className="h-6 w-6 text-primary-400" />
-              <span className="text-lg font-bold text-white">
-                Stichting Kettingreactie
-              </span>
-            </div>
+            <Link href="/" className="mb-4 inline-block">
+              <Image
+                src="/images/logos/logo-skr.jpg"
+                alt="Stichting Kettingreactie"
+                width={220}
+                height={60}
+                className="h-auto w-auto max-h-14"
+              />
+            </Link>
             <p className="mb-4 text-sm leading-relaxed text-gray-400">
               Stichting Kettingreactie zet zich in voor het verbeteren van de
               positie van kansarme vrouwen in India.
             </p>
-            <span className="inline-block rounded border border-gray-600 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-gray-400">
-              ANBI
-            </span>
+            <Image
+              src="/images/logos/anbi-logo.svg"
+              alt="ANBI — Algemeen Nut Beogende Instelling"
+              width={120}
+              height={60}
+              className="h-auto w-auto max-h-12"
+            />
           </div>
 
           {/* Projecten column */}
