@@ -42,3 +42,6 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+STAGING_USERS.md
+playwright-report/
+test-results/
