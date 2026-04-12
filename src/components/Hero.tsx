@@ -61,11 +61,11 @@ export default function Hero({
             <circle cx="50" cy="60" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
           </svg>
         </div>
-        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+        <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
           {breadcrumb && breadcrumb.length > 0 && (
             <nav
               aria-label="Breadcrumb"
-              className="mb-5 text-xs font-semibold text-ink-soft"
+              className="mb-3 text-xs font-semibold text-ink-soft"
             >
               <ol className="flex flex-wrap items-center gap-1.5">
                 {breadcrumb.map((item, idx) => (
@@ -91,15 +91,15 @@ export default function Hero({
             </nav>
           )}
           {eyebrow && (
-            <span className="mb-3 block text-[11px] font-bold uppercase tracking-[0.2em] text-accent-600">
+            <span className="mb-2 block text-[11px] font-bold uppercase tracking-[0.2em] text-accent-600">
               {eyebrow}
             </span>
           )}
-          <h1 className="max-w-4xl font-serif text-4xl font-bold leading-[1.05] text-primary-600 sm:text-5xl lg:text-6xl">
+          <h1 className="max-w-4xl font-serif text-3xl font-bold leading-[1.1] text-primary-600 sm:text-4xl lg:text-5xl">
             {title}
           </h1>
           {subtitle && (
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft sm:text-xl">
+            <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-soft sm:text-lg">
               {subtitle}
             </p>
           )}
