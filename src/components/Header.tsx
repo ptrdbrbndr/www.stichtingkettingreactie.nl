@@ -112,15 +112,15 @@ export default function Header() {
           <Link
             href="/"
             data-testid="site-logo"
-            className="group flex items-center gap-4"
+            className="group flex h-full items-center gap-4"
           >
             <Image
               src="/logo-skr.png"
               alt="Stichting Kettingreactie"
-              width={96}
-              height={96}
+              width={128}
+              height={128}
               priority
-              className="h-16 w-16 shrink-0 object-contain sm:h-20 sm:w-20"
+              className="h-full w-auto shrink-0 object-contain py-1"
             />
             <div className="flex flex-col leading-tight">
               <span className="text-xs font-bold uppercase tracking-[0.22em] text-accent-600 sm:text-sm">
