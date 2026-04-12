@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Menu, X, User } from "lucide-react";
+import { ChevronDown, Menu, X, User, Heart } from "lucide-react";
 
 type NavItem = {
   label: string;
@@ -11,8 +12,6 @@ type NavItem = {
   children?: { label: string; href: string }[];
 };
 
-// Hiërarchie 1:1 overgenomen uit de oude WordPress menu-structuur
-// (Over de Stichting / Projecten / Steun ons / Verantwoording met sub-pagina's)
 const navItems: NavItem[] = [
   { label: "Home", href: "/" },
   {
@@ -67,9 +66,7 @@ export default function Header() {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -102,31 +99,44 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 bg-white transition-shadow duration-300 ${
-        scrolled ? "shadow-md" : "shadow-none"
+      data-testid="site-header"
+      className={`sticky top-0 z-50 bg-cream/90 backdrop-blur-md transition-all duration-300 ${
+        scrolled
+          ? "border-b border-line shadow-[0_10px_30px_rgba(20,17,46,0.06)]"
+          : "border-b border-transparent"
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <img
+        <div className="flex h-20 items-center justify-between">
+          {/* Logo + wordmark */}
+          <Link
+            href="/"
+            data-testid="site-logo"
+            className="group flex items-center gap-3"
+          >
+            <Image
               src="/logo-skr.png"
               alt="Stichting Kettingreactie"
-              className="h-10 w-auto shrink-0"
+              width={56}
+              height={56}
+              priority
+              className="h-12 w-12 shrink-0 object-contain"
             />
-            <div className="flex flex-col leading-tight">
-              <span className="text-xs font-semibold uppercase tracking-widest text-gray-400">
+            <div className="flex flex-col leading-none">
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-600">
                 Stichting
               </span>
-              <span className="text-xl font-bold text-gray-900 group-hover:text-primary-700 transition-colors">
+              <span className="font-serif text-xl font-bold text-primary-600 group-hover:text-accent-600 transition-colors sm:text-2xl">
                 Kettingreactie
               </span>
             </div>
           </Link>
 
           {/* Desktop navigation */}
-          <nav className="hidden md:flex md:items-center md:gap-1">
+          <nav
+            data-testid="desktop-nav"
+            className="hidden md:flex md:items-center md:gap-1"
+          >
             {navItems.map((item, idx) => {
               const hasChildren = !!item.children?.length;
               const active = isSubActive(item);
@@ -136,13 +146,20 @@ export default function Header() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                    data-testid={`nav-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+                    className={`relative rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                       active
-                        ? "bg-primary-50 text-primary-700"
-                        : "text-gray-600 hover:bg-gray-50 hover:text-primary-700"
+                        ? "text-primary-600"
+                        : "text-ink-soft hover:text-accent-600"
                     }`}
                   >
                     {item.label}
+                    {active && (
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-x-3 -bottom-0.5 h-0.5 bg-accent-600"
+                      />
+                    )}
                   </Link>
                 );
               }
@@ -157,10 +174,11 @@ export default function Header() {
                 >
                   <Link
                     href={item.href}
-                    className={`flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                    data-testid={`nav-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+                    className={`relative flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                       active
-                        ? "bg-primary-50 text-primary-700"
-                        : "text-gray-600 hover:bg-gray-50 hover:text-primary-700"
+                        ? "text-primary-600"
+                        : "text-ink-soft hover:text-accent-600"
                     }`}
                     aria-haspopup="menu"
                     aria-expanded={isOpen}
@@ -171,14 +189,21 @@ export default function Header() {
                         isOpen ? "rotate-180" : ""
                       }`}
                     />
+                    {active && (
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-x-3 -bottom-0.5 h-0.5 bg-accent-600"
+                      />
+                    )}
                   </Link>
 
                   {isOpen && (
                     <div
-                      className="absolute left-0 top-full z-40 mt-1 min-w-[260px] overflow-hidden rounded-xl border border-gray-100 bg-white shadow-lg ring-1 ring-black/5"
+                      data-testid={`nav-dropdown-${idx}`}
+                      className="absolute left-0 top-full z-40 mt-1 min-w-[280px] overflow-hidden rounded-2xl border border-line bg-white shadow-xl ring-1 ring-primary-900/5"
                       role="menu"
                     >
-                      <div className="p-1.5">
+                      <div className="p-2">
                         {item.children!.map((child) => {
                           const childActive = isActive(child.href);
                           return (
@@ -188,8 +213,8 @@ export default function Header() {
                               role="menuitem"
                               className={`block rounded-lg px-3 py-2 text-sm transition-colors ${
                                 childActive
-                                  ? "bg-primary-50 font-medium text-primary-700"
-                                  : "text-gray-600 hover:bg-gray-50 hover:text-primary-700"
+                                  ? "bg-accent-50 font-medium text-accent-700"
+                                  : "text-ink-soft hover:bg-cream-dark hover:text-primary-600"
                               }`}
                             >
                               {child.label}
@@ -204,20 +229,32 @@ export default function Header() {
             })}
           </nav>
 
-          {/* Leden-portal button */}
-          <Link
-            href="/leden"
-            className="hidden items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:border-primary-200 hover:bg-primary-50 hover:text-primary-700 md:inline-flex"
-            title="Leden-portal"
-          >
-            <User className="h-4 w-4" />
-            Leden
-          </Link>
+          {/* Right side buttons */}
+          <div className="hidden items-center gap-3 md:flex">
+            <Link
+              href="/leden"
+              data-testid="leden-button"
+              className="inline-flex items-center gap-1.5 rounded-full border border-line px-4 py-2 text-sm font-medium text-primary-600 transition-colors hover:border-primary-600 hover:bg-primary-50"
+              title="Leden-portal"
+            >
+              <User className="h-4 w-4" />
+              Leden
+            </Link>
+            <Link
+              href="/steun-ons"
+              data-testid="doneer-button"
+              className="inline-flex items-center gap-1.5 rounded-full bg-accent-600 px-5 py-2 text-sm font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:bg-accent-700 hover:shadow-lg active:scale-95"
+            >
+              <Heart className="h-4 w-4" />
+              Doneer
+            </Link>
+          </div>
 
           {/* Mobile menu button */}
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-lg p-2 text-gray-600 hover:bg-gray-100 hover:text-primary-700 md:hidden"
+            data-testid="mobile-menu-toggle"
+            className="inline-flex items-center justify-center rounded-lg p-2 text-primary-600 hover:bg-primary-50 md:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Menu sluiten" : "Menu openen"}
             aria-expanded={mobileMenuOpen}
@@ -233,7 +270,10 @@ export default function Header() {
 
       {/* Mobile navigation */}
       {mobileMenuOpen && (
-        <div className="border-t border-gray-100 md:hidden">
+        <div
+          data-testid="mobile-nav"
+          className="border-t border-line bg-cream md:hidden"
+        >
           <nav className="mx-auto max-w-7xl space-y-1 px-4 py-3 sm:px-6 lg:px-8">
             {navItems.map((item, idx) => {
               const hasChildren = !!item.children?.length;
@@ -246,8 +286,8 @@ export default function Header() {
                     href={item.href}
                     className={`block rounded-lg px-3 py-2 text-base font-medium transition-colors ${
                       active
-                        ? "bg-primary-50 text-primary-700"
-                        : "text-gray-600 hover:bg-gray-50 hover:text-primary-700"
+                        ? "bg-primary-50 text-primary-600"
+                        : "text-ink-soft hover:bg-cream-dark hover:text-primary-600"
                     }`}
                   >
                     {item.label}
@@ -263,8 +303,8 @@ export default function Header() {
                       href={item.href}
                       className={`flex-1 rounded-lg px-3 py-2 text-base font-medium transition-colors ${
                         active
-                          ? "bg-primary-50 text-primary-700"
-                          : "text-gray-600 hover:bg-gray-50 hover:text-primary-700"
+                          ? "bg-primary-50 text-primary-600"
+                          : "text-ink-soft hover:bg-cream-dark hover:text-primary-600"
                       }`}
                     >
                       {item.label}
@@ -274,7 +314,7 @@ export default function Header() {
                       aria-label={`${item.label} submenu ${isOpen ? "sluiten" : "openen"}`}
                       aria-expanded={isOpen}
                       onClick={() => setOpenMobileIdx(isOpen ? null : idx)}
-                      className="rounded-lg px-3 text-gray-500 hover:bg-gray-50 hover:text-primary-700"
+                      className="rounded-lg px-3 text-ink-soft hover:bg-cream-dark hover:text-primary-600"
                     >
                       <ChevronDown
                         className={`h-5 w-5 transition-transform ${
@@ -284,7 +324,7 @@ export default function Header() {
                     </button>
                   </div>
                   {isOpen && (
-                    <div className="ml-3 mt-1 space-y-1 border-l border-gray-100 pl-3">
+                    <div className="ml-3 mt-1 space-y-1 border-l border-line pl-3">
                       {item.children!.map((child) => {
                         const childActive = isActive(child.href);
                         return (
@@ -293,8 +333,8 @@ export default function Header() {
                             href={child.href}
                             className={`block rounded-lg px-3 py-2 text-sm transition-colors ${
                               childActive
-                                ? "bg-primary-50 font-medium text-primary-700"
-                                : "text-gray-600 hover:bg-gray-50 hover:text-primary-700"
+                                ? "bg-accent-50 font-medium text-accent-700"
+                                : "text-ink-soft hover:bg-cream-dark hover:text-primary-600"
                             }`}
                           >
                             {child.label}
@@ -306,17 +346,22 @@ export default function Header() {
                 </div>
               );
             })}
-            <Link
-              href="/leden"
-              className={`mt-2 flex items-center gap-2 rounded-lg px-3 py-2 text-base font-medium transition-colors ${
-                isActive("/leden")
-                  ? "bg-primary-50 text-primary-700"
-                  : "text-gray-600 hover:bg-gray-50 hover:text-primary-700"
-              }`}
-            >
-              <User className="h-4 w-4" />
-              Leden-portal
-            </Link>
+            <div className="mt-4 flex flex-col gap-2 pt-3 border-t border-line">
+              <Link
+                href="/leden"
+                className="flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm font-medium text-primary-600"
+              >
+                <User className="h-4 w-4" />
+                Leden-portal
+              </Link>
+              <Link
+                href="/steun-ons"
+                className="flex items-center justify-center gap-2 rounded-full bg-accent-600 px-4 py-2 text-sm font-bold text-white shadow-md"
+              >
+                <Heart className="h-4 w-4" />
+                Doneer
+              </Link>
+            </div>
           </nav>
         </div>
       )}

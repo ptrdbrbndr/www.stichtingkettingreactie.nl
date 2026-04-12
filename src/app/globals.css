@@ -1,45 +1,69 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-primary-50: #fdf2f8;
-  --color-primary-100: #fce7f3;
-  --color-primary-200: #fbcfe8;
-  --color-primary-300: #f9a8d4;
-  --color-primary-400: #f472b6;
-  --color-primary-500: #ec4899;
-  --color-primary-600: #db2777;
-  --color-primary-700: #be185d;
-  --color-primary-800: #9d174d;
-  --color-primary-900: #831843;
+  /* Primary = INDIGO (from logo wordmark + middle ring, dominant 56k px) */
+  --color-primary-50: #eeecfa;
+  --color-primary-100: #ddd9f0;
+  --color-primary-200: #c5c0ff;
+  --color-primary-300: #9992f4;
+  --color-primary-400: #5a52b0;
+  --color-primary-500: #423996;
+  --color-primary-600: #2f2483;
+  --color-primary-700: #231a66;
+  --color-primary-800: #1b1450;
+  --color-primary-900: #120c3a;
 
-  --color-accent-50: #f5f3ff;
-  --color-accent-100: #ede9fe;
-  --color-accent-200: #ddd6fe;
-  --color-accent-300: #c4b5fd;
-  --color-accent-400: #a78bfa;
-  --color-accent-500: #8b5cf6;
-  --color-accent-600: #7c3aed;
-  --color-accent-700: #6d28d9;
-  --color-accent-800: #5b21b6;
-  --color-accent-900: #4c1d95;
+  /* Accent = MAGENTA (from logo bottom ring + "REACTIE" wordmark) */
+  --color-accent-50: #fdf2f8;
+  --color-accent-100: #fce7f3;
+  --color-accent-200: #fbcfe8;
+  --color-accent-300: #f9a8d4;
+  --color-accent-400: #f472b6;
+  --color-accent-500: #ec4899;
+  --color-accent-600: #e83a8e;
+  --color-accent-700: #be185d;
+  --color-accent-800: #9d174d;
+  --color-accent-900: #831843;
+
+  /* Azure = third logo ring, used sparingly for freshness/hope */
+  --color-azure-50: #e6f4fd;
+  --color-azure-100: #cce9fb;
+  --color-azure-200: #99d3f7;
+  --color-azure-300: #66bcf3;
+  --color-azure-400: #33a6ee;
+  --color-azure-500: #0098de;
+  --color-azure-600: #0077b3;
+  --color-azure-700: #005986;
+  --color-azure-800: #003c5a;
+  --color-azure-900: #001e2d;
+
+  /* Neutrals — warm editorial tones, indigo-tinted text */
+  --color-cream: #fbf9f5;
+  --color-cream-dark: #f5f3ef;
+  --color-ink: #14112e;
+  --color-ink-soft: #5a5470;
+  --color-line: #e9e6f0;
 
   --font-sans: var(--font-inter);
+  --font-serif: var(--font-fraunces);
 }
 
 body {
   font-family: var(--font-sans), system-ui, sans-serif;
-  color: #1f2937;
-  background: #ffffff;
+  color: var(--color-ink);
+  background: var(--color-cream);
 }
 
+.font-serif { font-family: var(--font-serif), "Noto Serif", Georgia, serif; font-feature-settings: "ss01", "ss02"; }
+
 /* Prose styles for blog content */
-.prose h1 { font-size: 2.25rem; font-weight: 700; margin-bottom: 1rem; color: #1f2937; }
-.prose h2 { font-size: 1.5rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; color: #1f2937; }
-.prose h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; color: #1f2937; }
-.prose p { margin-bottom: 1rem; line-height: 1.75; color: #374151; }
+.prose h1 { font-size: 2.25rem; font-weight: 700; margin-bottom: 1rem; color: var(--color-primary-600); font-family: var(--font-serif), Georgia, serif; }
+.prose h2 { font-size: 1.5rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--color-primary-600); font-family: var(--font-serif), Georgia, serif; }
+.prose h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--color-primary-600); font-family: var(--font-serif), Georgia, serif; }
+.prose p { margin-bottom: 1rem; line-height: 1.75; color: var(--color-ink-soft); }
 .prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
 .prose ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1rem; }
 .prose li { margin-bottom: 0.25rem; line-height: 1.75; }
-.prose blockquote { border-left: 4px solid #ec4899; padding-left: 1rem; margin: 1.5rem 0; font-style: italic; color: #6b7280; }
-.prose a { color: #be185d; text-decoration: underline; }
+.prose blockquote { border-left: 4px solid var(--color-accent-600); padding-left: 1rem; margin: 1.5rem 0; font-style: italic; color: var(--color-ink-soft); font-family: var(--font-serif), Georgia, serif; }
+.prose a { color: var(--color-accent-700); text-decoration: underline; }
 .prose img { border-radius: 0.5rem; margin: 1.5rem 0; }

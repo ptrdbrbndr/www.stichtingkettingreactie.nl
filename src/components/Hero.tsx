@@ -1,5 +1,15 @@
 import Link from "next/link";
-import { Heart, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { Heart, ArrowRight, Radio } from "lucide-react";
+
+interface FeatureArticle {
+  title: string;
+  excerpt?: string | null;
+  slug: string;
+  category?: string | null;
+  date: string;
+  image?: string | null;
+}
 
 interface HeroProps {
   title: string;
@@ -7,6 +17,19 @@ interface HeroProps {
   showCta?: boolean;
   ctaText?: string;
   ctaHref?: string;
+  featureArticle?: FeatureArticle | null;
+}
+
+function formatDutchDate(value: string) {
+  try {
+    return new Date(value).toLocaleDateString("nl-NL", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  } catch {
+    return value;
+  }
 }
 
 export default function Hero({
@@ -15,86 +38,143 @@ export default function Hero({
   showCta = false,
   ctaText = "Meer weten",
   ctaHref = "/over-ons",
+  featureArticle,
 }: HeroProps) {
-  if (showCta) {
-    // Homepage hero — groot en impactvol
+  // Compact subpagina hero
+  if (!showCta) {
     return (
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary-700 via-primary-600 to-accent-700">
-        {/* Patroon overlay */}
+      <section
+        data-testid="page-hero"
+        className="relative overflow-hidden border-b border-line bg-cream"
+      >
         <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `radial-gradient(circle at 25% 25%, rgba(255,255,255,0.2) 1px, transparent 1px),
-              radial-gradient(circle at 75% 75%, rgba(255,255,255,0.15) 1px, transparent 1px)`,
-            backgroundSize: "48px 48px",
-          }}
           aria-hidden="true"
-        />
-        {/* Decoratieve cirkels */}
-        <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-white opacity-5" aria-hidden="true" />
-        <div className="absolute -bottom-16 -left-16 h-56 w-56 rounded-full bg-accent-400 opacity-10" aria-hidden="true" />
-
-        <div className="relative mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 sm:py-28 lg:px-8">
-          {/* ANBI badge */}
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-green-400" aria-hidden="true" />
-            ANBI-erkende stichting
-          </div>
-
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+          className="pointer-events-none absolute inset-0 opacity-[0.035] text-primary-600"
+        >
+          <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+            <circle cx="40" cy="40" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
+            <circle cx="60" cy="40" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
+            <circle cx="50" cy="60" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
+          </svg>
+        </div>
+        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+          <h1 className="font-serif text-4xl font-bold leading-tight text-primary-600 sm:text-5xl">
             {title}
           </h1>
-
           {subtitle && (
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/80 sm:text-xl">
-              {subtitle}
-            </p>
-          )}
-
-          {ctaHref && (
-            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Link
-                href={ctaHref}
-                className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-base font-semibold text-primary-700 shadow-lg transition-all hover:-translate-y-0.5 hover:bg-primary-50 hover:shadow-xl"
-              >
-                <Heart className="h-4 w-4" />
-                {ctaText}
-              </Link>
-              <Link
-                href="/projecten"
-                className="inline-flex items-center gap-2 rounded-full border-2 border-white/40 px-8 py-3.5 text-base font-semibold text-white transition-all hover:border-white/70 hover:bg-white/10"
-              >
-                Onze projecten
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
+            <p className="mt-4 max-w-2xl text-lg text-ink-soft">{subtitle}</p>
           )}
         </div>
       </section>
     );
   }
 
-  // Subpagina hero — compact
+  // Homepage hero — asymmetric editorial split
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-primary-700 to-accent-700">
-      <div
-        className="absolute inset-0 opacity-10"
-        style={{
-          backgroundImage: `radial-gradient(circle at 25% 25%, rgba(255,255,255,0.2) 1px, transparent 1px),
-            radial-gradient(circle at 75% 75%, rgba(255,255,255,0.15) 1px, transparent 1px)`,
-          backgroundSize: "40px 40px",
-        }}
-        aria-hidden="true"
-      />
-      <div className="relative mx-auto flex min-h-[160px] max-w-7xl items-center justify-center px-4 py-10 sm:min-h-[200px] sm:px-6 sm:py-14 lg:px-8">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-            {title}
-          </h1>
-          {subtitle && (
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-white/85 sm:text-xl">
-              {subtitle}
-            </p>
+    <section
+      data-testid="home-hero"
+      className="relative overflow-hidden bg-cream"
+    >
+      <div className="mx-auto max-w-7xl px-4 pt-12 pb-20 sm:px-6 lg:px-8 lg:pt-16 lg:pb-28">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
+          {/* Left column — text */}
+          <div className="space-y-7 lg:col-span-7">
+            <div className="inline-flex items-center gap-2 rounded-full border border-line bg-white/70 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-primary-600 backdrop-blur-sm">
+              <span
+                aria-hidden="true"
+                className="h-1.5 w-1.5 rounded-full bg-green-500"
+              />
+              ANBI-erkende stichting sinds 2007
+            </div>
+
+            <h1 className="font-serif text-5xl font-bold leading-[1.05] text-primary-600 sm:text-6xl lg:text-[4.5rem]">
+              {title}
+            </h1>
+
+            {subtitle && (
+              <p className="max-w-xl text-lg leading-relaxed text-ink-soft sm:text-xl">
+                {subtitle}
+              </p>
+            )}
+
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <Link
+                href={ctaHref}
+                data-testid="hero-primary-cta"
+                className="group inline-flex items-center gap-2 rounded-full bg-primary-600 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-primary-600/20 transition-all hover:-translate-y-0.5 hover:bg-primary-700 hover:shadow-xl active:scale-95"
+              >
+                <Heart className="h-4 w-4" />
+                {ctaText}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+              <Link
+                href="/projecten"
+                data-testid="hero-secondary-cta"
+                className="inline-flex items-center gap-2 rounded-full border-2 border-primary-600 px-7 py-3.5 text-sm font-bold text-primary-600 transition-all hover:bg-primary-600 hover:text-white"
+              >
+                Onze projecten
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Right column — tilted feature news card */}
+          {featureArticle && (
+            <div className="relative lg:col-span-5">
+              {/* Azure offset block */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 -translate-x-0 translate-y-6 translate-x-6 rounded-3xl bg-azure-500"
+              />
+              {/* Card */}
+              <Link
+                href={`/nieuws/${featureArticle.slug}`}
+                data-testid="hero-feature-article"
+                className="relative block overflow-hidden rounded-3xl border border-line bg-white shadow-xl transition-transform duration-500 hover:rotate-0 motion-safe:rotate-[2deg]"
+              >
+                {featureArticle.image && (
+                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-cream-dark">
+                    <Image
+                      src={featureArticle.image}
+                      alt={featureArticle.title}
+                      fill
+                      sizes="(min-width: 1024px) 40vw, 100vw"
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary-900/30 to-transparent" />
+                  </div>
+                )}
+                <div className="space-y-3 p-7">
+                  <div className="flex items-center gap-2">
+                    <span className="relative flex h-2 w-2">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-600 opacity-75" />
+                      <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-600" />
+                    </span>
+                    <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-accent-600">
+                      Laatste nieuwsbericht
+                    </span>
+                  </div>
+                  {featureArticle.category && (
+                    <div className="inline-flex items-center gap-1.5 rounded-full bg-primary-50 px-3 py-1 text-[11px] font-semibold text-primary-700">
+                      <Radio className="h-3 w-3" />
+                      {featureArticle.category} · {formatDutchDate(featureArticle.date)}
+                    </div>
+                  )}
+                  <h2 className="font-serif text-2xl font-bold leading-snug text-primary-600">
+                    {featureArticle.title}
+                  </h2>
+                  {featureArticle.excerpt && (
+                    <p className="line-clamp-2 text-sm text-ink-soft">
+                      {featureArticle.excerpt}
+                    </p>
+                  )}
+                  <span className="inline-flex items-center gap-1 pt-1 text-sm font-bold text-accent-600">
+                    Lees het bericht
+                    <ArrowRight className="h-4 w-4" />
+                  </span>
+                </div>
+              </Link>
+            </div>
           )}
         </div>
       </div>
