@@ -57,6 +57,68 @@ export default async function HomePage() {
         ctaHref={heroCtaHref}
       />
 
+      {/* Laatste Nieuws */}
+      <section className="py-16 sm:py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <div className="mb-4 inline-flex rounded-full bg-primary-50 px-4 py-1.5 text-sm font-medium text-primary-700">
+              {newsBadge}
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+              {newsTitle}
+            </h2>
+          </div>
+
+          {latestNews.length === 0 ? (
+            <div className="mx-auto max-w-2xl rounded-2xl border border-gray-100 bg-white p-8 text-center shadow-sm">
+              <p className="text-gray-500">
+                Binnenkort verschijnen hier onze nieuwsberichten.
+              </p>
+            </div>
+          ) : (
+            <>
+              {featuredArticle && (
+                <div className="mb-12">
+                  <FeaturedArticleCard
+                    title={featuredArticle.title}
+                    excerpt={featuredArticle.excerpt ?? ""}
+                    slug={featuredArticle.slug}
+                    date={featuredArticle.published_at ?? featuredArticle.created_at}
+                    category={featuredArticle.category?.name}
+                    image={featuredArticle.featured_image}
+                  />
+                </div>
+              )}
+
+              {remainingArticles.length > 0 && (
+                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                  {remainingArticles.map((article) => (
+                    <BlogPostCard
+                      key={article.id}
+                      title={article.title}
+                      excerpt={article.excerpt ?? ""}
+                      slug={article.slug}
+                      date={article.published_at ?? article.created_at}
+                      category={article.category?.name}
+                      image={article.featured_image}
+                    />
+                  ))}
+                </div>
+              )}
+
+              <div className="mt-10 text-center">
+                <Link
+                  href="/nieuws"
+                  className="inline-flex items-center gap-2 rounded-full border-2 border-primary-600 px-6 py-2.5 text-sm font-semibold text-primary-700 transition-colors hover:bg-primary-50"
+                >
+                  Alle nieuwsberichten
+                </Link>
+              </div>
+            </>
+          )}
+        </div>
+      </section>
+
       {/* Impact-balk */}
       <section className="border-b border-gray-100 bg-white">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -169,68 +231,6 @@ export default async function HomePage() {
               Bekijk alle projecten
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* Laatste Nieuws */}
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 text-center">
-            <div className="mb-4 inline-flex rounded-full bg-primary-50 px-4 py-1.5 text-sm font-medium text-primary-700">
-              {newsBadge}
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-              {newsTitle}
-            </h2>
-          </div>
-
-          {latestNews.length === 0 ? (
-            <div className="mx-auto max-w-2xl rounded-2xl border border-gray-100 bg-white p-8 text-center shadow-sm">
-              <p className="text-gray-500">
-                Binnenkort verschijnen hier onze nieuwsberichten.
-              </p>
-            </div>
-          ) : (
-            <>
-              {featuredArticle && (
-                <div className="mb-12">
-                  <FeaturedArticleCard
-                    title={featuredArticle.title}
-                    excerpt={featuredArticle.excerpt ?? ""}
-                    slug={featuredArticle.slug}
-                    date={featuredArticle.published_at ?? featuredArticle.created_at}
-                    category={featuredArticle.category?.name}
-                    image={featuredArticle.featured_image}
-                  />
-                </div>
-              )}
-
-              {remainingArticles.length > 0 && (
-                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                  {remainingArticles.map((article) => (
-                    <BlogPostCard
-                      key={article.id}
-                      title={article.title}
-                      excerpt={article.excerpt ?? ""}
-                      slug={article.slug}
-                      date={article.published_at ?? article.created_at}
-                      category={article.category?.name}
-                      image={article.featured_image}
-                    />
-                  ))}
-                </div>
-              )}
-
-              <div className="mt-10 text-center">
-                <Link
-                  href="/nieuws"
-                  className="inline-flex items-center gap-2 rounded-full border-2 border-primary-600 px-6 py-2.5 text-sm font-semibold text-primary-700 transition-colors hover:bg-primary-50"
-                >
-                  Alle nieuwsberichten
-                </Link>
-              </div>
-            </>
-          )}
         </div>
       </section>
 
