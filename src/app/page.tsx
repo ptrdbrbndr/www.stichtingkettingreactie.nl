@@ -5,6 +5,7 @@ import { Heart, ArrowRight, Calendar, Quote } from "lucide-react";
 import Hero from "@/components/Hero";
 import { createClient } from "@/lib/supabase/server";
 import { getHomepageConfig, getArticles } from "@ptrdbrbndr/cms";
+import { decodeEntities } from "@/lib/text";
 
 export const metadata: Metadata = {
   title: "Stichting Kettingreactie - Samen voor kansarme vrouwen in India",
@@ -76,10 +77,11 @@ export default async function HomePage() {
 
   const heroFeature = featuredArticle
     ? {
-        title: featuredArticle.title,
-        excerpt: featuredArticle.excerpt,
+        title: decodeEntities(featuredArticle.title),
+        excerpt: decodeEntities(featuredArticle.excerpt),
         slug: featuredArticle.slug,
-        category: featuredArticle.category?.name ?? "Nieuwsbericht",
+        category:
+          decodeEntities(featuredArticle.category?.name) || "Nieuwsbericht",
         date: featuredArticle.published_at ?? featuredArticle.created_at,
         image: featuredArticle.featured_image,
       }
@@ -320,7 +322,7 @@ export default async function HomePage() {
                     <div className="relative aspect-video overflow-hidden">
                       <Image
                         src={newsFeatured.featured_image}
-                        alt={newsFeatured.title}
+                        alt={decodeEntities(newsFeatured.title)}
                         fill
                         sizes="(min-width: 1024px) 55vw, 100vw"
                         className="object-cover transition-transform duration-700 hover:scale-105"
@@ -338,19 +340,19 @@ export default async function HomePage() {
                       <>
                         <span aria-hidden="true">·</span>
                         <span className="font-semibold text-primary-600">
-                          {newsFeatured.category.name}
+                          {decodeEntities(newsFeatured.category.name)}
                         </span>
                       </>
                     )}
                   </div>
                   <Link href={`/nieuws/${newsFeatured?.slug ?? ""}`}>
                     <h3 className="font-serif text-3xl font-bold leading-tight text-primary-600 transition-colors hover:text-accent-600 sm:text-4xl">
-                      {newsFeatured?.title}
+                      {decodeEntities(newsFeatured?.title)}
                     </h3>
                   </Link>
                   {newsFeatured?.excerpt && (
                     <p className="text-lg leading-relaxed text-ink-soft">
-                      {newsFeatured.excerpt}
+                      {decodeEntities(newsFeatured.excerpt)}
                     </p>
                   )}
                   <Link
@@ -373,14 +375,14 @@ export default async function HomePage() {
                         className="group block"
                       >
                         <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-accent-600">
-                          {article.category?.name ?? "Update"}
+                          {decodeEntities(article.category?.name) || "Update"}
                         </span>
                         <h4 className="font-serif text-xl font-semibold leading-snug text-primary-600 transition-colors group-hover:text-accent-600">
-                          {article.title}
+                          {decodeEntities(article.title)}
                         </h4>
                         {article.excerpt && (
                           <p className="mt-2 line-clamp-2 text-sm text-ink-soft">
-                            {article.excerpt}
+                            {decodeEntities(article.excerpt)}
                           </p>
                         )}
                         <span className="mt-2 block text-xs text-ink-soft/80">

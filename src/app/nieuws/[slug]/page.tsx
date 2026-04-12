@@ -10,6 +10,7 @@ import {
   getArticles,
   formatReadingTime,
 } from "@ptrdbrbndr/cms";
+import { decodeEntities } from "@/lib/text";
 
 interface NieuwsDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -39,12 +40,16 @@ export async function generateMetadata({
     return { title: "Artikel niet gevonden" };
   }
 
+  const decodedTitle = decodeEntities(article.meta_title ?? article.title);
+  const decodedDescription = decodeEntities(
+    article.meta_description ?? article.excerpt ?? "",
+  );
+
   return {
-    title: article.meta_title ?? article.title,
+    title: decodedTitle,
     description:
-      article.meta_description ??
-      article.excerpt ??
-      `Lees "${article.title}" van Stichting Kettingreactie.`,
+      decodedDescription ||
+      `Lees "${decodedTitle}" van Stichting Kettingreactie.`,
   };
 }
 
@@ -72,16 +77,20 @@ export default async function NieuwsDetailPage({
     article.published_at ?? article.created_at,
   );
 
+  const articleTitle = decodeEntities(article.title);
+  const articleExcerpt = decodeEntities(article.excerpt) || undefined;
+  const categoryName = decodeEntities(article.category?.name) || "Nieuwsbericht";
+
   return (
     <>
       <Hero
-        eyebrow={article.category?.name ?? "Nieuwsbericht"}
-        title={article.title}
-        subtitle={article.excerpt ?? undefined}
+        eyebrow={categoryName}
+        title={articleTitle}
+        subtitle={articleExcerpt}
         breadcrumb={[
           { label: "Home", href: "/" },
           { label: "Nieuws", href: "/nieuws" },
-          { label: article.title, href: `/nieuws/${article.slug}` },
+          { label: articleTitle, href: `/nieuws/${article.slug}` },
         ]}
       />
 
@@ -117,7 +126,7 @@ export default async function NieuwsDetailPage({
             <div className="relative aspect-[16/9] overflow-hidden rounded-3xl shadow-2xl">
               <Image
                 src={article.featured_image}
-                alt={article.title}
+                alt={articleTitle}
                 fill
                 sizes="(min-width: 1024px) 60vw, 100vw"
                 className="object-cover"
@@ -167,7 +176,7 @@ export default async function NieuwsDetailPage({
                     key={tag.id}
                     className="inline-flex rounded-full border border-line bg-cream-dark/60 px-3 py-1 text-xs font-semibold text-primary-600"
                   >
-                    #{tag.name}
+                    #{decodeEntities(tag.name)}
                   </span>
                 ))}
               </div>
@@ -189,44 +198,50 @@ export default async function NieuwsDetailPage({
               </h2>
             </div>
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((item) => (
-                <Link
-                  key={item.id}
-                  href={`/nieuws/${item.slug}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
-                >
-                  {item.featured_image ? (
-                    <div className="relative aspect-[16/10] overflow-hidden bg-cream-dark">
-                      <Image
-                        src={item.featured_image}
-                        alt={item.title}
-                        fill
-                        sizes="(min-width: 1024px) 33vw, 100vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                    </div>
-                  ) : (
-                    <div className="h-1.5 bg-gradient-to-r from-primary-600 via-accent-600 to-azure-500" />
-                  )}
-                  <div className="flex flex-1 flex-col p-6">
-                    <span className="block text-[10px] font-bold uppercase tracking-[0.22em] text-accent-600">
-                      {item.category?.name ?? "Update"}
-                    </span>
-                    <h3 className="mt-2 font-serif text-xl font-bold leading-snug text-primary-600 transition-colors group-hover:text-accent-600">
-                      {item.title}
-                    </h3>
-                    {item.excerpt && (
-                      <p className="mt-3 line-clamp-3 text-sm text-ink-soft">
-                        {item.excerpt}
-                      </p>
+              {related.map((item) => {
+                const relTitle = decodeEntities(item.title);
+                const relExcerpt = decodeEntities(item.excerpt);
+                const relCategory =
+                  decodeEntities(item.category?.name) || "Update";
+                return (
+                  <Link
+                    key={item.id}
+                    href={`/nieuws/${item.slug}`}
+                    className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+                  >
+                    {item.featured_image ? (
+                      <div className="relative aspect-[16/10] overflow-hidden bg-cream-dark">
+                        <Image
+                          src={item.featured_image}
+                          alt={relTitle}
+                          fill
+                          sizes="(min-width: 1024px) 33vw, 100vw"
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                      </div>
+                    ) : (
+                      <div className="h-1.5 bg-gradient-to-r from-primary-600 via-accent-600 to-azure-500" />
                     )}
-                    <span className="mt-auto flex items-center gap-1 pt-4 text-sm font-bold text-accent-600">
-                      Lees verder
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                    </span>
-                  </div>
-                </Link>
-              ))}
+                    <div className="flex flex-1 flex-col p-6">
+                      <span className="block text-[10px] font-bold uppercase tracking-[0.22em] text-accent-600">
+                        {relCategory}
+                      </span>
+                      <h3 className="mt-2 font-serif text-xl font-bold leading-snug text-primary-600 transition-colors group-hover:text-accent-600">
+                        {relTitle}
+                      </h3>
+                      {relExcerpt && (
+                        <p className="mt-3 line-clamp-3 text-sm text-ink-soft">
+                          {relExcerpt}
+                        </p>
+                      )}
+                      <span className="mt-auto flex items-center gap-1 pt-4 text-sm font-bold text-accent-600">
+                        Lees verder
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>

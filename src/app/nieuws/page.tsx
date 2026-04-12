@@ -5,6 +5,7 @@ import { Calendar, ArrowRight, Newspaper } from "lucide-react";
 import Hero from "@/components/Hero";
 import { createClient } from "@/lib/supabase/server";
 import { getArticles } from "@ptrdbrbndr/cms";
+import { decodeEntities } from "@/lib/text";
 
 export const metadata: Metadata = {
   title: "Nieuws & verhalen",
@@ -80,7 +81,7 @@ export default async function NieuwsPage() {
                     <div className="relative aspect-[16/10] overflow-hidden rounded-3xl shadow-2xl">
                       <Image
                         src={featured.featured_image}
-                        alt={featured.title}
+                        alt={decodeEntities(featured.title)}
                         fill
                         sizes="(min-width: 1024px) 60vw, 100vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -94,14 +95,14 @@ export default async function NieuwsPage() {
                 <div className="space-y-5 lg:col-span-5">
                   <span className="block text-[11px] font-bold uppercase tracking-[0.2em] text-accent-600">
                     Uitgelicht ·{" "}
-                    {featured.category?.name ?? "Nieuwsbericht"}
+                    {decodeEntities(featured.category?.name) ?? "Nieuwsbericht"}
                   </span>
                   <h2 className="font-serif text-3xl font-bold leading-tight text-primary-600 transition-colors group-hover:text-accent-600 sm:text-4xl lg:text-5xl">
-                    {featured.title}
+                    {decodeEntities(featured.title)}
                   </h2>
                   {featured.excerpt && (
                     <p className="text-lg leading-relaxed text-ink-soft">
-                      {featured.excerpt}
+                      {decodeEntities(featured.excerpt)}
                     </p>
                   )}
                   <div className="flex items-center gap-2 text-sm text-ink-soft">
@@ -132,43 +133,49 @@ export default async function NieuwsPage() {
                   </h2>
                 </div>
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                  {secondary.map((article) => (
-                    <Link
-                      key={article.id}
-                      href={`/nieuws/${article.slug}`}
-                      className="group block"
-                    >
-                      {article.featured_image ? (
-                        <div className="relative mb-5 aspect-[4/3] overflow-hidden rounded-3xl shadow-lg">
-                          <Image
-                            src={article.featured_image}
-                            alt={article.title}
-                            fill
-                            sizes="(min-width: 768px) 45vw, 100vw"
-                            className="object-cover transition-transform duration-700 group-hover:scale-105"
-                          />
-                        </div>
-                      ) : (
-                        <div className="mb-5 aspect-[4/3] rounded-3xl bg-gradient-to-br from-primary-500 to-accent-600" />
-                      )}
-                      <span className="block text-[10px] font-bold uppercase tracking-[0.22em] text-accent-600">
-                        {article.category?.name ?? "Nieuwsbericht"}
-                      </span>
-                      <h3 className="mt-2 font-serif text-2xl font-bold leading-tight text-primary-600 transition-colors group-hover:text-accent-600">
-                        {article.title}
-                      </h3>
-                      {article.excerpt && (
-                        <p className="mt-3 line-clamp-2 text-base text-ink-soft">
-                          {article.excerpt}
-                        </p>
-                      )}
-                      <p className="mt-3 text-sm text-ink-soft">
-                        {formatDutchDate(
-                          article.published_at ?? article.created_at,
+                  {secondary.map((article) => {
+                    const title = decodeEntities(article.title);
+                    const excerpt = decodeEntities(article.excerpt);
+                    const category =
+                      decodeEntities(article.category?.name) || "Nieuwsbericht";
+                    return (
+                      <Link
+                        key={article.id}
+                        href={`/nieuws/${article.slug}`}
+                        className="group block"
+                      >
+                        {article.featured_image ? (
+                          <div className="relative mb-5 aspect-[4/3] overflow-hidden rounded-3xl shadow-lg">
+                            <Image
+                              src={article.featured_image}
+                              alt={title}
+                              fill
+                              sizes="(min-width: 768px) 45vw, 100vw"
+                              className="object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                          </div>
+                        ) : (
+                          <div className="mb-5 aspect-[4/3] rounded-3xl bg-gradient-to-br from-primary-500 to-accent-600" />
                         )}
-                      </p>
-                    </Link>
-                  ))}
+                        <span className="block text-[10px] font-bold uppercase tracking-[0.22em] text-accent-600">
+                          {category}
+                        </span>
+                        <h3 className="mt-2 font-serif text-2xl font-bold leading-tight text-primary-600 transition-colors group-hover:text-accent-600">
+                          {title}
+                        </h3>
+                        {excerpt && (
+                          <p className="mt-3 line-clamp-2 text-base text-ink-soft">
+                            {excerpt}
+                          </p>
+                        )}
+                        <p className="mt-3 text-sm text-ink-soft">
+                          {formatDutchDate(
+                            article.published_at ?? article.created_at,
+                          )}
+                        </p>
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             </section>
@@ -187,51 +194,57 @@ export default async function NieuwsPage() {
                   </h2>
                 </div>
                 <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                  {tertiary.map((article) => (
-                    <Link
-                      key={article.id}
-                      href={`/nieuws/${article.slug}`}
-                      className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
-                    >
-                      {article.featured_image ? (
-                        <div className="relative aspect-[16/10] overflow-hidden bg-cream-dark">
-                          <Image
-                            src={article.featured_image}
-                            alt={article.title}
-                            fill
-                            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                            className="object-cover transition-transform duration-700 group-hover:scale-105"
-                          />
-                        </div>
-                      ) : (
-                        <div className="h-1.5 bg-gradient-to-r from-primary-600 via-accent-600 to-azure-500" />
-                      )}
-                      <div className="flex flex-1 flex-col p-6">
-                        <div className="mb-3 flex items-center gap-2 text-xs">
-                          <span className="rounded-full bg-accent-50 px-2.5 py-1 font-bold uppercase tracking-wider text-accent-700">
-                            {article.category?.name ?? "Update"}
-                          </span>
-                          <span className="text-ink-soft">
-                            {formatDutchDate(
-                              article.published_at ?? article.created_at,
-                            )}
-                          </span>
-                        </div>
-                        <h3 className="font-serif text-xl font-bold leading-snug text-primary-600 transition-colors group-hover:text-accent-600">
-                          {article.title}
-                        </h3>
-                        {article.excerpt && (
-                          <p className="mt-3 line-clamp-3 text-sm text-ink-soft">
-                            {article.excerpt}
-                          </p>
+                  {tertiary.map((article) => {
+                    const title = decodeEntities(article.title);
+                    const excerpt = decodeEntities(article.excerpt);
+                    const category =
+                      decodeEntities(article.category?.name) || "Update";
+                    return (
+                      <Link
+                        key={article.id}
+                        href={`/nieuws/${article.slug}`}
+                        className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+                      >
+                        {article.featured_image ? (
+                          <div className="relative aspect-[16/10] overflow-hidden bg-cream-dark">
+                            <Image
+                              src={article.featured_image}
+                              alt={title}
+                              fill
+                              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                              className="object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                          </div>
+                        ) : (
+                          <div className="h-1.5 bg-gradient-to-r from-primary-600 via-accent-600 to-azure-500" />
                         )}
-                        <span className="mt-auto flex items-center gap-1 pt-4 text-sm font-bold text-accent-600">
-                          Lees verder
-                          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                        </span>
-                      </div>
-                    </Link>
-                  ))}
+                        <div className="flex flex-1 flex-col p-6">
+                          <div className="mb-3 flex items-center gap-2 text-xs">
+                            <span className="rounded-full bg-accent-50 px-2.5 py-1 font-bold uppercase tracking-wider text-accent-700">
+                              {category}
+                            </span>
+                            <span className="text-ink-soft">
+                              {formatDutchDate(
+                                article.published_at ?? article.created_at,
+                              )}
+                            </span>
+                          </div>
+                          <h3 className="font-serif text-xl font-bold leading-snug text-primary-600 transition-colors group-hover:text-accent-600">
+                            {title}
+                          </h3>
+                          {excerpt && (
+                            <p className="mt-3 line-clamp-3 text-sm text-ink-soft">
+                              {excerpt}
+                            </p>
+                          )}
+                          <span className="mt-auto flex items-center gap-1 pt-4 text-sm font-bold text-accent-600">
+                            Lees verder
+                            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                          </span>
+                        </div>
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             </section>

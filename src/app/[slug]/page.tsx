@@ -5,6 +5,7 @@ import { ArrowRight, ArrowLeft, Heart, Mail, BookOpen } from "lucide-react";
 import Hero from "@/components/Hero";
 import { createClient } from "@/lib/supabase/server";
 import { getPageBySlug } from "@ptrdbrbndr/cms";
+import { decodeEntities } from "@/lib/text";
 
 interface DynamicPageProps {
   params: Promise<{ slug: string }>;
@@ -117,8 +118,8 @@ export async function generateMetadata({
     return { title: "Pagina niet gevonden" };
   }
   return {
-    title: page.meta_title ?? page.title,
-    description: page.meta_description ?? undefined,
+    title: decodeEntities(page.meta_title ?? page.title),
+    description: decodeEntities(page.meta_description ?? undefined) || undefined,
   };
 }
 
@@ -131,16 +132,18 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
     notFound();
   }
 
+  const pageTitle = decodeEntities(page.title);
+  const pageSubtitle = decodeEntities(page.subtitle) || undefined;
   const section = SLUG_TO_SECTION[slug];
   const breadcrumb = section
     ? [
         { label: "Home", href: "/" },
         { label: section.label, href: section.href },
-        { label: page.title, href: `/${slug}` },
+        { label: pageTitle, href: `/${slug}` },
       ]
     : [
         { label: "Home", href: "/" },
-        { label: page.title, href: `/${slug}` },
+        { label: pageTitle, href: `/${slug}` },
       ];
 
   const footerCta = section ? SECTION_FOOTER_CTA[section.key] : null;
@@ -152,19 +155,19 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
     <>
       <Hero
         eyebrow={section?.label}
-        title={page.title}
-        subtitle={page.subtitle ?? undefined}
+        title={pageTitle}
+        subtitle={pageSubtitle}
         breadcrumb={breadcrumb}
       />
 
       {/* Article body with sidebar */}
-      <section className="relative overflow-hidden py-16 sm:py-24">
+      <section className="relative overflow-hidden py-10 sm:py-14">
         {/* Decorative three-ring watermark */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-32 top-20 text-primary-600 opacity-[0.035]"
+          className="pointer-events-none absolute -right-40 top-10 text-primary-600 opacity-[0.035]"
         >
-          <svg width="640" height="640" viewBox="0 0 100 100">
+          <svg width="560" height="560" viewBox="0 0 100 100">
             <circle cx="40" cy="40" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
             <circle cx="60" cy="40" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
             <circle cx="50" cy="60" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
@@ -172,9 +175,9 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-14">
             {/* Main content */}
-            <article className="lg:col-span-8 lg:col-start-2">
+            <article className="lg:col-span-8">
               {page.content_html ? (
                 <div
                   className="prose prose-editorial max-w-none"
@@ -189,7 +192,7 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
               )}
 
               {section && (
-                <div className="mt-16 border-t border-line pt-8">
+                <div className="mt-12 border-t border-line pt-6">
                   <Link
                     href={section.href}
                     className="inline-flex items-center gap-2 text-sm font-bold text-accent-600 hover:underline"
@@ -203,7 +206,7 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
 
             {/* Sticky sidebar */}
             {section && otherSiblings.length > 0 && (
-              <aside className="lg:col-span-3">
+              <aside className="lg:col-span-4">
                 <div className="sticky top-28 space-y-6">
                   {/* In deze sectie */}
                   <div className="rounded-2xl border border-line bg-white p-6 shadow-sm">
