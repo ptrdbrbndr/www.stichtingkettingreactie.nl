@@ -107,26 +107,26 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between">
+        <div className="flex h-24 items-center justify-between sm:h-28">
           {/* Logo + wordmark */}
           <Link
             href="/"
             data-testid="site-logo"
-            className="group flex items-center gap-3"
+            className="group flex items-center gap-4"
           >
             <Image
               src="/logo-skr.png"
               alt="Stichting Kettingreactie"
-              width={56}
-              height={56}
+              width={96}
+              height={96}
               priority
-              className="h-12 w-12 shrink-0 object-contain"
+              className="h-16 w-16 shrink-0 object-contain sm:h-20 sm:w-20"
             />
-            <div className="flex flex-col leading-none">
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-600">
+            <div className="flex flex-col leading-tight">
+              <span className="text-xs font-bold uppercase tracking-[0.22em] text-accent-600 sm:text-sm">
                 Stichting
               </span>
-              <span className="font-serif text-xl font-bold text-primary-600 group-hover:text-accent-600 transition-colors sm:text-2xl">
+              <span className="font-serif text-2xl font-bold text-primary-600 group-hover:text-accent-600 transition-colors sm:text-3xl">
                 Kettingreactie
               </span>
             </div>

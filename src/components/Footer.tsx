@@ -41,19 +41,19 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
           {/* About column */}
           <div className="space-y-5">
-            <Link href="/" className="inline-flex items-center gap-3">
+            <Link href="/" className="inline-flex items-center gap-4">
               <Image
                 src="/logo-skr.png"
                 alt="Stichting Kettingreactie"
-                width={56}
-                height={56}
-                className="h-12 w-12 object-contain"
+                width={96}
+                height={96}
+                className="h-16 w-16 object-contain"
               />
-              <div className="flex flex-col leading-none">
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-400">
+              <div className="flex flex-col leading-tight">
+                <span className="text-xs font-bold uppercase tracking-[0.22em] text-accent-400">
                   Stichting
                 </span>
-                <span className="font-serif text-xl font-bold text-white">
+                <span className="font-serif text-2xl font-bold text-white">
                   Kettingreactie
                 </span>
               </div>
