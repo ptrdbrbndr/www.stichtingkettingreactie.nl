@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Mail, MapPin, Landmark } from "lucide-react";
+import Link from "next/link";
+import { Mail, MapPin, Landmark, Heart } from "lucide-react";
 import Hero from "@/components/Hero";
+import InfoCard from "@/components/ui/InfoCard";
 
 export const metadata: Metadata = {
-  title: "Contact - Stichting Kettingreactie",
+  title: "Contact",
   description:
     "Neem contact op met Stichting Kettingreactie. Wij beantwoorden graag uw vragen.",
 };
@@ -11,68 +13,73 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <Hero title="Contact" subtitle="Wij horen graag van u." />
+      <Hero
+        eyebrow="Neem contact op"
+        title="Wij horen graag van u"
+        subtitle="Heeft u vragen over onze stichting, de projecten in Bangalore, of wilt u weten hoe u ons kunt steunen? Laat het ons weten — wij antwoorden persoonlijk."
+        breadcrumb={[
+          { label: "Home", href: "/" },
+          { label: "Contact", href: "/contact" },
+        ]}
+      />
 
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl">
-            <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm sm:p-10">
-              <h2 className="text-2xl font-bold text-gray-900">
-                Neem contact met ons op
-              </h2>
-              <p className="mt-3 leading-relaxed text-gray-600">
-                Heeft u vragen over onze stichting, onze projecten of wilt u
-                meer weten over hoe u ons kunt steunen? Neem gerust contact
-                met ons op.
+      <section className="py-20 sm:py-24">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <InfoCard icon={Mail} title="E-mail">
+              <p>
+                Stuur ons een bericht. Wij beantwoorden alle vragen zo snel
+                mogelijk.
               </p>
+              <p>
+                <a
+                  href="mailto:info@stichtingkettingreactie.nl"
+                  className="inline-flex items-center gap-1 font-bold text-accent-600 hover:underline"
+                >
+                  info@stichtingkettingreactie.nl →
+                </a>
+              </p>
+            </InfoCard>
 
-              <div className="mt-8 space-y-6">
-                {/* E-mail */}
-                <div className="flex items-start gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary-700">
-                    <Mail className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">E-mail</h3>
-                    <a
-                      href="mailto:info@stichtingkettingreactie.nl"
-                      className="mt-1 text-primary-700 hover:text-primary-800 hover:underline"
-                    >
-                      info@stichtingkettingreactie.nl
-                    </a>
-                  </div>
-                </div>
+            <InfoCard icon={MapPin} title="Locatie">
+              <p>Statutaire vestiging in Amsterdam, Nederland.</p>
+              <p>
+                Let op: wij zijn geen publiek toegankelijk kantoor. Neem
+                eerst contact op voor een afspraak.
+              </p>
+            </InfoCard>
 
-                {/* Locatie */}
-                <div className="flex items-start gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary-700">
-                    <MapPin className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Locatie</h3>
-                    <p className="mt-1 text-gray-600">Amsterdam, Nederland</p>
-                  </div>
-                </div>
+            <InfoCard icon={Landmark} title="Bankgegevens">
+              <p>
+                Rekeningnummer:{" "}
+                <span className="font-mono font-bold text-primary-600">
+                  NL87 INGB 0005313860
+                </span>
+              </p>
+              <p className="text-sm">
+                t.n.v. Stichting Kettingreactie Amsterdam · RSIN{" "}
+                <span className="font-mono">821887300</span>
+              </p>
+            </InfoCard>
 
-                {/* Bankrekening */}
-                <div className="flex items-start gap-4">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary-700">
-                    <Landmark className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">
-                      Bankrekening
-                    </h3>
-                    <p className="mt-1 font-mono text-primary-700">
-                      NL87 INGB 0005313860
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      t.n.v. Stichting Kettingreactie Amsterdam
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <InfoCard
+              variant="highlight"
+              icon={Heart}
+              title="Meedenken of meehelpen?"
+            >
+              <p>
+                Wij verwelkomen vrijwilligers, ambassadeurs en partners die
+                ons werk willen versterken — in Nederland of in Bangalore.
+              </p>
+              <p>
+                <Link
+                  href="/steun-ons"
+                  className="inline-flex items-center gap-1 font-bold text-accent-600 hover:underline"
+                >
+                  Andere manieren om te steunen →
+                </Link>
+              </p>
+            </InfoCard>
           </div>
         </div>
       </section>

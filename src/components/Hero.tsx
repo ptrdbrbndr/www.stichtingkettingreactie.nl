@@ -14,6 +14,8 @@ interface FeatureArticle {
 interface HeroProps {
   title: string;
   subtitle?: string;
+  eyebrow?: string;
+  breadcrumb?: { label: string; href: string }[];
   showCta?: boolean;
   ctaText?: string;
   ctaHref?: string;
@@ -35,6 +37,8 @@ function formatDutchDate(value: string) {
 export default function Hero({
   title,
   subtitle,
+  eyebrow,
+  breadcrumb,
   showCta = false,
   ctaText = "Meer weten",
   ctaHref = "/over-ons",
@@ -49,7 +53,7 @@ export default function Hero({
       >
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[0.035] text-primary-600"
+          className="pointer-events-none absolute inset-0 opacity-[0.04] text-primary-600"
         >
           <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
             <circle cx="40" cy="40" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
@@ -57,12 +61,47 @@ export default function Hero({
             <circle cx="50" cy="60" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
           </svg>
         </div>
-        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
-          <h1 className="font-serif text-4xl font-bold leading-tight text-primary-600 sm:text-5xl">
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+          {breadcrumb && breadcrumb.length > 0 && (
+            <nav
+              aria-label="Breadcrumb"
+              className="mb-5 text-xs font-semibold text-ink-soft"
+            >
+              <ol className="flex flex-wrap items-center gap-1.5">
+                {breadcrumb.map((item, idx) => (
+                  <li key={item.href} className="flex items-center gap-1.5">
+                    {idx > 0 && (
+                      <span aria-hidden="true" className="text-ink-soft/50">
+                        ›
+                      </span>
+                    )}
+                    {idx === breadcrumb.length - 1 ? (
+                      <span className="text-primary-600">{item.label}</span>
+                    ) : (
+                      <a
+                        href={item.href}
+                        className="hover:text-accent-600"
+                      >
+                        {item.label}
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )}
+          {eyebrow && (
+            <span className="mb-3 block text-[11px] font-bold uppercase tracking-[0.2em] text-accent-600">
+              {eyebrow}
+            </span>
+          )}
+          <h1 className="max-w-4xl font-serif text-4xl font-bold leading-[1.05] text-primary-600 sm:text-5xl lg:text-6xl">
             {title}
           </h1>
           {subtitle && (
-            <p className="mt-4 max-w-2xl text-lg text-ink-soft">{subtitle}</p>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft sm:text-xl">
+              {subtitle}
+            </p>
           )}
         </div>
       </section>
