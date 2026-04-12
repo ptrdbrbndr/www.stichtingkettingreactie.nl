@@ -1,13 +1,31 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, Newspaper, Calendar, Clock } from "lucide-react";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import { ArrowLeft, ArrowRight, Calendar, Clock, Newspaper } from "lucide-react";
 import Hero from "@/components/Hero";
 import { createClient } from "@/lib/supabase/server";
-import { getArticleBySlug, formatReadingTime } from "@ptrdbrbndr/cms";
-import { notFound } from "next/navigation";
+import {
+  getArticleBySlug,
+  getArticles,
+  formatReadingTime,
+} from "@ptrdbrbndr/cms";
 
 interface NieuwsDetailPageProps {
   params: Promise<{ slug: string }>;
+}
+
+function formatDutchDate(value: string | null | undefined) {
+  if (!value) return "";
+  try {
+    return new Date(value).toLocaleDateString("nl-NL", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  } catch {
+    return "";
+  }
 }
 
 export async function generateMetadata({
@@ -18,14 +36,15 @@ export async function generateMetadata({
   const article = await getArticleBySlug(supabase, slug);
 
   if (!article) {
-    return {
-      title: "Artikel niet gevonden - Stichting Kettingreactie",
-    };
+    return { title: "Artikel niet gevonden" };
   }
 
   return {
-    title: article.meta_title ?? `${article.title} - Nieuws - Stichting Kettingreactie`,
-    description: article.meta_description ?? article.excerpt ?? `Lees "${article.title}" van Stichting Kettingreactie.`,
+    title: article.meta_title ?? article.title,
+    description:
+      article.meta_description ??
+      article.excerpt ??
+      `Lees "${article.title}" van Stichting Kettingreactie.`,
   };
 }
 
@@ -40,93 +59,178 @@ export default async function NieuwsDetailPage({
     notFound();
   }
 
-  const formattedDate = new Date(
-    article.published_at ?? article.created_at
-  ).toLocaleDateString("nl-NL", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+  const { articles: recent } = await getArticles(supabase, {
+    status: "published",
+    orderBy: "published_at",
+    orderDirection: "desc",
+    limit: 5,
   });
+
+  const related = recent.filter((a) => a.slug !== article.slug).slice(0, 3);
+
+  const formattedDate = formatDutchDate(
+    article.published_at ?? article.created_at,
+  );
 
   return (
     <>
-      <Hero title="Nieuws" />
+      <Hero
+        eyebrow={article.category?.name ?? "Nieuwsbericht"}
+        title={article.title}
+        subtitle={article.excerpt ?? undefined}
+        breadcrumb={[
+          { label: "Home", href: "/" },
+          { label: "Nieuws", href: "/nieuws" },
+          { label: article.title, href: `/nieuws/${article.slug}` },
+        ]}
+      />
 
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      {/* Metadata strip */}
+      <section className="border-b border-line bg-cream-dark/50 py-5">
+        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-4 px-4 text-sm text-ink-soft sm:px-6 lg:px-8">
           <Link
             href="/nieuws"
-            className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-primary-700 transition-colors hover:text-primary-800"
+            className="inline-flex items-center gap-2 font-bold text-accent-600 hover:underline"
           >
             <ArrowLeft className="h-4 w-4" />
             Terug naar nieuws
           </Link>
-
-          <article className="mx-auto max-w-3xl">
-            {/* Article header */}
-            <header className="mb-8">
-              {article.category && (
-                <span className="mb-3 inline-flex items-center rounded-full bg-accent-50 px-3 py-1 text-xs font-medium text-accent-700">
-                  {article.category.name}
-                </span>
-              )}
-              <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl">
-                {article.title}
-              </h1>
-              {article.excerpt && (
-                <p className="mt-4 text-lg leading-relaxed text-gray-600">
-                  {article.excerpt}
-                </p>
-              )}
-              <div className="mt-4 flex items-center gap-4 text-sm text-gray-500">
-                <span className="inline-flex items-center gap-1.5">
-                  <Calendar className="h-4 w-4" />
-                  {formattedDate}
-                </span>
-                {article.reading_time_minutes && (
-                  <span className="inline-flex items-center gap-1.5">
-                    <Clock className="h-4 w-4" />
-                    {formatReadingTime(article.reading_time_minutes)}
-                  </span>
-                )}
-              </div>
-            </header>
-
-            {/* Article content */}
-            {article.content_html ? (
-              <div
-                className="prose"
-                dangerouslySetInnerHTML={{ __html: article.content_html }}
-              />
-            ) : (
-              <div className="rounded-2xl border border-gray-100 bg-white p-12 text-center shadow-sm">
-                <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-50 text-primary-600">
-                  <Newspaper className="h-8 w-8" />
-                </div>
-                <p className="text-gray-500">
-                  Dit artikel heeft nog geen inhoud.
-                </p>
-              </div>
-            )}
-
-            {/* Tags */}
-            {article.tags && article.tags.length > 0 && (
-              <div className="mt-10 border-t border-gray-100 pt-6">
-                <div className="flex flex-wrap gap-2">
-                  {article.tags.map((tag) => (
-                    <span
-                      key={tag.id}
-                      className="inline-flex rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600"
-                    >
-                      {tag.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </article>
+          <div className="flex flex-wrap items-center gap-5">
+            <span className="inline-flex items-center gap-1.5">
+              <Calendar className="h-4 w-4 text-accent-600" />
+              {formattedDate}
+            </span>
+            {article.reading_time_minutes ? (
+              <span className="inline-flex items-center gap-1.5">
+                <Clock className="h-4 w-4 text-accent-600" />
+                {formatReadingTime(article.reading_time_minutes)}
+              </span>
+            ) : null}
+          </div>
         </div>
       </section>
+
+      {/* Featured image */}
+      {article.featured_image && (
+        <section className="py-12">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <div className="relative aspect-[16/9] overflow-hidden rounded-3xl shadow-2xl">
+              <Image
+                src={article.featured_image}
+                alt={article.title}
+                fill
+                sizes="(min-width: 1024px) 60vw, 100vw"
+                className="object-cover"
+                priority
+              />
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Article body */}
+      <section className="relative overflow-hidden py-12 sm:py-16">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-32 top-20 text-primary-600 opacity-[0.035]"
+        >
+          <svg width="560" height="560" viewBox="0 0 100 100">
+            <circle cx="40" cy="40" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
+            <circle cx="60" cy="40" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
+            <circle cx="50" cy="60" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
+          </svg>
+        </div>
+        <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          {article.content_html ? (
+            <div
+              className="prose prose-editorial max-w-none"
+              dangerouslySetInnerHTML={{ __html: article.content_html }}
+            />
+          ) : (
+            <div className="rounded-2xl border border-line bg-white p-12 text-center shadow-sm">
+              <Newspaper className="mx-auto mb-4 h-10 w-10 text-accent-600" />
+              <p className="text-ink-soft">
+                Dit artikel heeft nog geen inhoud.
+              </p>
+            </div>
+          )}
+
+          {/* Tags */}
+          {article.tags && article.tags.length > 0 && (
+            <div className="mt-14 border-t border-line pt-6">
+              <span className="mb-3 block text-[10px] font-bold uppercase tracking-[0.22em] text-accent-600">
+                Onderwerpen
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {article.tags.map((tag) => (
+                  <span
+                    key={tag.id}
+                    className="inline-flex rounded-full border border-line bg-cream-dark/60 px-3 py-1 text-xs font-semibold text-primary-600"
+                  >
+                    #{tag.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Related articles */}
+      {related.length > 0 && (
+        <section className="bg-cream-dark/50 py-20 sm:py-24">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-10">
+              <span className="block text-[11px] font-bold uppercase tracking-[0.2em] text-accent-600">
+                Verder lezen
+              </span>
+              <h2 className="mt-2 font-serif text-3xl font-bold text-primary-600 sm:text-4xl">
+                Meer berichten
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {related.map((item) => (
+                <Link
+                  key={item.id}
+                  href={`/nieuws/${item.slug}`}
+                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+                >
+                  {item.featured_image ? (
+                    <div className="relative aspect-[16/10] overflow-hidden bg-cream-dark">
+                      <Image
+                        src={item.featured_image}
+                        alt={item.title}
+                        fill
+                        sizes="(min-width: 1024px) 33vw, 100vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    </div>
+                  ) : (
+                    <div className="h-1.5 bg-gradient-to-r from-primary-600 via-accent-600 to-azure-500" />
+                  )}
+                  <div className="flex flex-1 flex-col p-6">
+                    <span className="block text-[10px] font-bold uppercase tracking-[0.22em] text-accent-600">
+                      {item.category?.name ?? "Update"}
+                    </span>
+                    <h3 className="mt-2 font-serif text-xl font-bold leading-snug text-primary-600 transition-colors group-hover:text-accent-600">
+                      {item.title}
+                    </h3>
+                    {item.excerpt && (
+                      <p className="mt-3 line-clamp-3 text-sm text-ink-soft">
+                        {item.excerpt}
+                      </p>
+                    )}
+                    <span className="mt-auto flex items-center gap-1 pt-4 text-sm font-bold text-accent-600">
+                      Lees verder
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 }
