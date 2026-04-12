@@ -2,6 +2,20 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   transpilePackages: ["@ptrdbrbndr/cms"],
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "flwdwnefhfjagibvjpqh.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
+      {
+        protocol: "https",
+        hostname: "*.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
+    ],
+  },
   async redirects() {
     return [
       // Hierarchische WP page paths -> flat slug routes (na migratie van WP naar Supabase pages)
