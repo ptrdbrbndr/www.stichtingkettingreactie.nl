@@ -4,6 +4,7 @@ import { Heart, HandHeart, Users, Globe, CheckCircle, ArrowRight } from "lucide-
 import Hero from "@/components/Hero";
 import ProjectCard from "@/components/ProjectCard";
 import BlogPostCard from "@/components/BlogPostCard";
+import FeaturedArticleCard from "@/components/FeaturedArticleCard";
 import { createClient } from "@/lib/supabase/server";
 import { getHomepageConfig, getArticles } from "@ptrdbrbndr/cms";
 
@@ -22,7 +23,7 @@ export default async function HomePage() {
       status: "published",
       orderBy: "published_at",
       orderDirection: "desc",
-      limit: 9,
+      limit: 13,
     }),
   ]);
 
@@ -42,7 +43,8 @@ export default async function HomePage() {
   const donateText = config?.donate_text ?? "Elke donatie maakt een verschil. 100% van uw gift gaat direct naar de projecten in India. U kunt doneren via onze bankrekening.";
   const donateIban = config?.donate_iban ?? "NL87 INGB 0005313860";
   const donateIbanName = config?.donate_iban_name ?? "Stichting Kettingreactie Amsterdam";
-  const newsLimit = config?.news_limit ?? 3;
+
+  const [featuredArticle, ...remainingArticles] = latestNews;
 
   return (
     <>
@@ -190,18 +192,35 @@ export default async function HomePage() {
             </div>
           ) : (
             <>
-              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                {latestNews.slice(0, newsLimit).map((article) => (
-                  <BlogPostCard
-                    key={article.id}
-                    title={article.title}
-                    excerpt={article.excerpt ?? ""}
-                    slug={article.slug}
-                    date={article.published_at ?? article.created_at}
-                    category={article.category?.name}
+              {featuredArticle && (
+                <div className="mb-12">
+                  <FeaturedArticleCard
+                    title={featuredArticle.title}
+                    excerpt={featuredArticle.excerpt ?? ""}
+                    slug={featuredArticle.slug}
+                    date={featuredArticle.published_at ?? featuredArticle.created_at}
+                    category={featuredArticle.category?.name}
+                    image={featuredArticle.featured_image}
                   />
-                ))}
-              </div>
+                </div>
+              )}
+
+              {remainingArticles.length > 0 && (
+                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                  {remainingArticles.map((article) => (
+                    <BlogPostCard
+                      key={article.id}
+                      title={article.title}
+                      excerpt={article.excerpt ?? ""}
+                      slug={article.slug}
+                      date={article.published_at ?? article.created_at}
+                      category={article.category?.name}
+                      image={article.featured_image}
+                    />
+                  ))}
+                </div>
+              )}
+
               <div className="mt-10 text-center">
                 <Link
                   href="/nieuws"

@@ -6,6 +6,7 @@ interface BlogPostCardProps {
   slug: string;
   date: string;
   category?: string;
+  image?: string | null;
 }
 
 export default function BlogPostCard({
@@ -14,6 +15,7 @@ export default function BlogPostCard({
   slug,
   date,
   category,
+  image,
 }: BlogPostCardProps) {
   const formattedDate = new Date(date).toLocaleDateString("nl-NL", {
     day: "numeric",
@@ -24,7 +26,19 @@ export default function BlogPostCard({
   return (
     <Link href={`/nieuws/${slug}`} className="group block">
       <article className="h-full overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-        <div className="h-1 bg-gradient-to-r from-primary-500 to-accent-600" />
+        {image ? (
+          <div className="aspect-[16/9] overflow-hidden bg-gray-50">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={image}
+              alt={title}
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+        ) : (
+          <div className="h-1 bg-gradient-to-r from-primary-500 to-accent-600" />
+        )}
         <div className="p-6">
           {/* Date badge and category */}
           <div className="mb-3 flex items-center gap-2 flex-wrap">
