@@ -7,6 +7,19 @@ Charity-website met admin-CMS, donatieverwerking en publieke content. Verwerkt d
 
 ---
 
+> **Doc-revalidatie — 2026-04-26.** Deze baseline was laatst bijgewerkt op 2026-04-02 (commit c292245). Sindsdien zijn de volgende functies gepushed die de scope verbreden — bevestig per status-cel via code-review vóór externe oplevering:
+>
+> - WP-content-migratie naar Supabase + dynamische `/[slug]` page route (commit 668c87e) — uitgebreider angle-of-attack via publieke pagina-rendering vanuit Supabase
+> - Redirects voor oude WP hiërarchische page-paths (commit 68f14ff) — verifieer redirect-handling tegen open-redirect-misbruik
+> - WP-hiërarchische navigatie met dropdown sub-menus (commit ec65800)
+> - Editorial redesign + featured-article-blok (commits c11dcaa, dd5f2d4)
+> - HTML-entities decoden in subpage-rendering (commit 07090e0) — let bij externe pre-flight op XSS via WP-import-content (gedecodeerde HTML uit Supabase mag niet als raw `dangerouslySetInnerHTML` belanden zonder sanitatie)
+> - Supabase Storage hostname toegevoegd aan `next.config` images.remotePatterns (commit cfcfe4e)
+>
+> Inhoudelijke regels (MIDDEN-niveau, OWASP ASVS L1, AVG, PCI-DSS) blijven geldig. Per memory-context: WordPress draait parallel als productie op mijn.host; Next.js-herbouw staat op staging op Vercel tot cutover. Status-cellen hieronder zijn niet stuk-voor-stuk geverifieerd in deze revalidatie — pak een code-review-pass vóór externe audit of cutover.
+
+---
+
 ## Profiel
 
 | Eigenschap | Waarde |

@@ -4,6 +4,24 @@ Opgesteld op basis van opmerkingen van Sytze Hoekstra (27-03-2026).
 
 ---
 
+> **Doc-revalidatie — 2026-04-26.** Dit stappenplan was laatst bijgewerkt op 2026-03-28 (commit d4e3bff). Sindsdien is een omvangrijke editorial- en CMS-pas gepushed; bevestig per Sytze-stap of die inmiddels gedekt is door deze releases vóór externe oplevering:
+>
+> - Donatie-API + projectdocumentatie (commit c292245)
+> - WP-content-migratie naar Supabase + dynamische `/[slug]` page route (commit 668c87e)
+> - Redirects voor oude WP hiërarchische page-paths (commit 68f14ff)
+> - WP-hiërarchische navigatie met dropdown sub-menus (commit ec65800)
+> - Prominente featured article + nieuws-grid op homepage (commit dd5f2d4)
+> - Nieuws-sectie hoger op homepage, direct na hero (commit 8e84e03)
+> - Editorial redesign met logo-driven indigo/magenta/azure-palet (commit c11dcaa)
+> - Logo + wordmark groter + marge-tot-marge in header/footer (commits c3bd660, effe736)
+> - Fase 2 + Fase 3 editorial rollover van sub-pagina's, content-pages, nieuws en leden (commits 5ebd425, d5fc598)
+> - HTML-entities decoden + compactere subpage-hero (commits 07090e0, 845279f)
+> - Supabase Storage hostname in `next.config` images.remotePatterns (commit cfcfe4e)
+>
+> WordPress draait per `c:\Projecten\memory\MEMORY.md` nog parallel als productie op mijn.host; Next.js-herbouw staat op staging op Vercel tot productie-cutover.
+
+---
+
 ## Stap 1 — Footer: Logo's toevoegen
 
 **Wat:** Twee logo's toevoegen in de footer.
