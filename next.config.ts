@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Traefik/Cloudflare handles gzip — Next.js compression causes Content-Encoding mismatch via tunnel
+  compress: false,
+
   transpilePackages: ["@ptrdbrbndr/cms"],
   images: {
     remotePatterns: [
