@@ -1,34 +1,21 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  Stethoscope,
-  Baby,
-  Activity,
-} from "lucide-react";
 import Hero from "@/components/Hero";
-import InfoCard from "@/components/ui/InfoCard";
 
 export const metadata: Metadata = {
   title: "ASHA Foundation",
   description:
-    "De ASHA Foundation richt zich op HIV-preventie en behandeling voor vrouwen in India, geleid door Dr. Glory Alexander.",
+    "De ASHA Foundation in Bangalore, geleid door Dr. Glory Alexander, biedt ART-medicatie aan circa 100 HIV-positieve vrouwen en test per half jaar zo'n 5.000 zwangere vrouwen (PMTCT).",
 };
-
-const stats = [
-  { value: "~100", label: "Vrouwen ontvangen ART-medicatie" },
-  { value: "~5.000", label: "Zwangere vrouwen getest per halfjaar" },
-  { value: "~1%", label: "Test positief op HIV" },
-];
 
 export default function AshaFoundationPage() {
   return (
     <>
       <Hero
-        eyebrow="Project 03 · HIV-preventie & behandeling"
+        eyebrow="Hoofdstuk III · HIV-zorg"
         title="ASHA Foundation"
-        subtitle="Levensreddende medische zorg voor HIV-positieve vrouwen in en rondom Bangalore. Geleid door Dr. Glory Alexander."
+        subtitle="Medische zorg voor HIV-positieve vrouwen in en rondom Bangalore, geleid door Dr. Glory Alexander: ART-medicatie en een programma dat overdracht van moeder op kind voorkomt."
         breadcrumb={[
           { label: "Home", href: "/" },
           { label: "Projecten", href: "/projecten" },
@@ -36,137 +23,171 @@ export default function AshaFoundationPage() {
         ]}
       />
 
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <Link
-            href="/projecten"
-            className="mb-10 inline-flex items-center gap-2 text-sm font-bold text-accent-600 hover:underline"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Terug naar alle projecten
-          </Link>
+      <figure className="mx-auto max-w-[96rem]">
+        <div className="relative aspect-[21/9] min-h-[300px] w-full overflow-hidden">
+          <Image
+            src="/images/projecten/asha-foundation/dr-glory.jpg"
+            alt="Dr. Glory Alexander van de ASHA Foundation"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
+        <figcaption className="caption mx-4 sm:mx-6 lg:mx-8">
+          Dr. Glory Alexander, oprichter en drijvende kracht van de ASHA
+          Foundation, Bangalore.
+        </figcaption>
+      </figure>
 
-          <div className="mb-16 overflow-hidden rounded-3xl shadow-2xl">
-            <Image
-              src="/images/projecten/asha-foundation/dr-glory.jpg"
-              alt="Dr. Glory Alexander van de ASHA Foundation"
-              width={1620}
-              height={1080}
-              className="w-full"
-              priority
-            />
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        {/* Cijferregel van dit hoofdstuk */}
+        <div className="grid grid-cols-1 gap-x-8 gap-y-8 border-t-2 border-rule pt-8 sm:grid-cols-3">
+          <div>
+            <p className="font-serif text-5xl font-medium text-madder">
+              ± 100
+            </p>
+            <p className="kicker mt-3 text-ink-2">
+              Vrouwen ontvangen ART-medicatie
+            </p>
           </div>
+          <div>
+            <p className="font-serif text-5xl font-medium text-ink">± 5.000</p>
+            <p className="kicker mt-3 text-ink-2">
+              Zwangere vrouwen getest per half jaar
+            </p>
+          </div>
+          <div>
+            <p className="font-serif text-5xl font-medium text-ink">± 1%</p>
+            <p className="kicker mt-3 text-ink-2">
+              Test positief en wordt direct behandeld
+            </p>
+          </div>
+        </div>
 
-          <div className="mx-auto max-w-3xl">
-            <div className="mb-14 border-l-4 border-accent-600 pl-6">
-              <span className="block text-[11px] font-bold uppercase tracking-[0.2em] text-accent-600">
-                Wat ASHA doet
-              </span>
-              <h2 className="mt-2 font-serif text-3xl font-bold leading-tight text-primary-600 sm:text-4xl">
-                Medische zorg voor vrouwen die anders geen toegang hebben
-              </h2>
-              <p className="mt-5 text-lg leading-relaxed text-ink-soft">
-                De ASHA Foundation wordt geleid door Dr. Glory Alexander en
-                richt zich op HIV-preventie en behandeling voor vrouwen in en
-                rondom Bangalore — met levensreddende zorg voor wie anders
-                niet behandeld zou worden.
+        <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-7 lg:col-start-2">
+            <h2 className="font-serif text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
+              Behandeling voor wie er anders geen toegang toe heeft
+            </h2>
+            <div className="mt-7 space-y-6 font-serif text-lg leading-relaxed text-ink">
+              <p>
+                De ASHA Foundation voorziet circa 100 vrouwen van
+                antiretrovirale therapie (ART), vooral weduwen en jonge
+                HIV-positieve vrouwen die de medicatie zelf niet kunnen
+                betalen. De behandeling houdt het virus onder controle en
+                maakt een gewoon leven mogelijk.
+              </p>
+              <p>
+                Daarnaast draait de foundation een PMTCT-programma (Prevention
+                of Mother-to-Child Transmission): per half jaar worden zo&apos;n
+                5.000 zwangere vrouwen getest. Ongeveer 1% blijkt
+                HIV-positief. Door tijdige opsporing en behandeling wordt
+                overdracht op de baby vrijwel altijd voorkomen.
+              </p>
+              <p>
+                De foundation staat onder leiding van Dr. Glory Alexander, die
+                het werk in Bangalore sinds de oprichting draagt.
               </p>
             </div>
 
-            {/* Stats strip */}
-            <div className="mb-14 grid grid-cols-1 gap-4 sm:grid-cols-3">
-              {stats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="rounded-2xl border border-line bg-cream-dark/60 p-6 text-center"
-                >
-                  <p className="font-serif text-4xl font-bold text-primary-600 sm:text-5xl">
-                    {stat.value}
-                  </p>
-                  <p className="mt-2 text-xs font-semibold uppercase tracking-wider text-ink-soft">
-                    {stat.label}
-                  </p>
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:-mr-24">
+              <figure>
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src="/images/projecten/asha-foundation/blood-test.png"
+                    alt="Bloedafname voor een HIV-test bij de ASHA Foundation"
+                    fill
+                    sizes="(min-width: 640px) 40vw, 100vw"
+                    className="object-cover"
+                  />
                 </div>
-              ))}
+                <figcaption className="caption">
+                  Bloedafname voor een HIV-test.
+                </figcaption>
+              </figure>
+              <figure className="sm:mt-10">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src="/images/projecten/asha-foundation/verpleegster.jpg"
+                    alt="Verpleegkundige van de ASHA Foundation"
+                    fill
+                    sizes="(min-width: 640px) 40vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                <figcaption className="caption">
+                  Verpleegkundige van de foundation.
+                </figcaption>
+              </figure>
             </div>
 
-            <div className="mb-14 grid gap-4 sm:grid-cols-2">
-              <div className="overflow-hidden rounded-2xl">
+            <figure className="mt-12">
+              <div className="relative aspect-[3/2] overflow-hidden">
                 <Image
-                  src="/images/projecten/asha-foundation/blood-test.png"
-                  alt="Bloedtest bij ASHA Foundation"
-                  width={760}
-                  height={400}
-                  className="h-full w-full object-cover"
+                  src="/images/projecten/asha-foundation/sytze-jelly-glory.jpg"
+                  alt="Bestuursleden Sytze en Jelly met Dr. Glory Alexander"
+                  fill
+                  sizes="(min-width: 1024px) 58vw, 100vw"
+                  className="object-cover"
                 />
               </div>
-              <div className="overflow-hidden rounded-2xl">
-                <Image
-                  src="/images/projecten/asha-foundation/verpleegster.jpg"
-                  alt="Verpleegster bij ASHA Foundation"
-                  width={1080}
-                  height={1080}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              <InfoCard icon={Stethoscope} title="ART-medicatie voor 100 vrouwen">
-                <p>
-                  De ASHA Foundation voorziet in antiretrovirale therapie
-                  (ART) voor circa 100 vrouwen — voornamelijk weduwen en
-                  jonge HIV-positieve vrouwen die zonder deze medicatie geen
-                  toegang zouden hebben tot behandeling. De medicatie houdt
-                  het virus onder controle en maakt een waardig leven
-                  mogelijk.
-                </p>
-              </InfoCard>
-
-              <InfoCard icon={Baby} title="PMTCT-programma">
-                <p>
-                  Het PMTCT-programma (Prevention of Mother-to-Child
-                  Transmission) richt zich op het voorkomen van
-                  moeder-kind-overdracht van HIV. Door zwangere vrouwen te
-                  testen en te behandelen wordt overdracht op de baby in de
-                  meeste gevallen voorkomen.
-                </p>
-              </InfoCard>
-
-              <InfoCard
-                variant="highlight"
-                icon={Activity}
-                eyebrow="Impact in cijfers"
-                title="5.000 getest per halfjaar"
-              >
-                <p>
-                  In het kader van PMTCT worden circa 5.000 zwangere vrouwen
-                  getest in een periode van zes maanden. Ongeveer 1% blijkt
-                  HIV-positief — dankzij vroegtijdige opsporing en
-                  behandeling kan overdracht vrijwel altijd voorkomen worden.
-                </p>
-                <p>
-                  <Link
-                    href="/steun-ons"
-                    className="inline-flex items-center gap-1 font-bold text-accent-600 hover:underline"
-                  >
-                    Ook ASHA Foundation steunen →
-                  </Link>
-                </p>
-              </InfoCard>
-            </div>
-
-            <div className="mt-14 overflow-hidden rounded-3xl shadow-xl">
-              <Image
-                src="/images/projecten/asha-foundation/sytze-jelly-glory.jpg"
-                alt="Sytze en Jelly met Dr. Glory van ASHA Foundation"
-                width={1852}
-                height={1080}
-                className="w-full"
-              />
-            </div>
+              <figcaption className="caption">
+                Bestuursleden Sytze en Jelly met Dr. Glory Alexander tijdens
+                een projectbezoek; reizen op eigen kosten.
+              </figcaption>
+            </figure>
           </div>
+
+          <aside className="lg:col-span-3 lg:col-start-10">
+            <div className="border-t-2 border-rule pt-5">
+              <p className="kicker text-madder">Wat uw gift hier doet</p>
+              <dl className="mt-5 space-y-5 font-serif">
+                <div>
+                  <dt className="kicker text-ink-2">ART-medicatie</dt>
+                  <dd className="mt-1 text-[1.0625rem] leading-relaxed text-ink">
+                    Financiering van antiretrovirale therapie voor circa 100
+                    vrouwen die de behandeling zelf niet kunnen betalen.
+                  </dd>
+                </div>
+                <div>
+                  <dt className="kicker text-ink-2">PMTCT-tests</dt>
+                  <dd className="mt-1 text-[1.0625rem] leading-relaxed text-ink">
+                    Bijdrage aan het testprogramma voor zwangere vrouwen, zo&apos;n
+                    5.000 tests per half jaar.
+                  </dd>
+                </div>
+              </dl>
+              <Link
+                href="/steun-ons"
+                className="kicker mt-7 inline-block bg-madder px-6 py-3.5 text-paper transition-colors hover:bg-madder-deep"
+              >
+                Doneer
+              </Link>
+              <p className="mt-5 border-t border-rule-soft pt-4 font-serif text-[0.9375rem] leading-relaxed text-ink-2">
+                <span className="mark-turmeric text-ink">
+                  Elke euro gaat naar de projecten.
+                </span>{" "}
+                ANBI, RSIN 821887300.
+              </p>
+            </div>
+          </aside>
         </div>
+
+        <nav
+          aria-label="Hoofdstukken"
+          className="mt-20 flex items-baseline justify-between border-t-2 border-rule pt-6"
+        >
+          <Link
+            href="/projecten/uwa-hostel"
+            className="link-editorial font-serif text-lg"
+          >
+            Hoofdstuk II: UWA Working Women&apos;s Hostel
+          </Link>
+          <Link href="/projecten" className="link-editorial font-serif text-lg">
+            Alle projecten
+          </Link>
+        </nav>
       </section>
     </>
   );

@@ -1,6 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
-import { Heart, ArrowRight, Radio } from "lucide-react";
 
 interface FeatureArticle {
   title: string;
@@ -40,66 +38,46 @@ export default function Hero({
   eyebrow,
   breadcrumb,
   showCta = false,
-  ctaText = "Meer weten",
-  ctaHref = "/over-ons",
+  ctaText = "Doneer",
+  ctaHref = "/steun-ons",
   featureArticle,
 }: HeroProps) {
-  // Compact subpagina hero
+  // Katern-opening voor subpagina's
   if (!showCta) {
     return (
-      <section
-        data-testid="page-hero"
-        className="relative overflow-hidden border-b border-line bg-cream"
-      >
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[0.04] text-primary-600"
-        >
-          <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
-            <circle cx="40" cy="40" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
-            <circle cx="60" cy="40" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
-            <circle cx="50" cy="60" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
-          </svg>
-        </div>
-        <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-          {breadcrumb && breadcrumb.length > 0 && (
-            <nav
-              aria-label="Breadcrumb"
-              className="mb-3 text-xs font-semibold text-ink-soft"
-            >
-              <ol className="flex flex-wrap items-center gap-1.5">
-                {breadcrumb.map((item, idx) => (
-                  <li key={item.href} className="flex items-center gap-1.5">
-                    {idx > 0 && (
-                      <span aria-hidden="true" className="text-ink-soft/50">
-                        ›
-                      </span>
-                    )}
-                    {idx === breadcrumb.length - 1 ? (
-                      <span className="text-primary-600">{item.label}</span>
-                    ) : (
-                      <a
-                        href={item.href}
-                        className="hover:text-accent-600"
-                      >
-                        {item.label}
-                      </a>
-                    )}
-                  </li>
-                ))}
-              </ol>
-            </nav>
-          )}
-          {eyebrow && (
-            <span className="mb-2 block text-[11px] font-bold uppercase tracking-[0.2em] text-accent-600">
-              {eyebrow}
-            </span>
-          )}
-          <h1 className="max-w-4xl font-serif text-3xl font-bold leading-[1.1] text-primary-600 sm:text-4xl lg:text-5xl">
+      <section data-testid="page-hero" className="bg-paper">
+        <div className="mx-auto max-w-7xl px-4 pb-10 pt-6 sm:px-6 sm:pb-14 lg:px-8">
+          <div className="folio">
+            <p className="kicker text-madder">{eyebrow ?? "Stichting Kettingreactie"}</p>
+            {breadcrumb && breadcrumb.length > 1 && (
+              <nav aria-label="Kruimelpad" className="hidden sm:block">
+                <ol className="flex flex-wrap items-baseline gap-1.5">
+                  {breadcrumb.map((item, idx) => (
+                    <li
+                      key={item.href}
+                      className="kicker flex items-baseline gap-1.5 text-ink-2"
+                    >
+                      {idx > 0 && <span aria-hidden="true">/</span>}
+                      {idx === breadcrumb.length - 1 ? (
+                        <span className="text-ink" aria-current="page">
+                          {item.label}
+                        </span>
+                      ) : (
+                        <Link href={item.href} className="hover:text-madder">
+                          {item.label}
+                        </Link>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            )}
+          </div>
+          <h1 className="mt-7 max-w-4xl font-serif text-[clamp(2.5rem,6vw,4.25rem)] font-medium leading-[1.04] tracking-tight text-ink">
             {title}
           </h1>
           {subtitle && (
-            <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-soft sm:text-lg">
+            <p className="mt-6 max-w-2xl font-serif text-xl leading-relaxed text-ink-2 sm:text-[1.375rem] sm:leading-normal">
               {subtitle}
             </p>
           )}
@@ -108,110 +86,70 @@ export default function Hero({
     );
   }
 
-  // Homepage hero — asymmetric editorial split
+  // Voorpagina-opening — de enige geregisseerde animatie van de site
   return (
-    <section
-      data-testid="home-hero"
-      className="relative overflow-hidden bg-cream"
-    >
-      <div className="mx-auto max-w-7xl px-4 pt-12 pb-20 sm:px-6 lg:px-8 lg:pt-16 lg:pb-28">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
-          {/* Left column — text */}
-          <div className="space-y-7 lg:col-span-7">
-            <div className="inline-flex items-center gap-2 rounded-full border border-line bg-white/70 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-primary-600 backdrop-blur-sm">
-              <span
-                aria-hidden="true"
-                className="h-1.5 w-1.5 rounded-full bg-green-500"
-              />
-              ANBI-erkende stichting sinds 2007
+    <section data-testid="home-hero" className="bg-paper">
+      <div className="mx-auto max-w-7xl px-4 pb-12 pt-8 sm:px-6 sm:pb-16 lg:px-8">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-8">
+            <div className="folio reveal reveal-1">
+              <p className="kicker text-madder">Voorpagina</p>
+              <p className="kicker hidden text-ink-2 sm:block">
+                Drie projecten in Bangalore
+              </p>
             </div>
-
-            <h1 className="font-serif text-5xl font-bold leading-[1.05] text-primary-600 sm:text-6xl lg:text-[4.5rem]">
+            <h1 className="reveal reveal-2 mt-8 font-serif text-[clamp(2.75rem,7vw,5.25rem)] font-medium leading-[0.98] tracking-tight text-ink">
               {title}
             </h1>
-
             {subtitle && (
-              <p className="max-w-xl text-lg leading-relaxed text-ink-soft sm:text-xl">
+              <p className="reveal reveal-3 mt-8 max-w-2xl font-serif text-xl leading-relaxed text-ink-2 sm:text-[1.4375rem] sm:leading-normal">
                 {subtitle}
               </p>
             )}
-
-            <div className="flex flex-wrap items-center gap-4 pt-2">
+            <div className="reveal reveal-4 mt-10 flex flex-wrap items-center gap-7">
               <Link
                 href={ctaHref}
                 data-testid="hero-primary-cta"
-                className="group inline-flex items-center gap-2 rounded-full bg-primary-600 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-primary-600/20 transition-all hover:-translate-y-0.5 hover:bg-primary-700 hover:shadow-xl active:scale-95"
+                className="kicker bg-madder px-7 py-4 text-paper transition-colors hover:bg-madder-deep"
               >
-                <Heart className="h-4 w-4" />
                 {ctaText}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
               <Link
                 href="/projecten"
                 data-testid="hero-secondary-cta"
-                className="inline-flex items-center gap-2 rounded-full border-2 border-primary-600 px-7 py-3.5 text-sm font-bold text-primary-600 transition-all hover:bg-primary-600 hover:text-white"
+                className="font-serif text-lg text-ink underline decoration-1 underline-offset-4 transition-colors hover:text-madder"
               >
-                Onze projecten
-                <ArrowRight className="h-4 w-4" />
+                De drie projecten
               </Link>
             </div>
           </div>
 
-          {/* Right column — tilted feature news card */}
+          {/* Laatste verslag — als krantenkolom, geen kaart */}
           {featureArticle && (
-            <div className="relative lg:col-span-5">
-              {/* Azure offset block */}
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 -translate-x-0 translate-y-6 translate-x-6 rounded-3xl bg-azure-500"
-              />
-              {/* Card */}
+            <div className="reveal reveal-5 lg:col-span-4 lg:border-l lg:border-rule-soft lg:pl-10">
+              <div className="folio lg:border-t-0 lg:pt-0">
+                <p className="kicker text-ink-2">Laatste verslag</p>
+              </div>
               <Link
                 href={`/nieuws/${featureArticle.slug}`}
                 data-testid="hero-feature-article"
-                className="relative block overflow-hidden rounded-3xl border border-line bg-white shadow-xl transition-transform duration-500 hover:rotate-0 motion-safe:rotate-[2deg]"
+                className="group mt-5 block"
               >
-                {featureArticle.image && (
-                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-cream-dark">
-                    <Image
-                      src={featureArticle.image}
-                      alt={featureArticle.title}
-                      fill
-                      sizes="(min-width: 1024px) 40vw, 100vw"
-                      className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary-900/30 to-transparent" />
-                  </div>
+                <p className="kicker text-madder">
+                  {featureArticle.category ?? "Nieuws"} ·{" "}
+                  {formatDutchDate(featureArticle.date)}
+                </p>
+                <h2 className="mt-3 font-serif text-2xl font-medium leading-snug text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink">
+                  {featureArticle.title}
+                </h2>
+                {featureArticle.excerpt && (
+                  <p className="mt-3 font-serif text-[1.0625rem] leading-relaxed text-ink-2">
+                    {featureArticle.excerpt}
+                  </p>
                 )}
-                <div className="space-y-3 p-7">
-                  <div className="flex items-center gap-2">
-                    <span className="relative flex h-2 w-2">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-600 opacity-75" />
-                      <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-600" />
-                    </span>
-                    <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-accent-600">
-                      Laatste nieuwsbericht
-                    </span>
-                  </div>
-                  {featureArticle.category && (
-                    <div className="inline-flex items-center gap-1.5 rounded-full bg-primary-50 px-3 py-1 text-[11px] font-semibold text-primary-700">
-                      <Radio className="h-3 w-3" />
-                      {featureArticle.category} · {formatDutchDate(featureArticle.date)}
-                    </div>
-                  )}
-                  <h2 className="font-serif text-2xl font-bold leading-snug text-primary-600">
-                    {featureArticle.title}
-                  </h2>
-                  {featureArticle.excerpt && (
-                    <p className="line-clamp-2 text-sm text-ink-soft">
-                      {featureArticle.excerpt}
-                    </p>
-                  )}
-                  <span className="inline-flex items-center gap-1 pt-1 text-sm font-bold text-accent-600">
-                    Lees het bericht
-                    <ArrowRight className="h-4 w-4" />
-                  </span>
-                </div>
+                <p className="link-editorial mt-4 font-serif text-[1.0625rem]">
+                  Lees het verslag
+                </p>
               </Link>
             </div>
           )}

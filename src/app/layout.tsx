@@ -1,20 +1,29 @@
 import type { Metadata } from "next";
-import { Inter, Fraunces } from "next/font/google";
+import { Newsreader, Libre_Franklin } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+/*
+ * Typografie van het redesign (2026):
+ * - Newsreader: krantenserif met optische maten — scherp en karaktervol op
+ *   displayformaat, rustige leesletter op tekstformaat. Eén familie voor
+ *   koppen én broodtekst, het optische-maat-as doet het werk.
+ * - Libre Franklin: Franklin Gothic-erfgoed, de klassieke Amerikaanse
+ *   krantengrotesk. Alleen voor labels, meta en navigatie in kapitaal.
+ */
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
   display: "swap",
+  style: ["normal", "italic"],
+  axes: ["opsz"],
 });
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const franklin = Libre_Franklin({
+  variable: "--font-franklin",
   subsets: ["latin"],
   display: "swap",
-  axes: ["SOFT", "opsz"],
 });
 
 export const metadata: Metadata = {
@@ -23,7 +32,7 @@ export const metadata: Metadata = {
     template: "%s | Stichting Kettingreactie",
   },
   description:
-    "Stichting Kettingreactie zet zich in voor de verbetering van het leven van kansarme vrouwen in India door lokale initiatieven in en rondom Bangalore te ondersteunen.",
+    "Stichting Kettingreactie steunt sinds 2007 drie projecten voor vrouwen in en rondom Bangalore: Abayashram, het UWA Working Women's Hostel en de ASHA Foundation. ANBI-erkend; elke gedoneerde euro gaat naar de projecten.",
 };
 
 export default function RootLayout({
@@ -34,10 +43,12 @@ export default function RootLayout({
   return (
     <html lang="nl">
       <body
-        className={`${inter.variable} ${fraunces.variable} bg-cream text-ink antialiased`}
+        className={`${newsreader.variable} ${franklin.variable} bg-paper text-ink antialiased`}
       >
         <Header />
-        <main className="min-h-screen">{children}</main>
+        <main id="inhoud" className="min-h-screen">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

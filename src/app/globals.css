@@ -1,7 +1,26 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* Primary = INDIGO (from logo wordmark + middle ring, dominant 56k px) */
+  /* ==========================================================================
+     REDESIGN 2026 — "jaarverslag-katern"
+     Papier + inkt, één accent uit Indiase textiel (meekrap-rood), kurkuma
+     uitsluitend als arcering. Zie docs/DESIGN.md voor de richting.
+     ========================================================================== */
+  --color-paper: #f5f0e6;
+  --color-paper-2: #faf7ef; /* lichter vlak (verhoogde leeskolom) */
+  --color-paper-3: #ece4d2; /* dieper vlak (katern-achtergrond) */
+  --color-ink: #211d15;
+  --color-ink-2: #57503f; /* secundaire tekst, AA op paper */
+  --color-rule: #211d15; /* zwarte katernlijn */
+  --color-rule-soft: #d8cfba; /* zachte hulplijn */
+  --color-madder: #9a3222; /* meekrap/sindoor-rood — accent */
+  --color-madder-deep: #782416;
+  --color-turmeric: #e0a93e; /* kurkuma — alleen decoratieve arcering */
+
+  /* ==========================================================================
+     Legacy-tokens — nog in gebruik door /admin en /leden. Niet verwijderen
+     zolang die schermen niet zijn omgezet.
+     ========================================================================== */
   --color-primary-50: #eeecfa;
   --color-primary-100: #ddd9f0;
   --color-primary-200: #c5c0ff;
@@ -12,8 +31,6 @@
   --color-primary-700: #231a66;
   --color-primary-800: #1b1450;
   --color-primary-900: #120c3a;
-
-  /* Accent = MAGENTA (from logo bottom ring + "REACTIE" wordmark) */
   --color-accent-50: #fdf2f8;
   --color-accent-100: #fce7f3;
   --color-accent-200: #fbcfe8;
@@ -24,8 +41,6 @@
   --color-accent-700: #be185d;
   --color-accent-800: #9d174d;
   --color-accent-900: #831843;
-
-  /* Azure = third logo ring, used sparingly for freshness/hope */
   --color-azure-50: #e6f4fd;
   --color-azure-100: #cce9fb;
   --color-azure-200: #99d3f7;
@@ -36,58 +51,199 @@
   --color-azure-700: #005986;
   --color-azure-800: #003c5a;
   --color-azure-900: #001e2d;
+  --color-cream: #f5f0e6;
+  --color-cream-dark: #ece4d2;
+  --color-ink-soft: #57503f;
+  --color-line: #d8cfba;
 
-  /* Neutrals — warm editorial tones, indigo-tinted text */
-  --color-cream: #fbf9f5;
-  --color-cream-dark: #f5f3ef;
-  --color-ink: #14112e;
-  --color-ink-soft: #5a5470;
-  --color-line: #e9e6f0;
-
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-fraunces);
+  --font-sans: var(--font-franklin);
+  --font-serif: var(--font-newsreader);
 }
 
 body {
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  font-optical-sizing: auto;
   color: var(--color-ink);
-  background: var(--color-cream);
+  background: var(--color-paper);
+  font-size: 1.0625rem;
+  line-height: 1.65;
 }
 
-.font-serif { font-family: var(--font-serif), "Noto Serif", Georgia, serif; font-feature-settings: "ss01", "ss02"; }
+::selection {
+  background: var(--color-madder);
+  color: var(--color-paper);
+}
 
-/* Prose styles for blog/CMS content */
-.prose h1 { font-size: 2.5rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1.25rem; color: var(--color-primary-600); font-family: var(--font-serif), Georgia, serif; line-height: 1.15; }
-.prose h2 { font-size: 1.875rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; color: var(--color-primary-600); font-family: var(--font-serif), Georgia, serif; line-height: 1.2; }
-.prose h3 { font-size: 1.375rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--color-primary-600); font-family: var(--font-serif), Georgia, serif; line-height: 1.3; }
-.prose p { margin-bottom: 1.25rem; line-height: 1.8; color: var(--color-ink-soft); font-size: 1.0625rem; }
-.prose ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; color: var(--color-ink-soft); }
-.prose ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.25rem; color: var(--color-ink-soft); }
-.prose li { margin-bottom: 0.375rem; line-height: 1.8; }
-.prose strong { color: var(--color-ink); font-weight: 700; }
-.prose blockquote { border-left: 4px solid var(--color-accent-600); padding: 0.5rem 0 0.5rem 1.5rem; margin: 2rem 0; font-style: italic; color: var(--color-primary-600); font-family: var(--font-serif), Georgia, serif; font-size: 1.375rem; line-height: 1.55; }
-.prose a { color: var(--color-accent-700); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-.prose a:hover { color: var(--color-accent-600); }
-.prose img { border-radius: 1rem; margin: 2rem 0; box-shadow: 0 10px 30px rgba(20, 17, 46, 0.08); max-width: 100%; height: auto; }
-.prose figure { margin: 2rem 0; }
-.prose figure img { margin: 0; }
-.prose figcaption { margin-top: 0.75rem; font-size: 0.875rem; color: var(--color-ink-soft); font-style: italic; }
+/* Zichtbare focus voor toetsenbordgebruikers */
+:focus-visible {
+  outline: 2px solid var(--color-madder);
+  outline-offset: 3px;
+}
 
-/* Editorial prose — larger, with drop cap and bigger lede */
-.prose-editorial > p:first-of-type {
-  font-size: 1.3125rem;
-  line-height: 1.65;
+.font-serif {
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-optical-sizing: auto;
+}
+
+/* Franklin-kapitaal: labels, meta, navigatie */
+.kicker {
+  font-family: var(--font-franklin), "Helvetica Neue", Arial, sans-serif;
+  font-weight: 600;
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Folio-regel: katernlabel boven aan een pagina of sectie */
+.folio {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 2px solid var(--color-rule);
+  padding-top: 0.6rem;
+}
+
+/* Kurkuma-arcering: uitsluitend voor het transparantie-element */
+.mark-turmeric {
+  background-image: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--color-turmeric) 45%, transparent) 0.42em,
+    transparent 0.42em
+  );
+}
+
+/* Tekstlink in lopende tekst */
+.link-editorial {
+  color: var(--color-madder);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-thickness 120ms ease;
+}
+.link-editorial:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Fotobijschrift */
+.caption {
+  font-family: var(--font-franklin), Arial, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--color-ink-2);
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color-rule-soft);
+  margin-top: 0.65rem;
+}
+
+/* ==========================================================================
+   Openingsanimatie homepage — de enige geregisseerde beweging op de site
+   ========================================================================== */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.6em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.reveal {
+  opacity: 0;
+  animation: rise-in 640ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.reveal-1 { animation-delay: 60ms; }
+.reveal-2 { animation-delay: 180ms; }
+.reveal-3 { animation-delay: 300ms; }
+.reveal-4 { animation-delay: 440ms; }
+.reveal-5 { animation-delay: 580ms; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   Prose — CMS-inhoud (nieuwsverslagen en pagina's) als reportagetekst
+   ========================================================================== */
+.prose {
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-optical-sizing: auto;
+}
+.prose h1,
+.prose h2,
+.prose h3 {
+  font-family: var(--font-newsreader), Georgia, serif;
   color: var(--color-ink);
+  font-weight: 500;
+  line-height: 1.12;
+}
+.prose h1 { font-size: 2.25rem; margin: 2.5rem 0 1rem; }
+.prose h2 { font-size: 1.75rem; margin: 2.5rem 0 0.9rem; }
+.prose h3 { font-size: 1.3125rem; margin: 2rem 0 0.7rem; }
+.prose p {
+  margin-bottom: 1.3rem;
+  line-height: 1.72;
+  color: var(--color-ink);
+  font-size: 1.125rem;
+}
+.prose ul,
+.prose ol {
+  margin: 0 0 1.3rem 1.4rem;
+  color: var(--color-ink);
+  font-size: 1.125rem;
+}
+.prose ul { list-style-type: "— "; }
+.prose ol { list-style-type: decimal; }
+.prose li { margin-bottom: 0.4rem; line-height: 1.65; }
+.prose strong { font-weight: 600; }
+.prose blockquote {
+  border-top: 2px solid var(--color-rule);
+  border-bottom: 1px solid var(--color-rule-soft);
+  border-left: none;
+  padding: 1.4rem 0;
+  margin: 2.4rem 0;
+  font-style: italic;
+  font-size: 1.5rem;
+  line-height: 1.45;
+  color: var(--color-ink);
+}
+.prose a {
+  color: var(--color-madder);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.prose a:hover { text-decoration-thickness: 2px; }
+.prose img {
+  margin: 2.2rem 0;
+  max-width: 100%;
+  height: auto;
+}
+.prose figure { margin: 2.2rem 0; }
+.prose figure img { margin: 0; }
+.prose figcaption {
+  font-family: var(--font-franklin), Arial, sans-serif;
+  font-size: 0.75rem;
+  color: var(--color-ink-2);
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color-rule-soft);
+  margin-top: 0.65rem;
+}
+
+/* Reportage-opmaak: vergrote intro, initiaal */
+.prose-editorial > p:first-of-type {
+  font-size: 1.375rem;
+  line-height: 1.55;
 }
 .prose-editorial > p:first-of-type::first-letter {
   float: left;
-  font-family: var(--font-serif), Georgia, serif;
-  font-size: 5.5rem;
-  line-height: 0.85;
-  padding-right: 0.75rem;
-  padding-top: 0.5rem;
-  color: var(--color-primary-600);
-  font-weight: 700;
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-size: 4.9rem;
+  line-height: 0.82;
+  padding: 0.08em 0.12em 0 0;
+  color: var(--color-madder);
+  font-weight: 500;
 }
-.prose-editorial p { font-size: 1.125rem; line-height: 1.85; }
-.prose-editorial img:first-of-type { margin-top: 0; }

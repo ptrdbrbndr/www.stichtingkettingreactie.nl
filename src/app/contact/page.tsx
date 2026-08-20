@@ -1,87 +1,89 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Mail, MapPin, Landmark, Heart } from "lucide-react";
 import Hero from "@/components/Hero";
-import InfoCard from "@/components/ui/InfoCard";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Neem contact op met Stichting Kettingreactie. Wij beantwoorden graag uw vragen.",
+    "Contactgegevens van Stichting Kettingreactie: info@stichtingkettingreactie.nl, statutair gevestigd in Amsterdam.",
 };
 
 export default function ContactPage() {
   return (
     <>
       <Hero
-        eyebrow="Neem contact op"
-        title="Wij horen graag van u"
-        subtitle="Heeft u vragen over onze stichting, de projecten in Bangalore, of wilt u weten hoe u ons kunt steunen? Laat het ons weten — wij antwoorden persoonlijk."
+        eyebrow="Katern · Contact"
+        title="Het bestuur antwoordt persoonlijk"
+        subtitle="Vragen over de stichting, de projecten in Bangalore of over doneren: mail ons."
         breadcrumb={[
           { label: "Home", href: "/" },
           { label: "Contact", href: "/contact" },
         ]}
       />
 
-      <section className="py-20 sm:py-24">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <InfoCard icon={Mail} title="E-mail">
-              <p>
-                Stuur ons een bericht. Wij beantwoorden alle vragen zo snel
-                mogelijk.
+      <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
+        <dl className="border-t-2 border-rule">
+          <div className="grid grid-cols-1 gap-3 border-b border-rule-soft py-8 lg:grid-cols-12 lg:gap-8">
+            <dt className="font-serif text-xl font-medium text-ink lg:col-span-3">
+              E-mail
+            </dt>
+            <dd className="lg:col-span-7">
+              <a
+                href="mailto:info@stichtingkettingreactie.nl"
+                className="link-editorial font-serif text-2xl"
+              >
+                info@stichtingkettingreactie.nl
+              </a>
+              <p className="mt-2 font-serif text-lg leading-relaxed text-ink-2">
+                Het gebruikelijke kanaal voor alle vragen; het bestuur leest
+                en beantwoordt de mail zelf.
               </p>
-              <p>
-                <a
-                  href="mailto:info@stichtingkettingreactie.nl"
-                  className="inline-flex items-center gap-1 font-bold text-accent-600 hover:underline"
-                >
-                  info@stichtingkettingreactie.nl →
-                </a>
-              </p>
-            </InfoCard>
-
-            <InfoCard icon={MapPin} title="Locatie">
-              <p>Statutaire vestiging in Amsterdam, Nederland.</p>
-              <p>
-                Let op: wij zijn geen publiek toegankelijk kantoor. Neem
-                eerst contact op voor een afspraak.
-              </p>
-            </InfoCard>
-
-            <InfoCard icon={Landmark} title="Bankgegevens">
-              <p>
-                Rekeningnummer:{" "}
-                <span className="font-mono font-bold text-primary-600">
-                  NL87 INGB 0005313860
-                </span>
-              </p>
-              <p className="text-sm">
-                t.n.v. Stichting Kettingreactie Amsterdam · RSIN{" "}
-                <span className="font-mono">821887300</span>
-              </p>
-            </InfoCard>
-
-            <InfoCard
-              variant="highlight"
-              icon={Heart}
-              title="Meedenken of meehelpen?"
-            >
-              <p>
-                Wij verwelkomen vrijwilligers, ambassadeurs en partners die
-                ons werk willen versterken — in Nederland of in Bangalore.
-              </p>
-              <p>
-                <Link
-                  href="/steun-ons"
-                  className="inline-flex items-center gap-1 font-bold text-accent-600 hover:underline"
-                >
-                  Andere manieren om te steunen →
-                </Link>
-              </p>
-            </InfoCard>
+            </dd>
           </div>
-        </div>
+
+          <div className="grid grid-cols-1 gap-3 border-b border-rule-soft py-8 lg:grid-cols-12 lg:gap-8">
+            <dt className="font-serif text-xl font-medium text-ink lg:col-span-3">
+              Vestiging
+            </dt>
+            <dd className="lg:col-span-7">
+              <p className="font-serif text-lg leading-relaxed text-ink">
+                Statutair gevestigd in Amsterdam. De stichting heeft geen
+                kantoor of bezoekadres; neem eerst contact op voor een
+                afspraak.
+              </p>
+            </dd>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3 border-b border-rule-soft py-8 lg:grid-cols-12 lg:gap-8">
+            <dt className="font-serif text-xl font-medium text-ink lg:col-span-3">
+              Bankgegevens
+            </dt>
+            <dd className="lg:col-span-7">
+              <p className="font-serif text-2xl tracking-wide text-ink">
+                NL87 INGB 0005313860
+              </p>
+              <p className="mt-1 font-serif text-lg text-ink-2">
+                t.n.v. Stichting Kettingreactie Amsterdam · RSIN 821887300
+              </p>
+            </dd>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3 py-8 lg:grid-cols-12 lg:gap-8">
+            <dt className="font-serif text-xl font-medium text-ink lg:col-span-3">
+              Meedenken of meehelpen
+            </dt>
+            <dd className="lg:col-span-7">
+              <p className="font-serif text-lg leading-relaxed text-ink">
+                Vrijwilligers en partners zijn welkom, in Nederland en in
+                Bangalore. Zie ook de{" "}
+                <Link href="/steun-ons" className="link-editorial">
+                  andere manieren om te steunen
+                </Link>
+                .
+              </p>
+            </dd>
+          </div>
+        </dl>
       </section>
     </>
   );

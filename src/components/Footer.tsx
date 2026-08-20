@@ -1,184 +1,157 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, MapPin } from "lucide-react";
 
-const snelkoppelingen = [
-  { label: "Home", href: "/" },
+const katernen = [
   { label: "Over Ons", href: "/over-ons" },
+  { label: "Projecten", href: "/projecten" },
   { label: "Nieuws", href: "/nieuws" },
   { label: "Steun Ons", href: "/steun-ons" },
   { label: "Verantwoording", href: "/verantwoording" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const projectLinks = [
   { label: "Abayashram – Vision India", href: "/abayashram-vision-india-2" },
   { label: "UWA Working Women's Hostel", href: "/working-womens-hostel-uwa" },
   { label: "ASHA Foundation", href: "/hiv-positive-women-asha-foundation" },
-  { label: "Alle projecten", href: "/projecten" },
 ];
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer
-      data-testid="site-footer"
-      className="relative overflow-hidden border-t-[3px] border-azure-500 bg-primary-800 text-primary-100"
-    >
-      {/* Subtle three-ring watermark */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-32 -bottom-32 opacity-[0.04] text-white"
-      >
-        <svg width="560" height="560" viewBox="0 0 100 100">
-          <circle cx="40" cy="40" r="25" fill="none" stroke="currentColor" strokeWidth="1" />
-          <circle cx="60" cy="40" r="25" fill="none" stroke="currentColor" strokeWidth="1" />
-          <circle cx="50" cy="60" r="25" fill="none" stroke="currentColor" strokeWidth="1" />
-        </svg>
+    <footer data-testid="site-footer">
+      {/* Verantwoordingsstrook — vast element boven het colofon */}
+      <div className="border-t-2 border-rule bg-paper-3">
+        <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-8 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
+          <div className="flex items-start gap-5">
+            <Image
+              src="/images/logos/anbi-logo.svg"
+              alt="ANBI, Algemeen Nut Beogende Instelling"
+              width={120}
+              height={60}
+              className="h-12 w-auto shrink-0"
+            />
+            <p className="max-w-2xl font-serif text-[1.0625rem] leading-relaxed text-ink">
+              Stichting Kettingreactie is een ANBI (RSIN 821887300). Het
+              bestuur werkt onbetaald en betaalt reizen naar Bangalore uit
+              eigen zak.{" "}
+              <span className="mark-turmeric">
+                Elke gedoneerde euro gaat naar de drie projecten.
+              </span>
+            </p>
+          </div>
+          <Link
+            href="/financieel-overzicht-2012"
+            className="kicker shrink-0 text-madder underline decoration-1 underline-offset-4 hover:decoration-2"
+          >
+            Jaarcijfers inzien
+          </Link>
+        </div>
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-4 pt-16 pb-8 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
-          {/* About column */}
-          <div className="space-y-5">
-            <Link href="/" className="inline-flex items-center gap-4">
-              <Image
-                src="/logo-skr.png"
-                alt="Stichting Kettingreactie"
-                width={96}
-                height={96}
-                className="h-16 w-16 object-contain"
-              />
-              <div className="flex flex-col leading-tight">
-                <span className="text-xs font-bold uppercase tracking-[0.22em] text-accent-400">
-                  Stichting
-                </span>
-                <span className="font-serif text-2xl font-bold text-white">
-                  Kettingreactie
-                </span>
-              </div>
-            </Link>
-            <p className="text-sm leading-relaxed text-primary-200">
-              Stichting Kettingreactie zet zich sinds 2007 in voor het
-              verbeteren van de positie van kansarme vrouwen in India door
-              lokale initiatieven in en rondom Bangalore te ondersteunen.
-            </p>
-            <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-              <Image
-                src="/images/logos/anbi-logo.svg"
-                alt="ANBI — Algemeen Nut Beogende Instelling"
-                width={120}
-                height={60}
-                className="h-10 w-auto"
-              />
-            </div>
-          </div>
-
-          {/* Snelkoppelingen column */}
-          <div>
-            <h3 className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-azure-400">
-              Snelkoppelingen
-            </h3>
-            <ul className="space-y-3">
-              {snelkoppelingen.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-primary-200 transition-colors hover:text-accent-400"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Projecten column */}
-          <div>
-            <h3 className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-azure-400">
-              Projecten
-            </h3>
-            <ul className="space-y-3">
-              {projectLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-primary-200 transition-colors hover:text-accent-400"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact + IBAN column */}
-          <div className="space-y-5">
+      {/* Colofon */}
+      <div className="bg-ink text-paper">
+        <div className="mx-auto max-w-7xl px-4 pb-8 pt-14 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 gap-12 border-b border-paper/20 pb-12 sm:grid-cols-2 lg:grid-cols-4">
             <div>
-              <h3 className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-azure-400">
-                Contact
-              </h3>
-              <ul className="space-y-3 text-sm text-primary-200">
-                <li className="flex items-start gap-2">
-                  <Mail className="mt-0.5 h-4 w-4 shrink-0 text-azure-400" />
-                  <Link
-                    href="mailto:info@stichtingkettingreactie.nl"
-                    className="transition-colors hover:text-accent-400"
-                  >
-                    info@stichtingkettingreactie.nl
-                  </Link>
-                </li>
-                <li className="flex items-start gap-2">
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-azure-400" />
-                  <span>
-                    Stichting Kettingreactie
-                    <br />
-                    Amsterdam, Nederland
-                  </span>
-                </li>
+              <p className="kicker text-paper/60">Stichting</p>
+              <p className="mt-2 font-serif text-3xl leading-none">
+                Kettingreactie
+              </p>
+              <p className="mt-5 font-serif text-[0.9375rem] leading-relaxed text-paper/80">
+                Steunt sinds 2007 drie projecten voor vrouwen in en rondom
+                Bangalore, met fondsenwerving vanuit Nederland.
+              </p>
+              <p className="mt-4 font-serif text-[0.9375rem] text-paper/80">
+                <a
+                  href="mailto:info@stichtingkettingreactie.nl"
+                  className="underline decoration-1 underline-offset-4 hover:text-paper"
+                >
+                  info@stichtingkettingreactie.nl
+                </a>
+                <br />
+                Statutair gevestigd in Amsterdam
+              </p>
+            </div>
+
+            <div>
+              <p className="kicker mb-4 text-paper/60">Katernen</p>
+              <ul className="space-y-2.5">
+                {katernen.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="font-serif text-[1.0625rem] text-paper/85 underline decoration-transparent decoration-1 underline-offset-4 transition-colors hover:text-paper hover:decoration-paper"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
-            <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-              <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.2em] text-azure-400">
-                Rekeningnummer
-              </p>
-              <p className="font-mono text-sm font-semibold text-white">
+
+            <div>
+              <p className="kicker mb-4 text-paper/60">De drie projecten</p>
+              <ul className="space-y-2.5">
+                {projectLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="font-serif text-[1.0625rem] text-paper/85 underline decoration-transparent decoration-1 underline-offset-4 transition-colors hover:text-paper hover:decoration-paper"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <p className="kicker mb-4 text-paper/60">Giften</p>
+              <p className="font-serif text-xl tracking-wide">
                 NL87 INGB 0005313860
               </p>
-              <p className="mt-1 text-xs text-primary-300">
+              <p className="mt-1 font-serif text-[0.9375rem] text-paper/80">
                 t.n.v. Stichting Kettingreactie Amsterdam
+              </p>
+              <p className="mt-4 font-serif text-[0.9375rem] leading-relaxed text-paper/80">
+                Giften zijn aftrekbaar; de stichting is ANBI-geregistreerd
+                onder RSIN 821887300.
               </p>
             </div>
           </div>
-        </div>
 
-        {/* Bottom bar */}
-        <div className="mt-16 border-t border-white/10 pt-6">
-          <div className="flex flex-col items-center justify-between gap-4 text-xs text-primary-300 sm:flex-row">
-            <p>
-              &copy; {currentYear} Stichting Kettingreactie · Alle rechten
-              voorbehouden
+          <div className="flex flex-col items-start justify-between gap-3 pt-6 sm:flex-row sm:items-baseline">
+            <p className="kicker text-paper/50">
+              © {currentYear} Stichting Kettingreactie
             </p>
-            <div className="flex items-center gap-5">
-              <Link
-                href="/privacyverklaring"
-                className="transition-colors hover:text-accent-400"
-              >
-                Privacyverklaring
-              </Link>
-              <Link
-                href="/cookie-instellingen"
-                className="transition-colors hover:text-accent-400"
-              >
-                Cookie-instellingen
-              </Link>
-              <Link
-                href="/rsin"
-                className="transition-colors hover:text-accent-400"
-              >
-                ANBI & RSIN
-              </Link>
-            </div>
+            <ul className="flex flex-wrap gap-x-6 gap-y-2">
+              <li>
+                <Link
+                  href="/privacyverklaring"
+                  className="kicker text-paper/50 hover:text-paper"
+                >
+                  Privacyverklaring
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/cookie-instellingen"
+                  className="kicker text-paper/50 hover:text-paper"
+                >
+                  Cookie-instellingen
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/rsin"
+                  className="kicker text-paper/50 hover:text-paper"
+                >
+                  ANBI &amp; RSIN
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

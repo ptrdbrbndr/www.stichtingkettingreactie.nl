@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Menu, X, User, Heart } from "lucide-react";
 
 type NavItem = {
   label: string;
@@ -31,7 +30,7 @@ const navItems: NavItem[] = [
     children: [
       { label: "Abayashram – Vision India", href: "/abayashram-vision-india-2" },
       { label: "UWA – Working women's hostel", href: "/working-womens-hostel-uwa" },
-      { label: "ASHA Foundation – HIV positieve vrouwen", href: "/hiv-positive-women-asha-foundation" },
+      { label: "ASHA Foundation – HIV-positieve vrouwen", href: "/hiv-positive-women-asha-foundation" },
     ],
   },
   { label: "Nieuws", href: "/nieuws" },
@@ -59,17 +58,10 @@ const navItems: NavItem[] = [
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [openDesktopIdx, setOpenDesktopIdx] = useState<number | null>(null);
   const [openMobileIdx, setOpenMobileIdx] = useState<number | null>(null);
   const pathname = usePathname();
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -98,268 +90,282 @@ export default function Header() {
   };
 
   return (
-    <header
-      data-testid="site-header"
-      className={`sticky top-0 z-50 bg-cream/90 backdrop-blur-md transition-all duration-300 ${
-        scrolled
-          ? "border-b border-line shadow-[0_10px_30px_rgba(20,17,46,0.06)]"
-          : "border-b border-transparent"
-      }`}
-    >
+    <header data-testid="site-header" className="bg-paper">
+      {/* Dateline — het terugkerende verantwoordingsregeltje begint hier */}
+      <div className="border-b border-rule-soft">
+        <div className="mx-auto flex max-w-7xl items-baseline justify-between gap-4 px-4 py-2 sm:px-6 lg:px-8">
+          <p className="kicker text-ink-2">Amsterdam · Bangalore · sinds 2007</p>
+          <p className="kicker hidden text-ink-2 sm:block">
+            ANBI · RSIN 821887300 ·{" "}
+            <span className="mark-turmeric text-ink">
+              elke euro naar de projecten
+            </span>
+          </p>
+        </div>
+      </div>
+
+      {/* Masthead */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-24 items-center justify-between sm:h-28">
-          {/* Logo + wordmark */}
+        <div className="flex items-center justify-between gap-6 py-5 sm:py-7">
           <Link
             href="/"
             data-testid="site-logo"
-            className="group flex h-full items-center gap-4"
+            className="group flex items-center gap-4"
           >
             <Image
               src="/logo-skr.png"
-              alt="Stichting Kettingreactie"
-              width={128}
-              height={128}
+              alt=""
+              width={96}
+              height={96}
               priority
-              className="h-full w-auto shrink-0 object-contain py-1"
+              className="h-12 w-12 shrink-0 object-contain sm:h-16 sm:w-16"
             />
-            <div className="flex flex-col leading-tight">
-              <span className="text-xs font-bold uppercase tracking-[0.22em] text-accent-600 sm:text-sm">
-                Stichting
-              </span>
-              <span className="font-serif text-2xl font-bold text-primary-600 group-hover:text-accent-600 transition-colors sm:text-3xl">
+            <span className="flex flex-col">
+              <span className="kicker text-madder">Stichting</span>
+              <span className="font-serif text-3xl leading-none tracking-tight text-ink sm:text-4xl">
                 Kettingreactie
               </span>
-            </div>
+            </span>
           </Link>
 
-          {/* Desktop navigation */}
-          <nav
-            data-testid="desktop-nav"
-            className="hidden md:flex md:items-center md:gap-1"
-          >
-            {navItems.map((item, idx) => {
-              const hasChildren = !!item.children?.length;
-              const active = isSubActive(item);
-
-              if (!hasChildren) {
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    data-testid={`nav-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
-                    className={`relative rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                      active
-                        ? "text-primary-600"
-                        : "text-ink-soft hover:text-accent-600"
-                    }`}
-                  >
-                    {item.label}
-                    {active && (
-                      <span
-                        aria-hidden="true"
-                        className="absolute inset-x-3 -bottom-0.5 h-0.5 bg-accent-600"
-                      />
-                    )}
-                  </Link>
-                );
-              }
-
-              const isOpen = openDesktopIdx === idx;
-              return (
-                <div
-                  key={item.href}
-                  className="relative"
-                  onMouseEnter={() => openDropdown(idx)}
-                  onMouseLeave={scheduleCloseDropdown}
-                >
-                  <Link
-                    href={item.href}
-                    data-testid={`nav-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
-                    className={`relative flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                      active
-                        ? "text-primary-600"
-                        : "text-ink-soft hover:text-accent-600"
-                    }`}
-                    aria-haspopup="menu"
-                    aria-expanded={isOpen}
-                  >
-                    {item.label}
-                    <ChevronDown
-                      className={`h-4 w-4 transition-transform ${
-                        isOpen ? "rotate-180" : ""
-                      }`}
-                    />
-                    {active && (
-                      <span
-                        aria-hidden="true"
-                        className="absolute inset-x-3 -bottom-0.5 h-0.5 bg-accent-600"
-                      />
-                    )}
-                  </Link>
-
-                  {isOpen && (
-                    <div
-                      data-testid={`nav-dropdown-${idx}`}
-                      className="absolute left-0 top-full z-40 mt-1 min-w-[280px] overflow-hidden rounded-2xl border border-line bg-white shadow-xl ring-1 ring-primary-900/5"
-                      role="menu"
-                    >
-                      <div className="p-2">
-                        {item.children!.map((child) => {
-                          const childActive = isActive(child.href);
-                          return (
-                            <Link
-                              key={child.href}
-                              href={child.href}
-                              role="menuitem"
-                              className={`block rounded-lg px-3 py-2 text-sm transition-colors ${
-                                childActive
-                                  ? "bg-accent-50 font-medium text-accent-700"
-                                  : "text-ink-soft hover:bg-cream-dark hover:text-primary-600"
-                              }`}
-                            >
-                              {child.label}
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </nav>
-
-          {/* Right side buttons */}
-          <div className="hidden items-center gap-3 md:flex">
+          <div className="hidden items-center gap-6 md:flex">
             <Link
               href="/leden"
               data-testid="leden-button"
-              className="inline-flex items-center gap-1.5 rounded-full border border-line px-4 py-2 text-sm font-medium text-primary-600 transition-colors hover:border-primary-600 hover:bg-primary-50"
-              title="Leden-portal"
+              className="kicker text-ink-2 underline decoration-1 underline-offset-4 hover:text-ink"
             >
-              <User className="h-4 w-4" />
               Leden
             </Link>
             <Link
               href="/steun-ons"
               data-testid="doneer-button"
-              className="inline-flex items-center gap-1.5 rounded-full bg-accent-600 px-5 py-2 text-sm font-bold text-white shadow-md transition-all hover:-translate-y-0.5 hover:bg-accent-700 hover:shadow-lg active:scale-95"
+              className="kicker bg-madder px-5 py-3 text-paper transition-colors hover:bg-madder-deep"
             >
-              <Heart className="h-4 w-4" />
               Doneer
             </Link>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobiel menu — hamburger uit drie lijnen, geen icon-bibliotheek */}
           <button
             type="button"
             data-testid="mobile-menu-toggle"
-            className="inline-flex items-center justify-center rounded-lg p-2 text-primary-600 hover:bg-primary-50 md:hidden"
+            className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] border border-rule md:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Menu sluiten" : "Menu openen"}
             aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
+            <span
+              aria-hidden="true"
+              className={`h-[2px] w-5 bg-ink transition-transform ${
+                mobileMenuOpen ? "translate-y-[7px] rotate-45" : ""
+              }`}
+            />
+            <span
+              aria-hidden="true"
+              className={`h-[2px] w-5 bg-ink transition-opacity ${
+                mobileMenuOpen ? "opacity-0" : ""
+              }`}
+            />
+            <span
+              aria-hidden="true"
+              className={`h-[2px] w-5 bg-ink transition-transform ${
+                mobileMenuOpen ? "-translate-y-[7px] -rotate-45" : ""
+              }`}
+            />
           </button>
         </div>
       </div>
 
-      {/* Mobile navigation */}
-      {mobileMenuOpen && (
-        <div
-          data-testid="mobile-nav"
-          className="border-t border-line bg-cream md:hidden"
+      {/* Navigatieregel */}
+      <div className="hidden border-y-2 border-rule md:block">
+        <nav
+          data-testid="desktop-nav"
+          className="mx-auto flex max-w-7xl items-stretch px-4 sm:px-6 lg:px-8"
         >
-          <nav className="mx-auto max-w-7xl space-y-1 px-4 py-3 sm:px-6 lg:px-8">
-            {navItems.map((item, idx) => {
-              const hasChildren = !!item.children?.length;
-              const active = isSubActive(item);
+          {navItems.map((item, idx) => {
+            const hasChildren = !!item.children?.length;
+            const active = isSubActive(item);
+            const testId = `nav-${item.label.toLowerCase().replace(/\s+/g, "-")}`;
 
-              if (!hasChildren) {
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`block rounded-lg px-3 py-2 text-base font-medium transition-colors ${
-                      active
-                        ? "bg-primary-50 text-primary-600"
-                        : "text-ink-soft hover:bg-cream-dark hover:text-primary-600"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              }
-
-              const isOpen = openMobileIdx === idx;
+            if (!hasChildren) {
               return (
-                <div key={item.href}>
-                  <div className="flex items-stretch gap-1">
-                    <Link
-                      href={item.href}
-                      className={`flex-1 rounded-lg px-3 py-2 text-base font-medium transition-colors ${
-                        active
-                          ? "bg-primary-50 text-primary-600"
-                          : "text-ink-soft hover:bg-cream-dark hover:text-primary-600"
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                    <button
-                      type="button"
-                      aria-label={`${item.label} submenu ${isOpen ? "sluiten" : "openen"}`}
-                      aria-expanded={isOpen}
-                      onClick={() => setOpenMobileIdx(isOpen ? null : idx)}
-                      className="rounded-lg px-3 text-ink-soft hover:bg-cream-dark hover:text-primary-600"
-                    >
-                      <ChevronDown
-                        className={`h-5 w-5 transition-transform ${
-                          isOpen ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                  </div>
-                  {isOpen && (
-                    <div className="ml-3 mt-1 space-y-1 border-l border-line pl-3">
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  data-testid={testId}
+                  className={`kicker relative px-4 py-3.5 transition-colors first:pl-0 ${
+                    active ? "text-madder" : "text-ink hover:text-madder"
+                  }`}
+                >
+                  {item.label}
+                  {active && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-x-4 bottom-0 h-[3px] bg-madder first:left-0"
+                    />
+                  )}
+                </Link>
+              );
+            }
+
+            const isOpen = openDesktopIdx === idx;
+            return (
+              <div
+                key={item.href}
+                className="relative"
+                onMouseEnter={() => openDropdown(idx)}
+                onMouseLeave={scheduleCloseDropdown}
+              >
+                <Link
+                  href={item.href}
+                  data-testid={testId}
+                  className={`kicker relative flex items-center gap-1.5 px-4 py-3.5 transition-colors ${
+                    active ? "text-madder" : "text-ink hover:text-madder"
+                  }`}
+                  aria-haspopup="menu"
+                  aria-expanded={isOpen}
+                >
+                  {item.label}
+                  <span
+                    aria-hidden="true"
+                    className={`text-[0.6rem] transition-transform ${isOpen ? "rotate-180" : ""}`}
+                  >
+                    ▾
+                  </span>
+                  {active && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-x-4 bottom-0 h-[3px] bg-madder"
+                    />
+                  )}
+                </Link>
+
+                {isOpen && (
+                  <div
+                    data-testid={`nav-dropdown-${idx}`}
+                    className="absolute left-0 top-full z-40 min-w-[280px] border border-rule bg-paper-2"
+                    role="menu"
+                  >
+                    <ul className="py-2">
                       {item.children!.map((child) => {
                         const childActive = isActive(child.href);
                         return (
-                          <Link
-                            key={child.href}
-                            href={child.href}
-                            className={`block rounded-lg px-3 py-2 text-sm transition-colors ${
-                              childActive
-                                ? "bg-accent-50 font-medium text-accent-700"
-                                : "text-ink-soft hover:bg-cream-dark hover:text-primary-600"
-                            }`}
-                          >
-                            {child.label}
-                          </Link>
+                          <li key={child.href}>
+                            <Link
+                              href={child.href}
+                              role="menuitem"
+                              className={`block px-5 py-2 font-serif text-[1.0625rem] leading-snug transition-colors ${
+                                childActive
+                                  ? "text-madder"
+                                  : "text-ink hover:text-madder"
+                              }`}
+                            >
+                              {child.label}
+                            </Link>
+                          </li>
                         );
                       })}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </nav>
+      </div>
+      {/* Op mobiel zonder open menu: alleen de dubbele katernlijn */}
+      <div className="border-t-2 border-rule md:hidden" />
+
+      {/* Mobiele navigatie */}
+      {mobileMenuOpen && (
+        <div
+          data-testid="mobile-nav"
+          className="border-b-2 border-rule bg-paper md:hidden"
+        >
+          <nav className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
+            <ul className="divide-y divide-rule-soft">
+              {navItems.map((item, idx) => {
+                const hasChildren = !!item.children?.length;
+                const active = isSubActive(item);
+
+                if (!hasChildren) {
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className={`kicker block py-3.5 ${
+                          active ? "text-madder" : "text-ink"
+                        }`}
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  );
+                }
+
+                const isOpen = openMobileIdx === idx;
+                return (
+                  <li key={item.href}>
+                    <div className="flex items-center justify-between">
+                      <Link
+                        href={item.href}
+                        className={`kicker block flex-1 py-3.5 ${
+                          active ? "text-madder" : "text-ink"
+                        }`}
+                      >
+                        {item.label}
+                      </Link>
+                      <button
+                        type="button"
+                        aria-label={`${item.label} submenu ${isOpen ? "sluiten" : "openen"}`}
+                        aria-expanded={isOpen}
+                        onClick={() => setOpenMobileIdx(isOpen ? null : idx)}
+                        className="px-4 py-3.5 text-ink"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className={`inline-block text-[0.6rem] transition-transform ${
+                            isOpen ? "rotate-180" : ""
+                          }`}
+                        >
+                          ▾
+                        </span>
+                      </button>
                     </div>
-                  )}
-                </div>
-              );
-            })}
-            <div className="mt-4 flex flex-col gap-2 pt-3 border-t border-line">
-              <Link
-                href="/leden"
-                className="flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm font-medium text-primary-600"
-              >
-                <User className="h-4 w-4" />
-                Leden-portal
-              </Link>
+                    {isOpen && (
+                      <ul className="mb-3 ml-4 border-l border-rule pl-4">
+                        {item.children!.map((child) => (
+                          <li key={child.href}>
+                            <Link
+                              href={child.href}
+                              className={`block py-2 font-serif text-lg ${
+                                isActive(child.href)
+                                  ? "text-madder"
+                                  : "text-ink"
+                              }`}
+                            >
+                              {child.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="mt-4 flex items-center gap-6 border-t-2 border-rule pt-4">
               <Link
                 href="/steun-ons"
-                className="flex items-center justify-center gap-2 rounded-full bg-accent-600 px-4 py-2 text-sm font-bold text-white shadow-md"
+                className="kicker bg-madder px-5 py-3 text-paper"
               >
-                <Heart className="h-4 w-4" />
                 Doneer
+              </Link>
+              <Link
+                href="/leden"
+                className="kicker text-ink-2 underline decoration-1 underline-offset-4"
+              >
+                Leden
               </Link>
             </div>
           </nav>

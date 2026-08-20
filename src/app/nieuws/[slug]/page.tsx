@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Calendar, Clock, Newspaper } from "lucide-react";
-import Hero from "@/components/Hero";
 import { createClient } from "@/lib/supabase/server";
 import {
   getArticleBySlug,
@@ -49,7 +47,7 @@ export async function generateMetadata({
     title: decodedTitle,
     description:
       decodedDescription ||
-      `Lees "${decodedTitle}" van Stichting Kettingreactie.`,
+      `Verslag van Stichting Kettingreactie: ${decodedTitle}.`,
   };
 }
 
@@ -79,173 +77,123 @@ export default async function NieuwsDetailPage({
 
   const articleTitle = decodeEntities(article.title);
   const articleExcerpt = decodeEntities(article.excerpt) || undefined;
-  const categoryName = decodeEntities(article.category?.name) || "Nieuwsbericht";
+  const categoryName = decodeEntities(article.category?.name) || "Verslag";
 
   return (
     <>
-      <Hero
-        eyebrow={categoryName}
-        title={articleTitle}
-        subtitle={articleExcerpt}
-        breadcrumb={[
-          { label: "Home", href: "/" },
-          { label: "Nieuws", href: "/nieuws" },
-          { label: articleTitle, href: `/nieuws/${article.slug}` },
-        ]}
-      />
-
-      {/* Metadata strip */}
-      <section className="border-b border-line bg-cream-dark/50 py-5">
-        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-4 px-4 text-sm text-ink-soft sm:px-6 lg:px-8">
-          <Link
-            href="/nieuws"
-            className="inline-flex items-center gap-2 font-bold text-accent-600 hover:underline"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Terug naar nieuws
-          </Link>
-          <div className="flex flex-wrap items-center gap-5">
-            <span className="inline-flex items-center gap-1.5">
-              <Calendar className="h-4 w-4 text-accent-600" />
-              {formattedDate}
-            </span>
-            {article.reading_time_minutes ? (
-              <span className="inline-flex items-center gap-1.5">
-                <Clock className="h-4 w-4 text-accent-600" />
-                {formatReadingTime(article.reading_time_minutes)}
-              </span>
-            ) : null}
+      {/* Reportage-kop */}
+      <section className="bg-paper">
+        <div className="mx-auto max-w-7xl px-4 pb-8 pt-6 sm:px-6 lg:px-8">
+          <div className="folio">
+            <p className="kicker text-madder">{categoryName}</p>
+            <Link href="/nieuws" className="kicker text-ink-2 hover:text-madder">
+              Alle verslagen
+            </Link>
           </div>
+          <h1 className="mt-7 max-w-4xl font-serif text-[clamp(2.25rem,5.5vw,3.75rem)] font-medium leading-[1.05] tracking-tight text-ink">
+            {articleTitle}
+          </h1>
+          {articleExcerpt && (
+            <p className="mt-6 max-w-2xl font-serif text-xl leading-relaxed text-ink-2 sm:text-[1.375rem]">
+              {articleExcerpt}
+            </p>
+          )}
+          <p className="kicker mt-7 text-ink-2">
+            {formattedDate} · Bestuur Stichting Kettingreactie
+            {article.reading_time_minutes
+              ? ` · ${formatReadingTime(article.reading_time_minutes)}`
+              : ""}
+          </p>
         </div>
       </section>
 
-      {/* Featured image */}
+      {/* Openingsfoto */}
       {article.featured_image && (
-        <section className="py-12">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            <div className="relative aspect-[16/9] overflow-hidden rounded-3xl shadow-2xl">
-              <Image
-                src={article.featured_image}
-                alt={articleTitle}
-                fill
-                sizes="(min-width: 1024px) 60vw, 100vw"
-                className="object-cover"
-                priority
-              />
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Article body */}
-      <section className="relative overflow-hidden py-12 sm:py-16">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -left-32 top-20 text-primary-600 opacity-[0.035]"
-        >
-          <svg width="560" height="560" viewBox="0 0 100 100">
-            <circle cx="40" cy="40" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
-            <circle cx="60" cy="40" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
-            <circle cx="50" cy="60" r="25" fill="none" stroke="currentColor" strokeWidth="0.8" />
-          </svg>
-        </div>
-        <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          {article.content_html ? (
-            <div
-              className="prose prose-editorial max-w-none"
-              dangerouslySetInnerHTML={{ __html: article.content_html }}
+        <figure className="mx-auto max-w-[96rem]">
+          <div className="relative aspect-[21/9] min-h-[280px] w-full overflow-hidden">
+            <Image
+              src={article.featured_image}
+              alt={articleTitle}
+              fill
+              sizes="100vw"
+              className="object-cover"
+              priority
             />
-          ) : (
-            <div className="rounded-2xl border border-line bg-white p-12 text-center shadow-sm">
-              <Newspaper className="mx-auto mb-4 h-10 w-10 text-accent-600" />
-              <p className="text-ink-soft">
-                Dit artikel heeft nog geen inhoud.
-              </p>
-            </div>
-          )}
-
-          {/* Tags */}
-          {article.tags && article.tags.length > 0 && (
-            <div className="mt-14 border-t border-line pt-6">
-              <span className="mb-3 block text-[10px] font-bold uppercase tracking-[0.22em] text-accent-600">
-                Onderwerpen
-              </span>
-              <div className="flex flex-wrap gap-2">
-                {article.tags.map((tag) => (
-                  <span
-                    key={tag.id}
-                    className="inline-flex rounded-full border border-line bg-cream-dark/60 px-3 py-1 text-xs font-semibold text-primary-600"
-                  >
-                    #{decodeEntities(tag.name)}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Related articles */}
-      {related.length > 0 && (
-        <section className="bg-cream-dark/50 py-20 sm:py-24">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-10">
-              <span className="block text-[11px] font-bold uppercase tracking-[0.2em] text-accent-600">
-                Verder lezen
-              </span>
-              <h2 className="mt-2 font-serif text-3xl font-bold text-primary-600 sm:text-4xl">
-                Meer berichten
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((item) => {
-                const relTitle = decodeEntities(item.title);
-                const relExcerpt = decodeEntities(item.excerpt);
-                const relCategory =
-                  decodeEntities(item.category?.name) || "Update";
-                return (
-                  <Link
-                    key={item.id}
-                    href={`/nieuws/${item.slug}`}
-                    className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
-                  >
-                    {item.featured_image ? (
-                      <div className="relative aspect-[16/10] overflow-hidden bg-cream-dark">
-                        <Image
-                          src={item.featured_image}
-                          alt={relTitle}
-                          fill
-                          sizes="(min-width: 1024px) 33vw, 100vw"
-                          className="object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                      </div>
-                    ) : (
-                      <div className="h-1.5 bg-gradient-to-r from-primary-600 via-accent-600 to-azure-500" />
-                    )}
-                    <div className="flex flex-1 flex-col p-6">
-                      <span className="block text-[10px] font-bold uppercase tracking-[0.22em] text-accent-600">
-                        {relCategory}
-                      </span>
-                      <h3 className="mt-2 font-serif text-xl font-bold leading-snug text-primary-600 transition-colors group-hover:text-accent-600">
-                        {relTitle}
-                      </h3>
-                      {relExcerpt && (
-                        <p className="mt-3 line-clamp-3 text-sm text-ink-soft">
-                          {relExcerpt}
-                        </p>
-                      )}
-                      <span className="mt-auto flex items-center gap-1 pt-4 text-sm font-bold text-accent-600">
-                        Lees verder
-                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                      </span>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
           </div>
-        </section>
+        </figure>
       )}
+
+      {/* Reportagetekst met kantlijn */}
+      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+          <article className="lg:col-span-7 lg:col-start-2">
+            {article.content_html ? (
+              <div
+                className="prose prose-editorial max-w-none"
+                dangerouslySetInnerHTML={{ __html: article.content_html }}
+              />
+            ) : (
+              <p className="font-serif text-lg text-ink-2">
+                Dit verslag heeft nog geen inhoud.
+              </p>
+            )}
+
+            {article.tags && article.tags.length > 0 && (
+              <p className="mt-12 border-t border-rule-soft pt-5 font-serif text-[0.9375rem] text-ink-2">
+                <span className="kicker mr-3 text-ink-2">Trefwoorden</span>
+                {article.tags
+                  .map((tag) => decodeEntities(tag.name))
+                  .join(", ")}
+              </p>
+            )}
+          </article>
+
+          <aside className="lg:col-span-3 lg:col-start-10">
+            <div className="border-t-2 border-rule pt-5">
+              <p className="kicker text-ink-2">Kantlijn</p>
+              <p className="mt-3 font-serif text-[0.9375rem] leading-relaxed text-ink-2">
+                Bestuursleden bezoeken de projecten op eigen kosten;
+                verslagen zoals dit komen uit die bezoeken.{" "}
+                <span className="mark-turmeric text-ink">
+                  Elke gedoneerde euro gaat naar de projecten.
+                </span>
+              </p>
+              <Link
+                href="/steun-ons"
+                className="link-editorial mt-4 inline-block font-serif text-[1.0625rem]"
+              >
+                Steun de projecten
+              </Link>
+            </div>
+          </aside>
+        </div>
+
+        {/* Verder lezen */}
+        {related.length > 0 && (
+          <div className="mt-20">
+            <div className="folio">
+              <p className="kicker text-madder">Verder lezen</p>
+            </div>
+            <ul className="mt-2">
+              {related.map((item) => (
+                <li key={item.id} className="border-b border-rule-soft py-6">
+                  <Link
+                    href={`/nieuws/${item.slug}`}
+                    className="group grid grid-cols-1 gap-2 sm:grid-cols-12 sm:gap-8"
+                  >
+                    <p className="kicker text-ink-2 sm:col-span-3 lg:col-span-2">
+                      {formatDutchDate(item.published_at ?? item.created_at)}
+                    </p>
+                    <h3 className="font-serif text-xl font-medium leading-snug text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink sm:col-span-9">
+                      {decodeEntities(item.title)}
+                    </h3>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </section>
     </>
   );
 }
