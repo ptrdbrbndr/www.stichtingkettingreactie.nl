@@ -63,7 +63,7 @@ export default async function NieuwsPage() {
                 {featured.featured_image && (
                   <Link href={`/nieuws/${featured.slug}`} className="block">
                     <figure>
-                      <div className="relative aspect-[16/10] overflow-hidden">
+                      <div className="foto foto-diep relative aspect-[16/10]">
                         <Image
                           src={featured.featured_image}
                           alt=""
@@ -141,7 +141,7 @@ export default async function NieuwsPage() {
                       </div>
                       {article.featured_image && (
                         <div className="hidden sm:col-span-2 sm:block">
-                          <div className="relative aspect-[4/3] overflow-hidden">
+                          <div className="foto relative aspect-[4/3]">
                             <Image
                               src={article.featured_image}
                               alt=""

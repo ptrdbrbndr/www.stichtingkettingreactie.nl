@@ -110,13 +110,13 @@ export default async function NieuwsDetailPage({
       {/* Openingsfoto */}
       {article.featured_image && (
         <figure className="mx-auto max-w-[96rem]">
-          <div className="relative aspect-[21/9] min-h-[280px] w-full overflow-hidden">
+          <div className="relative aspect-[16/9] max-h-[70vh] w-full overflow-hidden">
             <Image
               src={article.featured_image}
               alt={articleTitle}
               fill
               sizes="100vw"
-              className="object-cover"
+              className="object-cover object-[50%_30%]"
               priority
             />
           </div>

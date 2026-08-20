@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import Hero from "@/components/Hero";
+import Onthul from "@/components/Onthul";
 import Schakel from "@/components/Schakel";
 
 export const metadata: Metadata = {
@@ -14,6 +15,8 @@ const projecten = [
   {
     nummer: "I",
     kleur: "text-azure-bright",
+    aspect: "aspect-[3/2]",
+    positie: "",
     title: "Abayashram",
     plaats: "Hoskote, bij Bangalore",
     organisatie: "Vision India, Joby Varghese",
@@ -26,6 +29,8 @@ const projecten = [
   {
     nummer: "II",
     kleur: "text-[#2f2483]",
+    aspect: "aspect-[4/3]",
+    positie: "object-[50%_30%]",
     title: "UWA Working Women's Hostel",
     plaats: "Bangalore",
     organisatie: "University Women's Association Bangalore",
@@ -38,6 +43,8 @@ const projecten = [
   {
     nummer: "III",
     kleur: "text-magenta-bright",
+    aspect: "aspect-[3/2]",
+    positie: "object-[50%_35%]",
     title: "ASHA Foundation",
     plaats: "Bangalore",
     organisatie: "Dr. Glory Alexander",
@@ -67,23 +74,23 @@ export default function ProjectenPage() {
           {projecten.map((project, idx) => {
             const reversed = idx % 2 === 1;
             return (
-              <article
-                key={project.nummer}
-                className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-0"
-              >
+              <Onthul key={project.nummer}>
+              <article className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-0">
                 <div
                   className={`lg:col-span-7 ${
                     reversed ? "lg:order-2 lg:col-start-6" : ""
                   }`}
                 >
                   <figure>
-                    <div className="relative aspect-[3/2] overflow-hidden">
+                    <div
+                      className={`foto foto-diep relative ${project.aspect}`}
+                    >
                       <Image
                         src={project.image}
                         alt={project.imageAlt}
                         fill
                         sizes="(min-width: 1024px) 58vw, 100vw"
-                        className="object-cover"
+                        className={`object-cover ${project.positie}`}
                       />
                     </div>
                     <figcaption className="caption">
@@ -124,6 +131,7 @@ export default function ProjectenPage() {
                   </Link>
                 </div>
               </article>
+              </Onthul>
             );
           })}
         </div>

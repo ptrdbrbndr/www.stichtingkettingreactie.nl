@@ -22,24 +22,7 @@ export default function OverOnsPage() {
         ]}
       />
 
-      <figure className="mx-auto max-w-[96rem]">
-        <div className="relative aspect-[21/9] min-h-[300px] w-full overflow-hidden">
-          <Image
-            src="/images/algemeen/sytze-jelly-joby.jpg"
-            alt="Bestuursleden Sytze en Jelly met Joby Varghese van Vision India"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-        </div>
-        <figcaption className="caption mx-4 sm:mx-6 lg:mx-8">
-          Bestuursleden Sytze en Jelly met Joby Varghese van Vision India,
-          tijdens een projectbezoek op eigen kosten.
-        </figcaption>
-      </figure>
-
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
           <div className="lg:col-span-7 lg:col-start-2">
             <h2 className="font-display text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
@@ -70,6 +53,23 @@ export default function OverOnsPage() {
                 wat er met het geld gebeurt.
               </p>
             </div>
+
+            <figure className="mt-12 lg:-mr-24">
+              <div className="foto foto-diep">
+                <Image
+                  src="/images/algemeen/sytze-jelly-joby.jpg"
+                  alt="Bestuursleden Sytze en Jelly met Joby Varghese van Vision India"
+                  width={1080}
+                  height={1080}
+                  sizes="(min-width: 1024px) 60vw, 100vw"
+                  className="h-auto w-full"
+                />
+              </div>
+              <figcaption className="caption">
+                Bestuursleden Sytze en Jelly met Joby Varghese van Vision
+                India, tijdens een projectbezoek op eigen kosten.
+              </figcaption>
+            </figure>
 
             <h2 className="mt-14 border-t-2 border-rule pt-8 font-display text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
               De drie projecten

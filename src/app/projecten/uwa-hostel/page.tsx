@@ -26,16 +26,16 @@ export default function UwaHostelPage() {
       <figure className="mx-auto max-w-[96rem]">
         <div className="relative aspect-[21/9] min-h-[300px] w-full overflow-hidden">
           <Image
-            src="/images/projecten/uwa-hostel/girls-audience.jpg"
-            alt="Bewoonsters van het UWA-hostel tijdens een bijeenkomst"
+            src="/images/projecten/uwa-hostel/alumni-meeting.jpg"
+            alt="Oud-bewoonsters van het UWA-hostel tijdens een alumnibijeenkomst"
             fill
             priority
             sizes="100vw"
-            className="object-cover"
+            className="object-cover object-[50%_45%]"
           />
         </div>
         <figcaption className="caption mx-4 sm:mx-6 lg:mx-8">
-          Bewoonsters van het UWA-hostel tijdens een bijeenkomst, Bangalore.
+          Oud-bewoonsters van het hostel tijdens een alumnibijeenkomst.
         </figcaption>
       </figure>
 
@@ -66,29 +66,31 @@ export default function UwaHostelPage() {
               </p>
             </div>
 
-            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:-mr-24">
-              <figure>
-                <div className="relative aspect-[4/3] overflow-hidden">
+            <div className="mt-12 grid items-start gap-6 sm:grid-cols-12 lg:-mr-24">
+              <figure className="sm:col-span-5">
+                <div className="foto foto-diep">
                   <Image
-                    src="/images/projecten/uwa-hostel/alumni-meeting.jpg"
-                    alt="Oud-bewoonsters tijdens een alumnibijeenkomst van het hostel"
-                    fill
-                    sizes="(min-width: 640px) 40vw, 100vw"
-                    className="object-cover"
+                    src="/images/projecten/uwa-hostel/girls-audience.jpg"
+                    alt="Bewoonsters van het UWA-hostel tijdens een bijeenkomst"
+                    width={904}
+                    height={916}
+                    sizes="(min-width: 640px) 30vw, 100vw"
+                    className="h-auto w-full"
                   />
                 </div>
                 <figcaption className="caption">
-                  Alumnibijeenkomst: oud-bewoonsters keren terug.
+                  Bewoonsters tijdens een bijeenkomst.
                 </figcaption>
               </figure>
-              <figure className="sm:mt-10">
-                <div className="relative aspect-[4/3] overflow-hidden">
+              <figure className="sm:col-span-7 sm:mt-16">
+                <div className="foto foto-diep">
                   <Image
                     src="/images/projecten/uwa-hostel/hostel-collage.jpg"
                     alt="Het gebouw en de gemeenschappelijke ruimtes van het UWA-hostel"
-                    fill
+                    width={914}
+                    height={341}
                     sizes="(min-width: 640px) 40vw, 100vw"
-                    className="object-cover"
+                    className="h-auto w-full"
                   />
                 </div>
                 <figcaption className="caption">

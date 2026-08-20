@@ -71,7 +71,7 @@ export default function AbayashramPage() {
             {/* Fotopaar — breekt de leeskolom */}
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:-mr-24">
               <figure>
-                <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="foto foto-diep relative aspect-[4/3]">
                   <Image
                     src="/images/projecten/abayashram/vrouwen-abayashram.jpg"
                     alt="Vrouwen van Abayashram"
@@ -85,7 +85,7 @@ export default function AbayashramPage() {
                 </figcaption>
               </figure>
               <figure className="sm:mt-10">
-                <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="foto foto-diep relative aspect-[4/3]">
                   <Image
                     src="/images/projecten/abayashram/handwerk.jpg"
                     alt="Handwerk gemaakt door de vrouwen"
@@ -101,7 +101,7 @@ export default function AbayashramPage() {
             </div>
 
             <figure className="mt-12">
-              <div className="relative aspect-[3/2] overflow-hidden">
+              <div className="foto foto-diep relative aspect-[3/2]">
                 <Image
                   src="/images/projecten/abayashram/sytze-jelly-abayashram.jpg"
                   alt="Bestuursleden Sytze en Jelly op bezoek bij de vrouwen van Abayashram"

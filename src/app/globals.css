@@ -145,6 +145,57 @@ body {
 }
 
 /* ==========================================================================
+   Onthulling bij scroll — subtiel, eenmalig, met respect voor
+   prefers-reduced-motion (klasse gezet door components/Onthul.tsx)
+   ========================================================================== */
+.onthul {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--onthul-delay, 0ms);
+}
+.onthul-zichtbaar {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .onthul {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Foto's: trage, rustige zoom op hover */
+.foto {
+  overflow: hidden;
+}
+.foto img {
+  transition: transform 1400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.foto:hover img,
+a:hover .foto img,
+a:focus-visible .foto img {
+  transform: scale(1.035);
+}
+@media (prefers-reduced-motion: reduce) {
+  .foto img {
+    transition: none;
+  }
+  .foto:hover img,
+  a:hover .foto img {
+    transform: none;
+  }
+}
+
+/* Zachte dieptewerking onder grid-brekende foto's (geen kaart-schaduw) */
+.foto-diep {
+  box-shadow: 0 34px 80px -38px rgba(30, 23, 80, 0.45);
+}
+
+/* ==========================================================================
    Openingsanimatie homepage — de enige geregisseerde beweging op de site
    ========================================================================== */
 @keyframes rise-in {

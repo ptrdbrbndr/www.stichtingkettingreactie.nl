@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Hero from "@/components/Hero";
 import Schakel from "@/components/Schakel";
+import Onthul from "@/components/Onthul";
 import { createClient } from "@/lib/supabase/server";
 import { getHomepageConfig, getArticles } from "@ptrdbrbndr/cms";
 import { decodeEntities } from "@/lib/text";
@@ -160,30 +161,30 @@ export default async function HomePage() {
         className="mx-auto max-w-7xl px-4 pb-4 pt-16 sm:px-6 lg:px-8"
       >
         <div className="grid grid-cols-2 gap-x-8 gap-y-10 border-t-2 border-rule pt-8 lg:grid-cols-4">
-          <div>
+          <Onthul>
             <p className="font-display text-6xl font-medium text-ink">3</p>
             <p className="kicker mt-3 text-ink-2">
               Projecten in en rondom Bangalore
             </p>
-          </div>
-          <div>
+          </Onthul>
+          <Onthul delay={90}>
             <p className="font-display text-6xl font-medium text-magenta">100%</p>
             <p className="kicker mt-3 text-ink-2">
               Van elke gift naar de projecten
             </p>
-          </div>
-          <div>
+          </Onthul>
+          <Onthul delay={180}>
             <p className="font-display text-6xl font-medium text-ink">2007</p>
             <p className="kicker mt-3 text-ink-2">
               Opgericht, sindsdien ANBI-erkend
             </p>
-          </div>
-          <div>
+          </Onthul>
+          <Onthul delay={270}>
             <p className="font-display text-6xl font-medium text-ink">€ 0</p>
             <p className="kicker mt-3 text-ink-2">
               Bestuursvergoeding; reizen op eigen kosten
             </p>
-          </div>
+          </Onthul>
         </div>
       </section>
 
@@ -193,15 +194,15 @@ export default async function HomePage() {
         className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8"
       >
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-4">
+          <Onthul className="lg:col-span-4">
             <div className="folio">
               <p className="kicker text-magenta">Waarom deze stichting</p>
             </div>
             <h2 className="mt-6 font-display text-4xl font-medium leading-[1.06] tracking-tight text-ink sm:text-5xl">
               {missionTitle}
             </h2>
-          </div>
-          <div className="lg:col-span-5 lg:col-start-6 lg:pt-24">
+          </Onthul>
+          <Onthul delay={120} className="lg:col-span-5 lg:col-start-6 lg:pt-24">
             <p className="font-serif text-xl leading-relaxed text-ink">
               {missionText}
             </p>
@@ -218,8 +219,8 @@ export default async function HomePage() {
             >
               Over de stichting en het bestuur
             </Link>
-          </div>
-          <div className="hidden lg:col-span-2 lg:block lg:pt-24">
+          </Onthul>
+          <Onthul delay={240} className="hidden lg:col-span-2 lg:block lg:pt-24">
             <div className="border-t-2 border-rule pt-4">
               <p className="kicker text-ink-2">Kantlijn</p>
               <p className="mt-3 font-serif text-[0.9375rem] leading-relaxed text-ink-2">
@@ -234,16 +235,22 @@ export default async function HomePage() {
                 .
               </p>
             </div>
-          </div>
+          </Onthul>
         </div>
       </section>
 
       {/* De drie projecten — drie hoofdstukken */}
       <section
         data-testid="projecten-section"
-        className="border-t-2 border-rule bg-paper-3/60"
+        className="relative overflow-hidden border-t-2 border-rule bg-paper-3/60"
       >
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-44 -top-32 text-rule opacity-[0.05]"
+        >
+          <Schakel className="h-[560px] w-auto -rotate-45" />
+        </div>
+        <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
           <div className="folio border-t-0 pt-0">
             <p className="kicker text-magenta">Katern · De drie projecten</p>
             <p className="kicker hidden text-ink-2 sm:block">
@@ -255,8 +262,8 @@ export default async function HomePage() {
             {projecten.map((project, idx) => {
               const reversed = idx % 2 === 1;
               return (
+                <Onthul key={project.slug}>
                 <article
-                  key={project.slug}
                   data-testid={`project-card-${project.slug}`}
                   className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-0"
                 >
@@ -267,7 +274,7 @@ export default async function HomePage() {
                   >
                     <figure>
                       <div
-                        className={`relative ${project.aspect} overflow-hidden`}
+                        className={`foto foto-diep relative ${project.aspect}`}
                       >
                         <Image
                           src={project.image}
@@ -277,17 +284,19 @@ export default async function HomePage() {
                           className="object-cover"
                         />
                       </div>
-                      <figcaption className="caption">
+                      <figcaption
+                        className={`caption ${reversed ? "lg:ml-32" : "lg:mr-32"}`}
+                      >
                         {project.imageAlt}
                       </figcaption>
                     </figure>
                   </div>
                   <div
-                    className={`lg:col-span-5 ${
+                    className={`relative z-10 lg:col-span-5 lg:mt-14 lg:bg-paper lg:p-10 ${
                       reversed
-                        ? "lg:order-1 lg:col-start-1 lg:pr-14"
-                        : "lg:col-start-8 lg:pl-2"
-                    } lg:-mt-2`}
+                        ? "lg:order-1 lg:col-start-1 lg:-mr-24"
+                        : "lg:col-start-8 lg:-ml-24"
+                    }`}
                   >
                     <p
                       aria-hidden="true"
@@ -318,6 +327,7 @@ export default async function HomePage() {
                     </Link>
                   </div>
                 </article>
+                </Onthul>
               );
             })}
           </div>
@@ -352,17 +362,17 @@ export default async function HomePage() {
           </p>
         ) : (
           <div className="mt-10 grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-10">
-            <div className="lg:col-span-7">
+            <Onthul className="lg:col-span-7">
               {newsFeatured?.featured_image && (
                 <Link href={`/nieuws/${newsFeatured.slug}`} className="block">
                   <figure>
-                    <div className="relative aspect-[16/10] overflow-hidden">
+                    <div className="foto foto-diep relative aspect-[16/10]">
                       <Image
                         src={newsFeatured.featured_image}
                         alt=""
                         fill
                         sizes="(min-width: 1024px) 55vw, 100vw"
-                        className="object-cover"
+                        className="object-cover object-[50%_30%]"
                       />
                     </div>
                   </figure>
@@ -388,9 +398,9 @@ export default async function HomePage() {
                   {decodeEntities(newsFeatured.excerpt)}
                 </p>
               )}
-            </div>
+            </Onthul>
 
-            <div className="lg:col-span-4 lg:col-start-9">
+            <Onthul delay={140} className="lg:col-span-4 lg:col-start-9">
               <ul>
                 {newsList.map((article) => (
                   <li
@@ -417,7 +427,7 @@ export default async function HomePage() {
               >
                 Het volledige archief
               </Link>
-            </div>
+            </Onthul>
           </div>
         )}
       </section>
@@ -425,11 +435,17 @@ export default async function HomePage() {
       {/* Doneer-strook — één rustige route */}
       <section
         data-testid="donatie-cta"
-        className="border-t-2 border-rule bg-paper-3/60"
+        className="relative overflow-hidden border-t-2 border-rule bg-paper-3/60"
       >
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-40 -left-40 text-rule opacity-[0.05]"
+        >
+          <Schakel className="h-[440px] w-auto -rotate-45" />
+        </div>
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
-            <div className="lg:col-span-5">
+            <Onthul className="lg:col-span-5">
               <p className="kicker text-magenta">Steunen</p>
               <h2 className="mt-4 font-display text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
                 Een gift komt zonder omwegen aan
@@ -439,8 +455,8 @@ export default async function HomePage() {
                 Giften zijn aftrekbaar; de ANBI-registratie is te controleren
                 bij de Belastingdienst onder RSIN 821887300.
               </p>
-            </div>
-            <div className="lg:col-span-6 lg:col-start-7">
+            </Onthul>
+            <Onthul delay={120} className="lg:col-span-6 lg:col-start-7">
               <div className="border-t-2 border-rule pt-5">
                 <p className="kicker text-ink-2">Rekeningnummer</p>
                 <p className="mt-2 font-display text-3xl tracking-wide text-ink sm:text-4xl">
@@ -465,7 +481,7 @@ export default async function HomePage() {
                   Over belastingaftrek
                 </Link>
               </div>
-            </div>
+            </Onthul>
           </div>
         </div>
       </section>

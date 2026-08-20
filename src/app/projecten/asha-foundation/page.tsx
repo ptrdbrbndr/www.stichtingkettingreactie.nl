@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Hero from "@/components/Hero";
+import Onthul from "@/components/Onthul";
 
 export const metadata: Metadata = {
   title: "ASHA Foundation",
@@ -31,7 +32,7 @@ export default function AshaFoundationPage() {
             fill
             priority
             sizes="100vw"
-            className="object-cover"
+            className="object-cover object-[50%_30%]"
           />
         </div>
         <figcaption className="caption mx-4 sm:mx-6 lg:mx-8">
@@ -43,26 +44,26 @@ export default function AshaFoundationPage() {
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         {/* Cijferregel van dit hoofdstuk */}
         <div className="grid grid-cols-1 gap-x-8 gap-y-8 border-t-2 border-rule pt-8 sm:grid-cols-3">
-          <div>
+          <Onthul>
             <p className="font-display text-5xl font-medium text-magenta">
               ± 100
             </p>
             <p className="kicker mt-3 text-ink-2">
               Vrouwen ontvangen ART-medicatie
             </p>
-          </div>
-          <div>
+          </Onthul>
+          <Onthul delay={90}>
             <p className="font-display text-5xl font-medium text-ink">± 5.000</p>
             <p className="kicker mt-3 text-ink-2">
               Zwangere vrouwen getest per half jaar
             </p>
-          </div>
-          <div>
+          </Onthul>
+          <Onthul delay={180}>
             <p className="font-display text-5xl font-medium text-ink">± 1%</p>
             <p className="kicker mt-3 text-ink-2">
               Test positief en wordt direct behandeld
             </p>
-          </div>
+          </Onthul>
         </div>
 
         <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-12">
@@ -91,29 +92,31 @@ export default function AshaFoundationPage() {
               </p>
             </div>
 
-            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:-mr-24">
-              <figure>
-                <div className="relative aspect-[4/3] overflow-hidden">
+            <div className="mt-12 grid items-start gap-6 sm:grid-cols-12 lg:-mr-24">
+              <figure className="sm:col-span-7">
+                <div className="foto foto-diep">
                   <Image
                     src="/images/projecten/asha-foundation/blood-test.png"
                     alt="Bloedafname voor een HIV-test bij de ASHA Foundation"
-                    fill
+                    width={760}
+                    height={400}
                     sizes="(min-width: 640px) 40vw, 100vw"
-                    className="object-cover"
+                    className="h-auto w-full"
                   />
                 </div>
                 <figcaption className="caption">
                   Bloedafname voor een HIV-test.
                 </figcaption>
               </figure>
-              <figure className="sm:mt-10">
-                <div className="relative aspect-[4/3] overflow-hidden">
+              <figure className="sm:col-span-5 sm:mt-16">
+                <div className="foto foto-diep">
                   <Image
                     src="/images/projecten/asha-foundation/verpleegster.jpg"
                     alt="Verpleegkundige van de ASHA Foundation"
-                    fill
-                    sizes="(min-width: 640px) 40vw, 100vw"
-                    className="object-cover"
+                    width={1080}
+                    height={1080}
+                    sizes="(min-width: 640px) 30vw, 100vw"
+                    className="h-auto w-full"
                   />
                 </div>
                 <figcaption className="caption">
@@ -123,7 +126,7 @@ export default function AshaFoundationPage() {
             </div>
 
             <figure className="mt-12">
-              <div className="relative aspect-[3/2] overflow-hidden">
+              <div className="foto foto-diep relative aspect-[3/2]">
                 <Image
                   src="/images/projecten/asha-foundation/sytze-jelly-glory.jpg"
                   alt="Bestuursleden Sytze en Jelly met Dr. Glory Alexander"
