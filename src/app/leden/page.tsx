@@ -12,6 +12,7 @@ import {
   ClipboardList,
   ArrowRight,
   LogOut,
+  Settings,
 } from "lucide-react";
 import IssueReportButton from "@/components/IssueReportButton";
 import IssueListPanel from "@/components/IssueListPanel";
@@ -21,6 +22,7 @@ export default function LedenDashboardPage() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [showIssues, setShowIssues] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const supabase = createClient();
@@ -30,6 +32,13 @@ export default function LedenDashboardPage() {
       } else {
         setUser(user);
         setLoading(false);
+        // RLS laat alleen de eigen rol-rij zien; alleen admins krijgen de beheerlink
+        supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", user.id)
+          .maybeSingle()
+          .then(({ data }) => setIsAdmin(data?.role === "admin"));
       }
     });
   }, [router]);
@@ -127,6 +136,16 @@ export default function LedenDashboardPage() {
               Goedendag, {userName}
             </h1>
             <div className="flex items-center gap-3">
+              {isAdmin && (
+                <Link
+                  href="/admin"
+                  data-testid="admin-link"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-accent-600"
+                >
+                  <Settings className="h-4 w-4" />
+                  Beheer
+                </Link>
+              )}
               <IssueReportButton source="leden" />
               <button
                 type="button"
