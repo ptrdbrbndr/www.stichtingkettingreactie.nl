@@ -68,7 +68,7 @@ export default function VerantwoordingPage() {
 
       <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
         {/* Kerngegevens als cijferregel */}
-        <div className="grid grid-cols-1 gap-x-8 gap-y-8 border-t-2 border-rule pt-8 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-8 pt-2 sm:grid-cols-3">
           <div>
             <p className="font-display text-5xl font-medium text-ink">ANBI</p>
             <p className="kicker mt-3 text-ink-2">
@@ -94,7 +94,7 @@ export default function VerantwoordingPage() {
           {regels.map((regel) => (
             <div
               key={regel.term}
-              className="grid grid-cols-1 gap-3 border-b border-rule-soft py-8 first:border-t-2 first:border-t-rule lg:grid-cols-12 lg:gap-8"
+              className="grid grid-cols-1 gap-3 border-b border-rule-soft py-8 first:border-t first:border-t-rule-soft lg:grid-cols-12 lg:gap-8"
             >
               <dt className="font-display text-xl font-semibold text-ink lg:col-span-3">
                 {regel.term}

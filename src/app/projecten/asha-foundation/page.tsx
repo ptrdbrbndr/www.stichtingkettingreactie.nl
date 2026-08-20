@@ -24,26 +24,28 @@ export default function AshaFoundationPage() {
         ]}
       />
 
-      <figure className="mx-auto max-w-[96rem]">
-        <div className="relative aspect-[21/9] min-h-[300px] w-full overflow-hidden">
-          <Image
-            src="/images/projecten/asha-foundation/dr-glory.jpg"
-            alt="Dr. Glory Alexander van de ASHA Foundation"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-[50%_30%]"
-          />
-        </div>
-        <figcaption className="caption mx-4 sm:mx-6 lg:mx-8">
-          Dr. Glory Alexander, oprichter en drijvende kracht van de ASHA
-          Foundation, Bangalore.
-        </figcaption>
-      </figure>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <figure className="relative z-10 -mt-12 sm:-mt-16">
+          <div className="foto foto-diep relative aspect-[21/9] min-h-[280px]">
+            <Image
+              src="/images/projecten/asha-foundation/dr-glory.jpg"
+              alt="Dr. Glory Alexander van de ASHA Foundation"
+              fill
+              priority
+              sizes="(min-width: 1280px) 80rem, 100vw"
+              className="object-cover object-[50%_30%]"
+            />
+          </div>
+          <figcaption className="caption border-t-0 text-center">
+            Dr. Glory Alexander, oprichter en drijvende kracht van de ASHA
+            Foundation, Bangalore.
+          </figcaption>
+        </figure>
+      </div>
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         {/* Cijferregel van dit hoofdstuk */}
-        <div className="grid grid-cols-1 gap-x-8 gap-y-8 border-t-2 border-rule pt-8 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-8 pt-2 sm:grid-cols-3">
           <Onthul>
             <p className="font-display text-5xl font-medium text-magenta">
               ± 100
@@ -143,7 +145,7 @@ export default function AshaFoundationPage() {
           </div>
 
           <aside className="lg:col-span-3 lg:col-start-10">
-            <div className="border-t-2 border-rule pt-5">
+            <div className="rounded-2xl bg-paper-3 p-6">
               <p className="kicker text-magenta">Wat uw gift hier doet</p>
               <dl className="mt-5 space-y-5 font-serif">
                 <div>
@@ -179,7 +181,7 @@ export default function AshaFoundationPage() {
 
         <nav
           aria-label="Hoofdstukken"
-          className="mt-20 flex items-baseline justify-between border-t-2 border-rule pt-6"
+          className="mt-20 flex items-baseline justify-between border-t border-rule-soft pt-6"
         >
           <Link
             href="/projecten/uwa-hostel"

@@ -56,7 +56,7 @@ export default function Hero({
         >
           <Schakel className="h-[420px] w-auto -rotate-45" />
         </div>
-        <div className="relative mx-auto max-w-4xl px-4 pb-14 pt-12 text-center sm:px-6 sm:pb-16 sm:pt-14 lg:px-8">
+        <div className="relative mx-auto max-w-4xl px-4 pb-20 pt-12 text-center sm:px-6 sm:pb-24 sm:pt-14 lg:px-8">
           {breadcrumb && breadcrumb.length > 1 && (
             <nav aria-label="Kruimelpad" className="mb-4">
               <ol className="flex flex-wrap items-baseline justify-center gap-1.5">
@@ -112,7 +112,7 @@ export default function Hero({
       >
         <Schakel className="h-[440px] w-auto -rotate-45" />
       </div>
-      <div className="relative mx-auto max-w-4xl px-4 pb-16 pt-16 text-center sm:px-6 sm:pb-24 sm:pt-20 lg:px-8">
+      <div className="relative mx-auto max-w-4xl px-4 pb-24 pt-16 text-center sm:px-6 sm:pb-36 sm:pt-20 lg:px-8">
         <p className="reveal reveal-1 kicker text-magenta-bright">
           Opvang · huisvesting · HIV-zorg
         </p>

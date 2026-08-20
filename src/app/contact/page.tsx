@@ -22,7 +22,7 @@ export default function ContactPage() {
       />
 
       <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
-        <dl className="border-t-2 border-rule">
+        <dl>
           <div className="grid grid-cols-1 gap-3 border-b border-rule-soft py-8 lg:grid-cols-12 lg:gap-8">
             <dt className="font-display text-xl font-semibold text-ink lg:col-span-3">
               E-mail

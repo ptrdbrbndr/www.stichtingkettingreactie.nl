@@ -71,7 +71,7 @@ export default function OverOnsPage() {
               </figcaption>
             </figure>
 
-            <h2 className="mt-14 border-t-2 border-rule pt-8 font-display text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
+            <h2 className="mt-14 pt-2 font-display text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
               De drie projecten
             </h2>
             <ul className="mt-6">
@@ -127,7 +127,7 @@ export default function OverOnsPage() {
           </div>
 
           <aside className="lg:col-span-3 lg:col-start-10">
-            <div className="border-t-2 border-rule pt-5">
+            <div className="rounded-2xl bg-paper-3 p-6">
               <p className="kicker text-ink-2">In dit katern</p>
               <ul className="mt-4 space-y-2.5">
                 {[

@@ -24,8 +24,9 @@ export default function AbayashramPage() {
       />
 
       {/* Openingsfoto */}
-      <figure className="mx-auto max-w-[96rem]">
-        <div className="relative aspect-[21/9] min-h-[300px] w-full overflow-hidden">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <figure className="relative z-10 -mt-12 sm:-mt-16">
+        <div className="foto foto-diep relative aspect-[21/9] min-h-[280px]">
           <Image
             src="/images/projecten/abayashram/abayashram-dak.jpg"
             alt="Abayashram gezien vanaf het dak"
@@ -35,10 +36,11 @@ export default function AbayashramPage() {
             className="object-cover"
           />
         </div>
-        <figcaption className="caption mx-4 sm:mx-6 lg:mx-8">
+        <figcaption className="caption border-t-0 text-center">
           Abayashram gezien vanaf het dak, Hoskote.
         </figcaption>
       </figure>
+      </div>
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
@@ -119,7 +121,7 @@ export default function AbayashramPage() {
 
           {/* Kantlijn */}
           <aside className="lg:col-span-3 lg:col-start-10">
-            <div className="border-t-2 border-rule pt-5">
+            <div className="rounded-2xl bg-paper-3 p-6">
               <p className="kicker text-magenta">Wat uw gift hier doet</p>
               <dl className="mt-5 space-y-5 font-serif">
                 <div>
@@ -156,7 +158,7 @@ export default function AbayashramPage() {
         {/* Hoofdstuknavigatie */}
         <nav
           aria-label="Hoofdstukken"
-          className="mt-20 flex items-baseline justify-between border-t-2 border-rule pt-6"
+          className="mt-20 flex items-baseline justify-between border-t border-rule-soft pt-6"
         >
           <Link href="/projecten" className="link-editorial font-serif text-lg">
             Alle projecten

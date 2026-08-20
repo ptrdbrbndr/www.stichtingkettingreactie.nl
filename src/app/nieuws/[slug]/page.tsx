@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import Schakel from "@/components/Schakel";
 import { createClient } from "@/lib/supabase/server";
 import {
   getArticleBySlug,
@@ -81,24 +82,34 @@ export default async function NieuwsDetailPage({
 
   return (
     <>
-      {/* Reportage-kop */}
-      <section className="bg-paper">
-        <div className="mx-auto max-w-7xl px-4 pb-8 pt-6 sm:px-6 lg:px-8">
-          <div className="folio">
-            <p className="kicker text-magenta">{categoryName}</p>
-            <Link href="/nieuws" className="kicker text-ink-2 hover:text-magenta">
+      {/* Reportage-kop — donker blok */}
+      <section className="relative overflow-hidden bg-ink text-paper">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-36 -top-24 text-paper opacity-[0.06]"
+        >
+          <Schakel className="h-[420px] w-auto -rotate-45" />
+        </div>
+        <div
+          className={`relative mx-auto max-w-4xl px-4 pt-12 text-center sm:px-6 sm:pt-14 lg:px-8 ${
+            article.featured_image ? "pb-20 sm:pb-28" : "pb-14 sm:pb-16"
+          }`}
+        >
+          <p className="kicker text-magenta-bright">
+            {categoryName} ·{" "}
+            <Link href="/nieuws" className="hover:text-paper">
               Alle verslagen
             </Link>
-          </div>
-          <h1 className="mt-7 max-w-4xl font-display text-[clamp(2.25rem,5.5vw,3.75rem)] font-medium leading-[1.05] tracking-tight text-ink">
+          </p>
+          <h1 className="mx-auto mt-4 max-w-3xl font-display text-[clamp(2rem,4.5vw,3.25rem)] font-semibold leading-[1.06] tracking-tight">
             {articleTitle}
           </h1>
           {articleExcerpt && (
-            <p className="mt-6 max-w-2xl font-serif text-xl leading-relaxed text-ink-2 sm:text-[1.375rem]">
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-paper/75 sm:text-xl">
               {articleExcerpt}
             </p>
           )}
-          <p className="kicker mt-7 text-ink-2">
+          <p className="kicker mt-6 text-paper/60">
             {formattedDate} · Bestuur Stichting Kettingreactie
             {article.reading_time_minutes
               ? ` · ${formatReadingTime(article.reading_time_minutes)}`
@@ -107,20 +118,22 @@ export default async function NieuwsDetailPage({
         </div>
       </section>
 
-      {/* Openingsfoto */}
+      {/* Openingsfoto — schuift over de donkere kop heen */}
       {article.featured_image && (
-        <figure className="mx-auto max-w-[96rem]">
-          <div className="relative aspect-[16/9] max-h-[70vh] w-full overflow-hidden">
-            <Image
-              src={article.featured_image}
-              alt={articleTitle}
-              fill
-              sizes="100vw"
-              className="object-cover object-[50%_30%]"
-              priority
-            />
-          </div>
-        </figure>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <figure className="relative z-10 -mt-12 sm:-mt-16">
+            <div className="foto foto-diep relative aspect-[16/9] max-h-[70vh]">
+              <Image
+                src={article.featured_image}
+                alt={articleTitle}
+                fill
+                sizes="(min-width: 1280px) 80rem, 100vw"
+                className="object-cover object-[50%_30%]"
+                priority
+              />
+            </div>
+          </figure>
+        </div>
       )}
 
       {/* Reportagetekst met kantlijn */}
@@ -149,7 +162,7 @@ export default async function NieuwsDetailPage({
           </article>
 
           <aside className="lg:col-span-3 lg:col-start-10">
-            <div className="border-t-2 border-rule pt-5">
+            <div className="rounded-2xl bg-paper-3 p-6">
               <p className="kicker text-ink-2">Kantlijn</p>
               <p className="mt-3 font-serif text-[0.9375rem] leading-relaxed text-ink-2">
                 Bestuursleden bezoeken de projecten op eigen kosten;

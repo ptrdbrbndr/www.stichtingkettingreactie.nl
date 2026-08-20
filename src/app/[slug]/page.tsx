@@ -131,7 +131,7 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
       />
 
       <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-12 border-t-2 border-rule pt-10 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-12 pt-4 lg:grid-cols-12">
           {/* Leeskolom */}
           <article className="lg:col-span-7 lg:col-start-2">
             {page.content_html ? (
@@ -160,7 +160,7 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
           {/* Kantlijn met sectienavigatie */}
           {section && (
             <aside className="lg:col-span-3 lg:col-start-10">
-              <div className="border-t-2 border-rule pt-5 lg:sticky lg:top-8">
+              <div className="rounded-2xl bg-paper-3 p-6 lg:sticky lg:top-8">
                 <p className="kicker text-ink-2">
                   In het katern {section.label.toLowerCase()}
                 </p>

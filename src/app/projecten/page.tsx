@@ -70,7 +70,7 @@ export default function ProjectenPage() {
       />
 
       <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
-        <div className="space-y-20 border-t-2 border-rule pt-14 sm:space-y-28">
+        <div className="space-y-20 pt-6 sm:space-y-28">
           {projecten.map((project, idx) => {
             const reversed = idx % 2 === 1;
             return (

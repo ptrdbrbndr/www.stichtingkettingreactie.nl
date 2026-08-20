@@ -139,7 +139,7 @@ export default async function HomePage() {
 
       {/* Openingsfoto — schuift over de donkere hero heen */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <figure className="relative z-10 -mt-6 sm:-mt-10">
+        <figure className="relative z-10 -mt-14 sm:-mt-24">
           <div className="foto foto-diep relative aspect-[21/9] min-h-[280px]">
             <Image
               src="/images/projecten/abayashram/handwerk.jpg"

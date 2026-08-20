@@ -50,7 +50,7 @@ export default async function NieuwsPage() {
 
       {articles.length === 0 ? (
         <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
-          <p className="border-t-2 border-rule pt-8 font-serif text-lg text-ink-2">
+          <p className="pt-2 font-serif text-lg text-ink-2">
             Er zijn nog geen verslagen gepubliceerd.
           </p>
         </section>
@@ -58,7 +58,7 @@ export default async function NieuwsPage() {
         <>
           {/* Uitgelicht verslag */}
           <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 gap-10 border-t-2 border-rule pt-10 lg:grid-cols-12">
+            <div className="grid grid-cols-1 gap-10 pt-4 lg:grid-cols-12">
               <div className="lg:col-span-7">
                 {featured.featured_image && (
                   <Link href={`/nieuws/${featured.slug}`} className="block">
