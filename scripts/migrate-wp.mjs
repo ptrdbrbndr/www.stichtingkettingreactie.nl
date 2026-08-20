@@ -26,7 +26,8 @@ globalThis.HTMLElement = dom.window.HTMLElement;
 globalThis.Node = dom.window.Node;
 globalThis.DOMParser = dom.window.DOMParser;
 
-const SUPABASE_URL = "https://flwdwnefhfjagibvjpqh.supabase.co";
+const SUPABASE_URL =
+  process.env.SUPABASE_URL ?? "https://flwdwnefhfjagibvjpqh.supabase.co";
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 if (!SERVICE_KEY) {
   console.error("SUPABASE_SERVICE_KEY env var required");
@@ -125,7 +126,10 @@ async function loadMediaMap() {
 
 async function loadTaxMappings() {
   const data = JSON.parse(
-    fs.readFileSync("c:/tmp/skr-tax-mapping.json", "utf-8"),
+    fs.readFileSync(
+      process.env.TAX_MAPPING_PATH ?? "c:/tmp/skr-tax-mapping.json",
+      "utf-8",
+    ),
   );
   return {
     categoryMap: new Map(Object.entries(data.categories).map(([k, v]) => [parseInt(k), v])),
