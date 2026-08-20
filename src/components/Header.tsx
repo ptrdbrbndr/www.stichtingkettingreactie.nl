@@ -28,9 +28,9 @@ const navItems: NavItem[] = [
     label: "Projecten",
     href: "/projecten",
     children: [
-      { label: "Abayashram – Vision India", href: "/abayashram-vision-india-2" },
-      { label: "UWA – Working women's hostel", href: "/working-womens-hostel-uwa" },
-      { label: "ASHA Foundation – HIV-positieve vrouwen", href: "/hiv-positive-women-asha-foundation" },
+      { label: "Abayashram – Vision India", href: "/projecten/abayashram" },
+      { label: "UWA – Working women's hostel", href: "/projecten/uwa-hostel" },
+      { label: "ASHA Foundation – HIV-positieve vrouwen", href: "/projecten/asha-foundation" },
     ],
   },
   { label: "Nieuws", href: "/nieuws" },

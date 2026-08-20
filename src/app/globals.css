@@ -264,6 +264,8 @@ a:focus-visible .foto img {
   line-height: 1.72;
   color: var(--color-ink);
   font-size: 1.125rem;
+  /* WordPress-content staat vol inline text-align: justify — oogt stijf */
+  text-align: left !important;
 }
 .prose ul,
 .prose ol {
@@ -297,6 +299,32 @@ a:focus-visible .foto img {
   margin: 2.2rem 0;
   max-width: 100%;
   height: auto;
+  border-radius: 14px;
+  box-shadow: 0 24px 60px -30px rgba(30, 23, 80, 0.4);
+}
+/* WP-content zet vaak meerdere losse afbeeldingen in één alinea; maak daar
+   een nette fotorij van in plaats van een over elkaar vallende collage. */
+.prose p:has(> img) {
+  margin: 2.2rem 0;
+}
+.prose p:has(> img ~ img) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+.prose p:has(> img ~ img) img {
+  flex: 1 1 12rem;
+  min-width: 0;
+  width: auto;
+  max-height: 320px;
+  object-fit: cover;
+  margin: 0;
+}
+/* Alinea met precies één afbeelding: rustig op volle kolombreedte */
+.prose p:has(> img):not(:has(> img ~ img)) img {
+  width: 100%;
+  margin: 0;
 }
 .prose figure { margin: 2.2rem 0; }
 .prose figure img { margin: 0; }
@@ -309,17 +337,9 @@ a:focus-visible .foto img {
   margin-top: 0.65rem;
 }
 
-/* Reportage-opmaak: vergrote intro, initiaal */
+/* Reportage-opmaak: vergrote intro-alinea (geen initiaal — die vloekt met
+   de geometrische Jost en sloopt de uitlijning van lijst-achtige pagina's) */
 .prose-editorial > p:first-of-type {
   font-size: 1.375rem;
   line-height: 1.55;
-}
-.prose-editorial > p:first-of-type::first-letter {
-  float: left;
-  font-family: var(--font-jost), Georgia, serif;
-  font-size: 4.9rem;
-  line-height: 0.82;
-  padding: 0.08em 0.12em 0 0;
-  color: var(--color-magenta);
-  font-weight: 500;
 }

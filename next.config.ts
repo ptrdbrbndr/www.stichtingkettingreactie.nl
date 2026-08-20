@@ -26,10 +26,14 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Oude WP-projectpagina's -> de nieuwe projecthoofdstukken (redesign v3)
+      { source: "/projecten/hiv-positive-women-asha-foundation", destination: "/projecten/asha-foundation", permanent: true },
+      { source: "/projecten/working-womens-hostel-uwa", destination: "/projecten/uwa-hostel", permanent: true },
+      { source: "/projecten/abayashram-vision-india-2", destination: "/projecten/abayashram", permanent: true },
+      { source: "/hiv-positive-women-asha-foundation", destination: "/projecten/asha-foundation", permanent: true },
+      { source: "/working-womens-hostel-uwa", destination: "/projecten/uwa-hostel", permanent: true },
+      { source: "/abayashram-vision-india-2", destination: "/projecten/abayashram", permanent: true },
       // Hierarchische WP page paths -> flat slug routes (na migratie van WP naar Supabase pages)
-      { source: "/projecten/hiv-positive-women-asha-foundation", destination: "/hiv-positive-women-asha-foundation", permanent: true },
-      { source: "/projecten/working-womens-hostel-uwa", destination: "/working-womens-hostel-uwa", permanent: true },
-      { source: "/projecten/abayashram-vision-india-2", destination: "/abayashram-vision-india-2", permanent: true },
       { source: "/welkom", destination: "/over-ons", permanent: true },
       { source: "/welkom/beleidsplan", destination: "/beleidsplan", permanent: true },
       { source: "/welkom/doelstelling", destination: "/doelstelling", permanent: true },

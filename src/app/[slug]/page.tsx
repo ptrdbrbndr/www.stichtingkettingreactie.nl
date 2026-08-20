@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Hero from "@/components/Hero";
+import Schakel from "@/components/Schakel";
 import { createClient } from "@/lib/supabase/server";
 import { getPageBySlug } from "@ptrdbrbndr/cms";
 import { decodeEntities } from "@/lib/text";
@@ -160,39 +161,50 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
           {/* Kantlijn met sectienavigatie */}
           {section && (
             <aside className="lg:col-span-3 lg:col-start-10">
-              <div className="rounded-2xl bg-paper-3 p-6 lg:sticky lg:top-8">
-                <p className="kicker text-ink-2">
-                  In het katern {section.label.toLowerCase()}
-                </p>
-                <ul className="mt-4 space-y-2.5">
-                  {section.siblings.map((sib) => {
-                    const isActive = sib.slug === slug;
-                    return (
-                      <li key={sib.slug}>
-                        <Link
-                          href={`/${sib.slug}`}
-                          aria-current={isActive ? "page" : undefined}
-                          className={`font-serif text-[1.0625rem] underline decoration-1 underline-offset-4 transition-colors ${
-                            isActive
-                              ? "text-magenta decoration-magenta"
-                              : "text-ink decoration-transparent hover:decoration-ink"
-                          }`}
-                        >
-                          {sib.label}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-                <p className="mt-7 border-t border-rule-soft pt-4 font-serif text-[0.9375rem] leading-relaxed text-ink-2">
-                  <span className="mark-azure text-ink">
-                    Elke euro gaat naar de projecten.
-                  </span>{" "}
-                  ANBI, RSIN 821887300.{" "}
-                  <Link href="/steun-ons" className="link-editorial">
-                    Doneren
+              <div className="space-y-5 lg:sticky lg:top-8">
+                <div className="rounded-2xl bg-paper-3 p-6">
+                  <p className="kicker text-ink-2">
+                    In het katern {section.label.toLowerCase()}
+                  </p>
+                  <ul className="mt-4 space-y-2.5">
+                    {section.siblings.map((sib) => {
+                      const isActive = sib.slug === slug;
+                      return (
+                        <li key={sib.slug}>
+                          <Link
+                            href={`/${sib.slug}`}
+                            aria-current={isActive ? "page" : undefined}
+                            className={`font-serif text-[1.0625rem] underline decoration-1 underline-offset-4 transition-colors ${
+                              isActive
+                                ? "text-magenta decoration-magenta"
+                                : "text-ink decoration-transparent hover:decoration-ink"
+                            }`}
+                          >
+                            {sib.label}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+                <div className="relative overflow-hidden rounded-2xl bg-ink p-6 text-paper">
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -right-10 -top-8 text-paper opacity-[0.07]"
+                  >
+                    <Schakel className="h-28 w-auto -rotate-45" />
+                  </div>
+                  <p className="kicker text-magenta-bright">Steunen</p>
+                  <p className="mt-2 text-[0.9375rem] leading-relaxed text-paper/80">
+                    Elke euro gaat naar de projecten. ANBI, RSIN 821887300.
+                  </p>
+                  <Link
+                    href="/steun-ons"
+                    className="pil mt-4 bg-magenta px-6 py-3 text-paper hover:bg-magenta-deep"
+                  >
+                    Doneer
                   </Link>
-                </p>
+                </div>
               </div>
             </aside>
           )}

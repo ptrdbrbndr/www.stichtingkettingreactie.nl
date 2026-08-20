@@ -162,21 +162,32 @@ export default async function NieuwsDetailPage({
           </article>
 
           <aside className="lg:col-span-3 lg:col-start-10">
-            <div className="rounded-2xl bg-paper-3 p-6">
-              <p className="kicker text-ink-2">Kantlijn</p>
-              <p className="mt-3 font-serif text-[0.9375rem] leading-relaxed text-ink-2">
-                Bestuursleden bezoeken de projecten op eigen kosten;
-                verslagen zoals dit komen uit die bezoeken.{" "}
-                <span className="mark-azure text-ink">
-                  Elke gedoneerde euro gaat naar de projecten.
-                </span>
-              </p>
-              <Link
-                href="/steun-ons"
-                className="link-editorial mt-4 inline-block font-serif text-[1.0625rem]"
-              >
-                Steun de projecten
-              </Link>
+            <div className="space-y-5 lg:sticky lg:top-8">
+              <div className="rounded-2xl bg-paper-3 p-6">
+                <p className="kicker text-ink-2">Kantlijn</p>
+                <p className="mt-3 font-serif text-[0.9375rem] leading-relaxed text-ink-2">
+                  Bestuursleden bezoeken de projecten op eigen kosten;
+                  verslagen zoals dit komen uit die bezoeken.
+                </p>
+              </div>
+              <div className="relative overflow-hidden rounded-2xl bg-ink p-6 text-paper">
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -right-10 -top-8 text-paper opacity-[0.07]"
+                >
+                  <Schakel className="h-28 w-auto -rotate-45" />
+                </div>
+                <p className="kicker text-magenta-bright">Steunen</p>
+                <p className="mt-2 text-[0.9375rem] leading-relaxed text-paper/80">
+                  Elke euro gaat naar de projecten. ANBI, RSIN 821887300.
+                </p>
+                <Link
+                  href="/steun-ons"
+                  className="pil mt-4 bg-magenta px-6 py-3 text-paper hover:bg-magenta-deep"
+                >
+                  Doneer
+                </Link>
+              </div>
             </div>
           </aside>
         </div>

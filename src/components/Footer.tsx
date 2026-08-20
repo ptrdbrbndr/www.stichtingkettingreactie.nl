@@ -12,9 +12,9 @@ const katernen = [
 ];
 
 const projectLinks = [
-  { label: "Abayashram – Vision India", href: "/abayashram-vision-india-2" },
-  { label: "UWA Working Women's Hostel", href: "/working-womens-hostel-uwa" },
-  { label: "ASHA Foundation", href: "/hiv-positive-women-asha-foundation" },
+  { label: "Abayashram – Vision India", href: "/projecten/abayashram" },
+  { label: "UWA Working Women's Hostel", href: "/projecten/uwa-hostel" },
+  { label: "ASHA Foundation", href: "/projecten/asha-foundation" },
 ];
 
 export default function Footer() {
