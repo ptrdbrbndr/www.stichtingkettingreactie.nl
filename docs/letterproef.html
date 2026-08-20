@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Letterproef — Stichting Kettingreactie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Archivo:ital,wdth,wght@0,62..125,300..800;1,62..125,400&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=Alegreya+Sans:ital,wght@0,400;0,700;0,800;1,400&family=Alegreya:ital,wght@0,400;0,600;1,400&family=Schibsted+Grotesk:wght@400;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #fdfdfc; --ink: #1e1750; --ink2: #55517a;
+    --rule: #251d66; --magenta: #be185d; --magentab: #e83a8e; --azure: #0098de;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #e9e8f0; color: var(--ink); padding: 2rem; }
+  .intro { max-width: 70rem; margin: 0 auto 2rem; font: 400 15px/1.5 system-ui; color: #333; }
+  .intro strong { font-size: 20px; display: block; margin-bottom: .4rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; max-width: 96rem; margin: 0 auto; }
+  .kaart { background: var(--paper); border: 1px solid #ccc; display: flex; flex-direction: column; }
+  .naam { background: #333; color: #fff; font: 700 13px/1 system-ui; letter-spacing: .08em; text-transform: uppercase; padding: .8rem 1.2rem; }
+  .naam small { display: block; font-weight: 400; text-transform: none; letter-spacing: 0; margin-top: .35rem; opacity: .8; }
+  .vlak { padding: 1.6rem 1.6rem 2rem; }
+  .donker { background: var(--ink); color: var(--paper); }
+  .kicker { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+  .kicker.m { color: var(--magenta); }
+  .donker .kicker { color: var(--magentab); }
+  h1 { font-size: clamp(30px, 3.2vw, 44px); line-height: 1.04; letter-spacing: -0.015em; margin: .7rem 0 1rem; }
+  .stand { font-size: 19px; line-height: 1.5; color: var(--ink2); margin-bottom: 1.1rem; }
+  .donker .stand { color: #c9c5e2; }
+  p.brood { font-size: 16.5px; line-height: 1.65; margin-bottom: 1rem; }
+  .cijfer { font-size: 44px; line-height: 1; margin: .2rem 0 .3rem; }
+  .cijfer.m { color: var(--magenta); }
+  .knop { display: inline-block; background: var(--magenta); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; padding: 1rem 1.6rem; text-decoration: none; margin-top: .4rem; }
+  .rijtje { border-top: 2px solid var(--rule); margin-top: 1.2rem; padding-top: .8rem; display: flex; justify-content: space-between; align-items: baseline; }
+
+  /* Richting 1 — Geometrisch (Jost) */
+  .f-geo { font-family: "Jost", sans-serif; }
+  .f-geo h1 { font-weight: 600; }
+  .f-geo .brood, .f-geo .stand { font-weight: 400; }
+  .f-geo .kicker, .f-geo .knop { font-family: "Jost", sans-serif; }
+
+  /* Richting 2 — Krachtig neutraal (Archivo + Source Sans 3) */
+  .f-kracht h1, .f-kracht .cijfer, .f-kracht .kicker, .f-kracht .knop { font-family: "Archivo", sans-serif; }
+  .f-kracht h1 { font-weight: 700; font-stretch: 115%; letter-spacing: -0.01em; }
+  .f-kracht .cijfer { font-weight: 800; font-stretch: 118%; }
+  .f-kracht .brood, .f-kracht .stand { font-family: "Source Sans 3", sans-serif; }
+
+  /* Richting 3 — Warm humanistisch (Alegreya Sans + Alegreya) */
+  .f-warm h1, .f-warm .cijfer, .f-warm .kicker, .f-warm .knop { font-family: "Alegreya Sans", sans-serif; }
+  .f-warm h1 { font-weight: 800; }
+  .f-warm .cijfer { font-weight: 800; }
+  .f-warm .brood, .f-warm .stand { font-family: "Alegreya", serif; }
+  .f-warm .brood { font-size: 17.5px; }
+
+  /* Referentie — huidig (Schibsted Grotesk + Newsreader) */
+  .f-huidig h1, .f-huidig .cijfer, .f-huidig .kicker, .f-huidig .knop { font-family: "Schibsted Grotesk", sans-serif; }
+  .f-huidig h1 { font-weight: 500; }
+  .f-huidig .brood, .f-huidig .stand { font-family: "Newsreader", serif; font-size: 17.5px; }
+</style>
+</head>
+<body>
+  <div class="intro">
+    <strong>Letterproef Stichting Kettingreactie</strong>
+    Drie typografische richtingen naast elkaar, elk met dezelfde inhoud en de vastgestelde kleurstelling
+    (wit · indigo · magenta). Onderaan elke kolom een donker blok, zoals de nieuwe hero en het colofon.
+    Rechts ter vergelijking de huidige combinatie.
+  </div>
+
+  <div class="grid">
+
+    <div class="kaart f-geo">
+      <div class="naam">1 · Geometrisch<small>Jost — koppen én broodtekst, dicht op het woordmerk</small></div>
+      <div class="vlak">
+        <p class="kicker m">Katern · De drie projecten</p>
+        <h1>Drie projecten voor vrouwen in Bangalore</h1>
+        <p class="stand">Een opvanghuis, een hostel voor werkende vrouwen en een HIV-programma, gefinancierd vanuit Nederland.</p>
+        <p class="brood">Abayashram biedt onderdak aan circa 45 vrouwen met ernstige psychische problemen. Veel van hen zijn op straat gevonden of achtergelaten door hun familie. In het huis krijgen zij een bed, maaltijden en medische zorg.</p>
+        <div class="rijtje"><span class="cijfer m">100%</span><span class="kicker">Van elke gift naar de projecten</span></div>
+        <a class="knop" href="#">Doneer</a>
+      </div>
+      <div class="vlak donker">
+        <p class="kicker">Amsterdam · Bangalore · sinds 2007</p>
+        <h1>Een gift komt zonder omwegen aan</h1>
+        <p class="stand">Het bestuur werkt onbetaald en betaalt reizen uit eigen zak.</p>
+      </div>
+    </div>
+
+    <div class="kaart f-kracht">
+      <div class="naam">2 · Krachtig neutraal<small>Archivo (breed) — koppen · Source Sans — broodtekst</small></div>
+      <div class="vlak">
+        <p class="kicker m">Katern · De drie projecten</p>
+        <h1>Drie projecten voor vrouwen in Bangalore</h1>
+        <p class="stand">Een opvanghuis, een hostel voor werkende vrouwen en een HIV-programma, gefinancierd vanuit Nederland.</p>
+        <p class="brood">Abayashram biedt onderdak aan circa 45 vrouwen met ernstige psychische problemen. Veel van hen zijn op straat gevonden of achtergelaten door hun familie. In het huis krijgen zij een bed, maaltijden en medische zorg.</p>
+        <div class="rijtje"><span class="cijfer m">100%</span><span class="kicker">Van elke gift naar de projecten</span></div>
+        <a class="knop" href="#">Doneer</a>
+      </div>
+      <div class="vlak donker">
+        <p class="kicker">Amsterdam · Bangalore · sinds 2007</p>
+        <h1>Een gift komt zonder omwegen aan</h1>
+        <p class="stand">Het bestuur werkt onbetaald en betaalt reizen uit eigen zak.</p>
+      </div>
+    </div>
+
+    <div class="kaart f-warm">
+      <div class="naam">3 · Warm humanistisch<small>Alegreya Sans — koppen · Alegreya (serif) — broodtekst</small></div>
+      <div class="vlak">
+        <p class="kicker m">Katern · De drie projecten</p>
+        <h1>Drie projecten voor vrouwen in Bangalore</h1>
+        <p class="stand">Een opvanghuis, een hostel voor werkende vrouwen en een HIV-programma, gefinancierd vanuit Nederland.</p>
+        <p class="brood">Abayashram biedt onderdak aan circa 45 vrouwen met ernstige psychische problemen. Veel van hen zijn op straat gevonden of achtergelaten door hun familie. In het huis krijgen zij een bed, maaltijden en medische zorg.</p>
+        <div class="rijtje"><span class="cijfer m">100%</span><span class="kicker">Van elke gift naar de projecten</span></div>
+        <a class="knop" href="#">Doneer</a>
+      </div>
+      <div class="vlak donker">
+        <p class="kicker">Amsterdam · Bangalore · sinds 2007</p>
+        <h1>Een gift komt zonder omwegen aan</h1>
+        <p class="stand">Het bestuur werkt onbetaald en betaalt reizen uit eigen zak.</p>
+      </div>
+    </div>
+
+    <div class="kaart f-huidig">
+      <div class="naam">Ter referentie · huidig<small>Schibsted Grotesk — koppen · Newsreader — broodtekst</small></div>
+      <div class="vlak">
+        <p class="kicker m">Katern · De drie projecten</p>
+        <h1>Drie projecten voor vrouwen in Bangalore</h1>
+        <p class="stand">Een opvanghuis, een hostel voor werkende vrouwen en een HIV-programma, gefinancierd vanuit Nederland.</p>
+        <p class="brood">Abayashram biedt onderdak aan circa 45 vrouwen met ernstige psychische problemen. Veel van hen zijn op straat gevonden of achtergelaten door hun familie. In het huis krijgen zij een bed, maaltijden en medische zorg.</p>
+        <div class="rijtje"><span class="cijfer m">100%</span><span class="kicker">Van elke gift naar de projecten</span></div>
+        <a class="knop" href="#">Doneer</a>
+      </div>
+      <div class="vlak donker">
+        <p class="kicker">Amsterdam · Bangalore · sinds 2007</p>
+        <h1>Een gift komt zonder omwegen aan</h1>
+        <p class="stand">Het bestuur werkt onbetaald en betaalt reizen uit eigen zak.</p>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

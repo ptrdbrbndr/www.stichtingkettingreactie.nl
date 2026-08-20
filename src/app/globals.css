@@ -58,12 +58,12 @@
   --color-ink-soft: #55517a;
   --color-line: #dcdaeb;
 
-  --font-sans: var(--font-grotesk);
-  --font-serif: var(--font-newsreader);
+  --font-sans: var(--font-jost);
+  --font-serif: var(--font-jost);
 }
 
 body {
-  font-family: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  font-family: var(--font-jost), Georgia, "Times New Roman", serif;
   font-optical-sizing: auto;
   color: var(--color-ink);
   background: var(--color-paper);
@@ -83,33 +83,31 @@ body {
 }
 
 .font-serif {
-  font-family: var(--font-newsreader), Georgia, serif;
+  font-family: var(--font-jost), Georgia, serif;
   font-optical-sizing: auto;
 }
 
 /* Display-grotesk: koppen en nummering, aansluitend op het woordmerk */
 .font-display {
-  font-family: var(--font-grotesk), "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-jost), "Helvetica Neue", Arial, sans-serif;
   letter-spacing: -0.015em;
 }
 
 /* Grotesk-kapitaal: labels, meta, navigatie, knoppen */
 .kicker {
-  font-family: var(--font-grotesk), "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-jost), "Helvetica Neue", Arial, sans-serif;
   font-weight: 600;
   font-size: 0.6875rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-/* Folio-regel: katernlabel boven aan een pagina of sectie */
+/* Folio-regel: sectielabel — in de blok-taal zonder harde katernlijn */
 .folio {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  border-top: 2px solid var(--color-rule);
-  padding-top: 0.6rem;
 }
 
 /* Azuur-arcering: uitsluitend voor het transparantie-element */
@@ -119,6 +117,23 @@ body {
     color-mix(in srgb, var(--color-azure-bright) 26%, transparent) 0.42em,
     transparent 0.42em
   );
+}
+
+/* Pil-knop: de schakelvorm uit het logo als knop */
+.pil {
+  display: inline-block;
+  border-radius: 999px;
+  font-family: var(--font-jost), Arial, sans-serif;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+.pil:hover {
+  transform: translateY(-2px);
 }
 
 /* Tekstlink in lopende tekst */
@@ -135,7 +150,7 @@ body {
 
 /* Fotobijschrift */
 .caption {
-  font-family: var(--font-grotesk), Arial, sans-serif;
+  font-family: var(--font-jost), Arial, sans-serif;
   font-size: 0.75rem;
   letter-spacing: 0.02em;
   color: var(--color-ink-2);
@@ -168,9 +183,10 @@ body {
   }
 }
 
-/* Foto's: trage, rustige zoom op hover */
+/* Foto's: licht afgerond (schakel-vormentaal), trage zoom op hover */
 .foto {
   overflow: hidden;
+  border-radius: 14px;
 }
 .foto img {
   transition: transform 1400ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -228,13 +244,13 @@ a:focus-visible .foto img {
    Prose — CMS-inhoud (nieuwsverslagen en pagina's) als reportagetekst
    ========================================================================== */
 .prose {
-  font-family: var(--font-newsreader), Georgia, serif;
+  font-family: var(--font-jost), Georgia, serif;
   font-optical-sizing: auto;
 }
 .prose h1,
 .prose h2,
 .prose h3 {
-  font-family: var(--font-grotesk), Arial, sans-serif;
+  font-family: var(--font-jost), Arial, sans-serif;
   letter-spacing: -0.015em;
   color: var(--color-ink);
   font-weight: 600;
@@ -285,7 +301,7 @@ a:focus-visible .foto img {
 .prose figure { margin: 2.2rem 0; }
 .prose figure img { margin: 0; }
 .prose figcaption {
-  font-family: var(--font-grotesk), Arial, sans-serif;
+  font-family: var(--font-jost), Arial, sans-serif;
   font-size: 0.75rem;
   color: var(--color-ink-2);
   padding-top: 0.5rem;
@@ -300,7 +316,7 @@ a:focus-visible .foto img {
 }
 .prose-editorial > p:first-of-type::first-letter {
   float: left;
-  font-family: var(--font-newsreader), Georgia, serif;
+  font-family: var(--font-jost), Georgia, serif;
   font-size: 4.9rem;
   line-height: 0.82;
   padding: 0.08em 0.12em 0 0;

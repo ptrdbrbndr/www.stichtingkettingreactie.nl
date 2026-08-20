@@ -1,11 +1,34 @@
-# Designrichting — redesign 2026 (v2)
+# Designrichting — redesign 2026 (v3, samen afgepeld)
 
-Herzien op 20 augustus 2026 na afstemming: **het logo is het vaste anker**;
-de look-and-feel volgt het logo (drie verweven kettingschakels in azuur,
-indigo en magenta, plus een geometrisch kapitaal-woordmerk). De eerdere
-warm-papier-richting (v1) is daarmee vervallen. Wie aan de publieke site
-werkt, houdt zich aan deze richting; admin- en ledenschermen vallen er (nog)
-buiten.
+Vastgesteld op 20 augustus 2026 in een afpelsessie met Pieter (archetype →
+letterproef → vormentaal). Dit vervangt v1 (warm papier) en v2 (magazine).
+
+**De vier vastgelegde keuzes:**
+
+1. **Kleur** (uit v2 behouden): wit + diep indigo als inkt, magenta als
+   accent, azuur in details; stevig kleurblok-ritme — donkere indigo hero
+   en doneer-strook, licht-indigo getinte katernvlakken (`paper-3`), wit
+   daartussen.
+2. **Indeling**: modern-symmetrisch met blokken. Gecentreerde sectiekoppen,
+   heldere kleurblokken onder elkaar, drie gelijke projectkolommen. Geen
+   krant-decoratie (folio-lijnen, datelines) meer.
+3. **Typografie** (gekozen via `docs/letterproef.html`): **Jost** voor
+   alles — koppen 600, broodtekst 400, labels 600 caps. Geometrisch, in de
+   lijn van het KETTINGREACTIE-woordmerk.
+4. **Vormentaal**: de schakelvorm uit het logo — knoppen als volledig ronde
+   pil (klasse `.pil`), foto's en vlakken licht afgerond (14px, in `.foto`).
+   Schakelmotief subtiel: watermerk in donkere/getinte blokken, gekleurde
+   schakel bij de drie projectnummers (I azuur, II indigo, III magenta),
+   kleurenrij in het colofon.
+
+Dynamiek: Onthul-scroll-onthulling, trage foto-zoom op hover, zachte brede
+schaduw (`.foto-diep`) onder belangrijke foto's. Verantwoording (ANBI,
+RSIN 821887300, elke euro naar de projecten) blijft het vaste terugkerende
+element: topstrip, kantlijnen en de strook boven het colofon.
+
+---
+
+## Historie: v2 (vervallen, hieronder ter referentie)
 
 ## De richting in vijf zinnen
 

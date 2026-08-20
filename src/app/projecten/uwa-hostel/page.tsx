@@ -122,7 +122,7 @@ export default function UwaHostelPage() {
               </dl>
               <Link
                 href="/steun-ons"
-                className="kicker mt-7 inline-block bg-magenta px-6 py-3.5 text-paper transition-colors hover:bg-magenta-deep"
+                className="pil mt-7 bg-magenta px-6 py-3.5 text-paper transition-colors hover:bg-magenta-deep"
               >
                 Doneer
               </Link>

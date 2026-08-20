@@ -14,6 +14,14 @@ export const metadata: Metadata = {
     "Stichting Kettingreactie financiert sinds 2007 een opvanghuis, een hostel voor werkende vrouwen en een HIV-programma in en rondom Bangalore. ANBI; elke gedoneerde euro gaat naar de projecten.",
 };
 
+// Terugval: eerste afbeelding uit de artikelinhoud (weinig artikelen hebben
+// een los ingestelde featured image, de verslagen zelf staan vol foto's).
+function eersteAfbeelding(html: string | null | undefined) {
+  if (!html) return null;
+  const m = html.match(/<img[^>]+src="([^"]+)"/);
+  return m?.[1] ?? null;
+}
+
 function formatDutchDate(value: string | null | undefined) {
   if (!value) return "";
   try {
@@ -36,7 +44,7 @@ export default async function HomePage() {
       status: "published",
       orderBy: "published_at",
       orderDirection: "desc",
-      limit: 6,
+      limit: 4,
     }),
   ]);
 
@@ -60,20 +68,19 @@ export default async function HomePage() {
     config?.donate_iban_name ?? "Stichting Kettingreactie Amsterdam";
 
   const [featuredArticle, ...restArticles] = latestNews;
-  const newsFeatured = restArticles[0] ?? featuredArticle;
-  const newsList = restArticles.slice(1, 5);
+  const nieuwsDrie = latestNews.slice(0, 3);
 
   const heroFeature = featuredArticle
     ? {
         title: decodeEntities(featuredArticle.title),
         excerpt: decodeEntities(featuredArticle.excerpt),
         slug: featuredArticle.slug,
-        category:
-          decodeEntities(featuredArticle.category?.name) || "Nieuws",
+        category: decodeEntities(featuredArticle.category?.name) || "Nieuws",
         date: featuredArticle.published_at ?? featuredArticle.created_at,
         image: featuredArticle.featured_image,
       }
     : null;
+  void restArticles;
 
   const projecten = [
     {
@@ -82,15 +89,12 @@ export default async function HomePage() {
       kleur: "text-azure-bright",
       title: "Abayashram",
       plaats: "Hoskote, bij Bangalore",
-      organisatie: "Vision India, Joby Varghese",
       beschrijving:
-        "Een opvanghuis voor circa 45 vrouwen met ernstige psychische problemen, van wie velen op straat zijn gevonden of door hun familie zijn achtergelaten. Zij krijgen onderdak, medische en psychologische zorg en waar het kan hereniging met hun familie.",
-      bijdrage:
-        "De stichting sponsorde onder meer de auto waarmee de vrouwen naar het ziekenhuis worden gebracht en draagt bij aan de dagelijkse kosten.",
+        "Opvanghuis voor circa 45 vrouwen met ernstige psychische problemen. Onderdak, medische en psychologische zorg, en waar het kan hereniging met familie.",
+      bijdrage: "De stichting sponsorde de ziekenhuisauto en draagt bij aan de dagelijkse kosten.",
       href: "/projecten/abayashram",
       image: "/images/projecten/abayashram/vrouwen-abayashram.jpg",
       imageAlt: "Vrouwen van Abayashram, Hoskote",
-      aspect: "aspect-[3/2]",
     },
     {
       nummer: "II",
@@ -98,15 +102,13 @@ export default async function HomePage() {
       kleur: "text-[#2f2483]",
       title: "UWA Working Women's Hostel",
       plaats: "Bangalore",
-      organisatie: "University Women's Association Bangalore",
       beschrijving:
-        "Betaalbare en veilige huisvesting voor jonge vrouwen die vanuit dorpen naar Bangalore komen om te werken. Voor de meesten is het de eerste keer buiten hun dorp; veel bewoners ondersteunen met hun inkomen hun familie op het platteland.",
-      bijdrage:
-        "De stichting draagt bij aan het onderhoud en de exploitatie van het hostel.",
+        "Veilige, betaalbare huisvesting voor jonge vrouwen die vanuit dorpen naar Bangalore komen om te werken; velen ondersteunen daarmee hun familie.",
+      bijdrage: "De stichting draagt bij aan onderhoud en exploitatie van het hostel.",
       href: "/projecten/uwa-hostel",
       image: "/images/projecten/uwa-hostel/girls-audience.jpg",
       imageAlt: "Bewoonsters van het UWA-hostel tijdens een bijeenkomst",
-      aspect: "aspect-square",
+      positie: "object-[50%_30%]",
     },
     {
       nummer: "III",
@@ -114,15 +116,13 @@ export default async function HomePage() {
       kleur: "text-magenta-bright",
       title: "ASHA Foundation",
       plaats: "Bangalore",
-      organisatie: "Dr. Glory Alexander",
       beschrijving:
-        "HIV-zorg voor vrouwen: ART-medicatie voor circa 100 vrouwen, vooral weduwen en jonge HIV-positieve vrouwen, en een PMTCT-programma dat per half jaar zo'n 5.000 zwangere vrouwen test om overdracht van moeder op kind te voorkomen.",
-      bijdrage:
-        "De stichting financiert ART-medicatie en draagt bij aan het PMTCT-testprogramma.",
+        "HIV-zorg onder leiding van Dr. Glory Alexander: ART-medicatie voor circa 100 vrouwen en een PMTCT-programma met zo'n 5.000 tests per half jaar.",
+      bijdrage: "De stichting financiert ART-medicatie en draagt bij aan het testprogramma.",
       href: "/projecten/asha-foundation",
       image: "/images/projecten/asha-foundation/dr-glory.jpg",
       imageAlt: "Dr. Glory Alexander van de ASHA Foundation",
-      aspect: "aspect-[3/2]",
+      positie: "object-[50%_35%]",
     },
   ];
 
@@ -137,50 +137,54 @@ export default async function HomePage() {
         featureArticle={heroFeature}
       />
 
-      {/* Openingsfoto — full-bleed met bijschrift */}
-      <figure className="mx-auto max-w-[96rem]">
-        <div className="relative aspect-[21/9] min-h-[320px] w-full overflow-hidden">
-          <Image
-            src="/images/projecten/abayashram/handwerk.jpg"
-            alt="Handwerk van de vrouwen van Abayashram"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-        </div>
-        <figcaption className="caption mx-4 sm:mx-6 lg:mx-8">
-          Handwerk van de vrouwen van Abayashram, Hoskote. Foto: bestuursbezoek
-          aan de projecten.
-        </figcaption>
-      </figure>
+      {/* Openingsfoto — schuift over de donkere hero heen */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <figure className="relative z-10 -mt-6 sm:-mt-10">
+          <div className="foto foto-diep relative aspect-[21/9] min-h-[280px]">
+            <Image
+              src="/images/projecten/abayashram/handwerk.jpg"
+              alt="Handwerk van de vrouwen van Abayashram"
+              fill
+              priority
+              sizes="(min-width: 1280px) 80rem, 100vw"
+              className="object-cover"
+            />
+          </div>
+          <figcaption className="caption border-t-0 text-center">
+            Handwerk van de vrouwen van Abayashram, Hoskote. Foto:
+            bestuursbezoek aan de projecten.
+          </figcaption>
+        </figure>
+      </div>
 
       {/* Cijferregel */}
       <section
         data-testid="impact-strip"
-        className="mx-auto max-w-7xl px-4 pb-4 pt-16 sm:px-6 lg:px-8"
+        className="mx-auto max-w-6xl px-4 pb-20 pt-14 text-center sm:px-6 lg:px-8"
       >
-        <div className="grid grid-cols-2 gap-x-8 gap-y-10 border-t-2 border-rule pt-8 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-10 lg:grid-cols-4">
           <Onthul>
-            <p className="font-display text-6xl font-medium text-ink">3</p>
+            <p className="font-display text-6xl font-semibold text-ink">3</p>
             <p className="kicker mt-3 text-ink-2">
               Projecten in en rondom Bangalore
             </p>
           </Onthul>
           <Onthul delay={90}>
-            <p className="font-display text-6xl font-medium text-magenta">100%</p>
+            <p className="font-display text-6xl font-semibold text-magenta">
+              100%
+            </p>
             <p className="kicker mt-3 text-ink-2">
               Van elke gift naar de projecten
             </p>
           </Onthul>
           <Onthul delay={180}>
-            <p className="font-display text-6xl font-medium text-ink">2007</p>
+            <p className="font-display text-6xl font-semibold text-ink">2007</p>
             <p className="kicker mt-3 text-ink-2">
               Opgericht, sindsdien ANBI-erkend
             </p>
           </Onthul>
           <Onthul delay={270}>
-            <p className="font-display text-6xl font-medium text-ink">€ 0</p>
+            <p className="font-display text-6xl font-semibold text-ink">€ 0</p>
             <p className="kicker mt-3 text-ink-2">
               Bestuursvergoeding; reizen op eigen kosten
             </p>
@@ -188,301 +192,229 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Missie — verspringende leeskolommen */}
-      <section
-        data-testid="missie-section"
-        className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8"
-      >
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
-          <Onthul className="lg:col-span-4">
-            <div className="folio">
-              <p className="kicker text-magenta">Waarom deze stichting</p>
-            </div>
-            <h2 className="mt-6 font-display text-4xl font-medium leading-[1.06] tracking-tight text-ink sm:text-5xl">
+      {/* Missie — getint blok */}
+      <section data-testid="missie-section" className="bg-paper-3">
+        <div className="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6 sm:py-24 lg:px-8">
+          <Onthul>
+            <p className="kicker text-magenta">Waarom deze stichting</p>
+            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-ink sm:text-4xl">
               {missionTitle}
             </h2>
-          </Onthul>
-          <Onthul delay={120} className="lg:col-span-5 lg:col-start-6 lg:pt-24">
-            <p className="font-serif text-xl leading-relaxed text-ink">
+            <p className="mt-6 text-lg leading-relaxed text-ink">
               {missionText}
             </p>
-            <p className="mt-6 font-serif text-xl leading-relaxed text-ink">
-              De naam verwijst naar het idee dat iedere bijdrage een reactie in
-              gang zet die verder reikt dan je op het eerste gezicht verwacht:
-              een vrouw met een eigen inkomen ondersteunt op haar beurt haar
+            <p className="mt-4 text-lg leading-relaxed text-ink">
+              De naam verwijst naar wat we daar zien: een bijdrage zet een
+              reactie in gang die verder reikt dan de eerste ontvanger. Een
+              vrouw met een eigen inkomen ondersteunt op haar beurt haar
               familie.
             </p>
             <Link
               href="/over-ons"
               data-testid="missie-link"
-              className="link-editorial mt-8 inline-block font-serif text-lg"
+              className="link-editorial mt-7 inline-block text-lg"
             >
               Over de stichting en het bestuur
             </Link>
           </Onthul>
-          <Onthul delay={240} className="hidden lg:col-span-2 lg:block lg:pt-24">
-            <div className="border-t-2 border-rule pt-4">
-              <p className="kicker text-ink-2">Kantlijn</p>
-              <p className="mt-3 font-serif text-[0.9375rem] leading-relaxed text-ink-2">
-                Jaarlijkse verantwoording, ANBI, RSIN 821887300. De jaarcijfers
-                staan{" "}
-                <Link
-                  href="/financieel-overzicht-2012"
-                  className="link-editorial"
-                >
-                  hier
-                </Link>
-                .
-              </p>
-            </div>
-          </Onthul>
         </div>
       </section>
 
-      {/* De drie projecten — drie hoofdstukken */}
+      {/* De drie projecten — drie gelijke kolommen */}
       <section
         data-testid="projecten-section"
-        className="relative overflow-hidden border-t-2 border-rule bg-paper-3/60"
+        className="relative overflow-hidden"
       >
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-44 -top-32 text-rule opacity-[0.05]"
+          className="pointer-events-none absolute -right-44 top-10 text-rule opacity-[0.04]"
         >
-          <Schakel className="h-[560px] w-auto -rotate-45" />
+          <Schakel className="h-[520px] w-auto -rotate-45" />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
-          <div className="folio border-t-0 pt-0">
-            <p className="kicker text-magenta">Katern · De drie projecten</p>
-            <p className="kicker hidden text-ink-2 sm:block">
-              In en rondom Bangalore
-            </p>
-          </div>
+          <Onthul className="mx-auto max-w-2xl text-center">
+            <p className="kicker text-magenta">De drie projecten</p>
+            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-ink sm:text-4xl">
+              Drie schakels, drie plekken in Bangalore
+            </h2>
+          </Onthul>
 
-          <div className="mt-14 space-y-20 sm:space-y-28">
-            {projecten.map((project, idx) => {
-              const reversed = idx % 2 === 1;
-              return (
-                <Onthul key={project.slug}>
-                <article
-                  data-testid={`project-card-${project.slug}`}
-                  className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-0"
-                >
-                  <div
-                    className={`lg:col-span-6 ${
-                      reversed ? "lg:order-2 lg:col-start-7" : ""
-                    }`}
-                  >
+          <div className="mt-14 grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-3">
+            {projecten.map((project, idx) => (
+              <Onthul key={project.slug} delay={idx * 120}>
+                <article data-testid={`project-card-${project.slug}`}>
+                  <Link href={project.href} className="group block">
                     <figure>
-                      <div
-                        className={`foto foto-diep relative ${project.aspect}`}
-                      >
+                      <div className="foto foto-diep relative aspect-[4/3]">
                         <Image
                           src={project.image}
                           alt={project.imageAlt}
                           fill
-                          sizes="(min-width: 1024px) 50vw, 100vw"
-                          className="object-cover"
+                          sizes="(min-width: 768px) 33vw, 100vw"
+                          className={`object-cover ${project.positie ?? ""}`}
                         />
                       </div>
-                      <figcaption
-                        className={`caption ${reversed ? "lg:ml-32" : "lg:mr-32"}`}
-                      >
-                        {project.imageAlt}
-                      </figcaption>
                     </figure>
-                  </div>
-                  <div
-                    className={`relative z-10 lg:col-span-5 lg:mt-14 lg:bg-paper lg:p-10 ${
-                      reversed
-                        ? "lg:order-1 lg:col-start-1 lg:-mr-24"
-                        : "lg:col-start-8 lg:-ml-24"
-                    }`}
-                  >
                     <p
                       aria-hidden="true"
-                      className={`flex items-center gap-3 ${project.kleur}`}
+                      className={`mt-6 flex items-center gap-2.5 ${project.kleur}`}
                     >
-                      <Schakel className="h-6 w-auto -rotate-45" />
-                      <span className="font-display text-6xl font-bold leading-none">
+                      <Schakel className="h-4 w-auto -rotate-45" />
+                      <span className="font-display text-2xl font-bold leading-none">
                         {project.nummer}
                       </span>
                     </p>
-                    <h3 className="mt-4 font-display text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
+                    <h3 className="mt-2 font-display text-2xl font-semibold leading-snug tracking-tight text-ink underline decoration-transparent decoration-2 underline-offset-4 transition-colors group-hover:decoration-magenta">
                       {project.title}
                     </h3>
-                    <p className="kicker mt-3 text-ink-2">
-                      {project.plaats} · {project.organisatie}
-                    </p>
-                    <p className="mt-5 font-serif text-lg leading-relaxed text-ink">
+                    <p className="kicker mt-2 text-ink-2">{project.plaats}</p>
+                    <p className="mt-3 leading-relaxed text-ink">
                       {project.beschrijving}
                     </p>
-                    <p className="mt-4 border-l-2 border-rule pl-4 font-serif text-[1.0625rem] leading-relaxed text-ink-2">
+                    <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-2">
                       {project.bijdrage}
                     </p>
-                    <Link
-                      href={project.href}
-                      className="link-editorial mt-6 inline-block font-serif text-lg"
-                    >
-                      Hoofdstuk {project.nummer}: {project.title}
-                    </Link>
-                  </div>
+                  </Link>
                 </article>
-                </Onthul>
-              );
-            })}
+              </Onthul>
+            ))}
           </div>
 
-          <div className="mt-16 border-t border-rule-soft pt-6">
+          <div className="mt-14 text-center">
             <Link
               href="/projecten"
               data-testid="projecten-all-link"
-              className="link-editorial font-serif text-lg"
+              className="pil border border-rule px-8 py-4 text-ink transition-colors hover:border-magenta hover:text-magenta"
             >
-              Alle drie de projecten in één overzicht
+              Alle drie de projecten
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Verslagen */}
-      <section
-        data-testid="nieuws-section"
-        className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8"
-      >
-        <div className="folio">
-          <p className="kicker text-magenta">{newsTitle}</p>
-          <p className="kicker hidden text-ink-2 sm:block">
-            Bezoekverslagen en berichten
-          </p>
-        </div>
+      {/* Verslagen — getint blok */}
+      <section data-testid="nieuws-section" className="bg-paper-3">
+        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
+          <Onthul className="mx-auto max-w-2xl text-center">
+            <p className="kicker text-magenta">{newsTitle}</p>
+            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-ink sm:text-4xl">
+              Bezoekverslagen en berichten
+            </h2>
+          </Onthul>
 
-        {latestNews.length === 0 ? (
-          <p className="mt-10 font-serif text-lg text-ink-2">
-            Er zijn nog geen verslagen gepubliceerd.
-          </p>
-        ) : (
-          <div className="mt-10 grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-10">
-            <Onthul className="lg:col-span-7">
-              {newsFeatured?.featured_image && (
-                <Link href={`/nieuws/${newsFeatured.slug}`} className="block">
-                  <figure>
-                    <div className="foto foto-diep relative aspect-[16/10]">
-                      <Image
-                        src={newsFeatured.featured_image}
-                        alt=""
-                        fill
-                        sizes="(min-width: 1024px) 55vw, 100vw"
-                        className="object-cover object-[50%_30%]"
-                      />
-                    </div>
-                  </figure>
-                </Link>
-              )}
-              <p className="kicker mt-6 text-magenta">
-                {decodeEntities(newsFeatured?.category?.name) || "Verslag"} ·{" "}
-                {formatDutchDate(
-                  newsFeatured?.published_at ?? newsFeatured?.created_at,
-                )}
-              </p>
-              <Link
-                href={`/nieuws/${newsFeatured?.slug ?? ""}`}
-                data-testid="nieuws-featured-link"
-                className="group block"
-              >
-                <h3 className="mt-3 font-display text-3xl font-medium leading-[1.1] tracking-tight text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink sm:text-4xl">
-                  {decodeEntities(newsFeatured?.title)}
-                </h3>
-              </Link>
-              {newsFeatured?.excerpt && (
-                <p className="mt-4 max-w-2xl font-serif text-lg leading-relaxed text-ink-2">
-                  {decodeEntities(newsFeatured.excerpt)}
-                </p>
-              )}
-            </Onthul>
-
-            <Onthul delay={140} className="lg:col-span-4 lg:col-start-9">
-              <ul>
-                {newsList.map((article) => (
-                  <li
-                    key={article.id}
-                    className="border-b border-rule-soft py-5 first:border-t-2 first:border-t-rule"
+          {nieuwsDrie.length === 0 ? (
+            <p className="mt-10 text-center text-lg text-ink-2">
+              Er zijn nog geen verslagen gepubliceerd.
+            </p>
+          ) : (
+            <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-3">
+              {nieuwsDrie.map((article, idx) => {
+                const beeld =
+                  article.featured_image ??
+                  eersteAfbeelding(article.content_html);
+                return (
+                <Onthul key={article.id} delay={idx * 120}>
+                  <Link
+                    href={`/nieuws/${article.slug}`}
+                    data-testid={idx === 0 ? "nieuws-featured-link" : undefined}
+                    className="group block"
                   >
-                    <Link href={`/nieuws/${article.slug}`} className="group block">
-                      <p className="kicker text-ink-2">
-                        {formatDutchDate(
-                          article.published_at ?? article.created_at,
-                        )}
+                    {beeld ? (
+                      <figure>
+                        <div className="foto relative aspect-[16/10]">
+                          <Image
+                            src={beeld}
+                            alt=""
+                            fill
+                            sizes="(min-width: 768px) 33vw, 100vw"
+                            className="object-cover object-[50%_30%]"
+                          />
+                        </div>
+                      </figure>
+                    ) : (
+                      <div
+                        aria-hidden="true"
+                        className="flex aspect-[16/10] items-center justify-center rounded-[14px] bg-ink/5 text-ink/30"
+                      >
+                        <Schakel className="h-10 w-auto -rotate-45" />
+                      </div>
+                    )}
+                    <p className="kicker mt-5 text-ink-2">
+                      {formatDutchDate(
+                        article.published_at ?? article.created_at,
+                      )}{" "}
+                      · {decodeEntities(article.category?.name) || "Verslag"}
+                    </p>
+                    <h3 className="mt-2 font-display text-xl font-semibold leading-snug text-ink underline decoration-transparent decoration-2 underline-offset-4 transition-colors group-hover:decoration-magenta">
+                      {decodeEntities(article.title)}
+                    </h3>
+                    {article.excerpt && (
+                      <p className="mt-2 line-clamp-2 text-[0.9375rem] leading-relaxed text-ink-2">
+                        {decodeEntities(article.excerpt)}
                       </p>
-                      <h4 className="mt-1.5 font-display text-xl font-semibold leading-snug text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink">
-                        {decodeEntities(article.title)}
-                      </h4>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href="/nieuws"
-                data-testid="nieuws-all-link"
-                className="link-editorial mt-6 inline-block font-serif text-lg"
-              >
-                Het volledige archief
-              </Link>
-            </Onthul>
+                    )}
+                  </Link>
+                </Onthul>
+                );
+              })}
+            </div>
+          )}
+
+          <div className="mt-12 text-center">
+            <Link
+              href="/nieuws"
+              data-testid="nieuws-all-link"
+              className="link-editorial text-lg"
+            >
+              Het volledige archief
+            </Link>
           </div>
-        )}
+        </div>
       </section>
 
-      {/* Doneer-strook — één rustige route */}
+      {/* Doneer — donker blok */}
       <section
         data-testid="donatie-cta"
-        className="relative overflow-hidden border-t-2 border-rule bg-paper-3/60"
+        className="relative overflow-hidden bg-ink text-paper"
       >
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -bottom-40 -left-40 text-rule opacity-[0.05]"
+          className="pointer-events-none absolute -bottom-36 -right-36 text-paper opacity-[0.06]"
         >
           <Schakel className="h-[440px] w-auto -rotate-45" />
         </div>
-        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
-            <Onthul className="lg:col-span-5">
-              <p className="kicker text-magenta">Steunen</p>
-              <h2 className="mt-4 font-display text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
-                Een gift komt zonder omwegen aan
-              </h2>
-              <p className="mt-4 font-serif text-lg leading-relaxed text-ink-2">
-                De stichting heeft geen kantoor en geen betaalde krachten.
-                Giften zijn aftrekbaar; de ANBI-registratie is te controleren
-                bij de Belastingdienst onder RSIN 821887300.
-              </p>
-            </Onthul>
-            <Onthul delay={120} className="lg:col-span-6 lg:col-start-7">
-              <div className="border-t-2 border-rule pt-5">
-                <p className="kicker text-ink-2">Rekeningnummer</p>
-                <p className="mt-2 font-display text-3xl tracking-wide text-ink sm:text-4xl">
-                  {donateIban}
-                </p>
-                <p className="mt-1 font-serif text-[1.0625rem] text-ink-2">
-                  t.n.v. {donateIbanName}
-                </p>
-              </div>
-              <div className="mt-7 flex flex-wrap items-center gap-7">
-                <Link
-                  href="/steun-ons"
-                  data-testid="donatie-cta-button"
-                  className="kicker bg-magenta px-7 py-4 text-paper transition-colors hover:bg-magenta-deep"
-                >
-                  Doneer
-                </Link>
-                <Link
-                  href="/belastingaftrek-schenkingen"
-                  className="link-editorial font-serif text-lg"
-                >
-                  Over belastingaftrek
-                </Link>
-              </div>
-            </Onthul>
-          </div>
+        <div className="relative mx-auto max-w-3xl px-4 py-20 text-center sm:px-6 sm:py-24 lg:px-8">
+          <Onthul>
+            <p className="kicker text-magenta-bright">Steunen</p>
+            <h2 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+              Een gift komt zonder omwegen aan
+            </h2>
+            <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-paper/75">
+              De stichting heeft geen kantoor en geen betaalde krachten.
+              Giften zijn aftrekbaar; ANBI, RSIN 821887300.
+            </p>
+            <p className="mt-8 font-display text-2xl font-semibold tracking-wide sm:text-3xl">
+              {donateIban}
+            </p>
+            <p className="mt-1 text-[1.0625rem] text-paper/75">
+              t.n.v. {donateIbanName}
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-6">
+              <Link
+                href="/steun-ons"
+                data-testid="donatie-cta-button"
+                className="pil bg-magenta px-8 py-4 text-paper hover:bg-magenta-deep"
+              >
+                Doneer
+              </Link>
+              <Link
+                href="/belastingaftrek-schenkingen"
+                className="text-[1.0625rem] text-paper underline decoration-paper/40 decoration-1 underline-offset-4 hover:decoration-paper"
+              >
+                Over belastingaftrek
+              </Link>
+            </div>
+          </Onthul>
         </div>
       </section>
     </>

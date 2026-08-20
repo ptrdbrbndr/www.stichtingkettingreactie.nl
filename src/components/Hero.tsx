@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Schakel from "@/components/Schakel";
 
 interface FeatureArticle {
   title: string;
@@ -42,42 +43,49 @@ export default function Hero({
   ctaHref = "/steun-ons",
   featureArticle,
 }: HeroProps) {
-  // Katern-opening voor subpagina's
+  // Donkere paginakop voor subpagina's
   if (!showCta) {
     return (
-      <section data-testid="page-hero" className="bg-paper">
-        <div className="mx-auto max-w-7xl px-4 pb-10 pt-6 sm:px-6 sm:pb-14 lg:px-8">
-          <div className="folio">
-            <p className="kicker text-magenta">{eyebrow ?? "Stichting Kettingreactie"}</p>
-            {breadcrumb && breadcrumb.length > 1 && (
-              <nav aria-label="Kruimelpad" className="hidden sm:block">
-                <ol className="flex flex-wrap items-baseline gap-1.5">
-                  {breadcrumb.map((item, idx) => (
-                    <li
-                      key={item.href}
-                      className="kicker flex items-baseline gap-1.5 text-ink-2"
-                    >
-                      {idx > 0 && <span aria-hidden="true">/</span>}
-                      {idx === breadcrumb.length - 1 ? (
-                        <span className="text-ink" aria-current="page">
-                          {item.label}
-                        </span>
-                      ) : (
-                        <Link href={item.href} className="hover:text-magenta">
-                          {item.label}
-                        </Link>
-                      )}
-                    </li>
-                  ))}
-                </ol>
-              </nav>
-            )}
-          </div>
-          <h1 className="mt-7 max-w-4xl font-display text-[clamp(2.5rem,6vw,4.25rem)] font-medium leading-[1.04] tracking-tight text-ink">
+      <section
+        data-testid="page-hero"
+        className="relative overflow-hidden bg-ink text-paper"
+      >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-36 -top-24 text-paper opacity-[0.06]"
+        >
+          <Schakel className="h-[420px] w-auto -rotate-45" />
+        </div>
+        <div className="relative mx-auto max-w-4xl px-4 pb-14 pt-12 text-center sm:px-6 sm:pb-16 sm:pt-14 lg:px-8">
+          {breadcrumb && breadcrumb.length > 1 && (
+            <nav aria-label="Kruimelpad" className="mb-4">
+              <ol className="flex flex-wrap items-baseline justify-center gap-1.5">
+                {breadcrumb.map((item, idx) => (
+                  <li
+                    key={item.href}
+                    className="kicker flex items-baseline gap-1.5 text-paper/50"
+                  >
+                    {idx > 0 && <span aria-hidden="true">/</span>}
+                    {idx === breadcrumb.length - 1 ? (
+                      <span className="text-paper/80" aria-current="page">
+                        {item.label}
+                      </span>
+                    ) : (
+                      <Link href={item.href} className="hover:text-paper">
+                        {item.label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )}
+          {eyebrow && <p className="kicker text-magenta-bright">{eyebrow}</p>}
+          <h1 className="mx-auto mt-4 max-w-3xl font-display text-[clamp(2.25rem,5vw,3.5rem)] font-semibold leading-[1.06] tracking-tight">
             {title}
           </h1>
           {subtitle && (
-            <p className="mt-6 max-w-2xl font-serif text-xl leading-relaxed text-ink-2 sm:text-[1.375rem] sm:leading-normal">
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-paper/75 sm:text-xl">
               {subtitle}
             </p>
           )}
@@ -86,74 +94,67 @@ export default function Hero({
     );
   }
 
-  // Voorpagina-opening — de enige geregisseerde animatie van de site
+  // Voorpagina: donker heroblok, gecentreerd
   return (
-    <section data-testid="home-hero" className="bg-paper">
-      <div className="mx-auto max-w-7xl px-4 pb-12 pt-8 sm:px-6 sm:pb-16 lg:px-8">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-8">
-            <div className="folio reveal reveal-1">
-              <p className="kicker text-magenta">Voorpagina</p>
-              <p className="kicker hidden text-ink-2 sm:block">
-                Drie projecten in Bangalore
-              </p>
-            </div>
-            <h1 className="reveal reveal-2 mt-8 font-display text-[clamp(2.75rem,7vw,5.25rem)] font-medium leading-[0.98] tracking-tight text-ink">
-              {title}
-            </h1>
-            {subtitle && (
-              <p className="reveal reveal-3 mt-8 max-w-2xl font-serif text-xl leading-relaxed text-ink-2 sm:text-[1.4375rem] sm:leading-normal">
-                {subtitle}
-              </p>
-            )}
-            <div className="reveal reveal-4 mt-10 flex flex-wrap items-center gap-7">
-              <Link
-                href={ctaHref}
-                data-testid="hero-primary-cta"
-                className="kicker bg-magenta px-7 py-4 text-paper transition-colors hover:bg-magenta-deep"
-              >
-                {ctaText}
-              </Link>
-              <Link
-                href="/projecten"
-                data-testid="hero-secondary-cta"
-                className="font-serif text-lg text-ink underline decoration-1 underline-offset-4 transition-colors hover:text-magenta"
-              >
-                De drie projecten
-              </Link>
-            </div>
-          </div>
-
-          {/* Laatste verslag — als krantenkolom, geen kaart */}
-          {featureArticle && (
-            <div className="reveal reveal-5 lg:col-span-4 lg:border-l lg:border-rule-soft lg:pl-10">
-              <div className="folio lg:border-t-0 lg:pt-0">
-                <p className="kicker text-ink-2">Laatste verslag</p>
-              </div>
-              <Link
-                href={`/nieuws/${featureArticle.slug}`}
-                data-testid="hero-feature-article"
-                className="group mt-5 block"
-              >
-                <p className="kicker text-magenta">
-                  {featureArticle.category ?? "Nieuws"} ·{" "}
-                  {formatDutchDate(featureArticle.date)}
-                </p>
-                <h2 className="mt-3 font-display text-2xl font-medium leading-snug text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink">
-                  {featureArticle.title}
-                </h2>
-                {featureArticle.excerpt && (
-                  <p className="mt-3 font-serif text-[1.0625rem] leading-relaxed text-ink-2">
-                    {featureArticle.excerpt}
-                  </p>
-                )}
-                <p className="link-editorial mt-4 font-serif text-[1.0625rem]">
-                  Lees het verslag
-                </p>
-              </Link>
-            </div>
-          )}
+    <section
+      data-testid="home-hero"
+      className="relative overflow-hidden bg-ink text-paper"
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-40 -top-16 text-paper opacity-[0.06]"
+      >
+        <Schakel className="h-[560px] w-auto -rotate-45" />
+      </div>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-32 -left-44 text-magenta-bright opacity-[0.08]"
+      >
+        <Schakel className="h-[440px] w-auto -rotate-45" />
+      </div>
+      <div className="relative mx-auto max-w-4xl px-4 pb-16 pt-16 text-center sm:px-6 sm:pb-24 sm:pt-20 lg:px-8">
+        <p className="reveal reveal-1 kicker text-magenta-bright">
+          Opvang · huisvesting · HIV-zorg
+        </p>
+        <h1 className="reveal reveal-2 mx-auto mt-5 max-w-3xl font-display text-[clamp(2.75rem,6.5vw,4.75rem)] font-semibold leading-[1.02] tracking-tight">
+          {title}
+        </h1>
+        {subtitle && (
+          <p className="reveal reveal-3 mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-paper/75 sm:text-xl">
+            {subtitle}
+          </p>
+        )}
+        <div className="reveal reveal-4 mt-9 flex flex-wrap items-center justify-center gap-6">
+          <Link
+            href={ctaHref}
+            data-testid="hero-primary-cta"
+            className="pil bg-magenta px-8 py-4 text-paper hover:bg-magenta-deep"
+          >
+            {ctaText}
+          </Link>
+          <Link
+            href="/projecten"
+            data-testid="hero-secondary-cta"
+            className="pil border border-paper/40 px-8 py-4 text-paper transition-colors hover:border-paper hover:bg-paper/10"
+          >
+            De drie projecten
+          </Link>
         </div>
+
+        {featureArticle && (
+          <Link
+            href={`/nieuws/${featureArticle.slug}`}
+            data-testid="hero-feature-article"
+            className="reveal reveal-5 group mx-auto mt-12 flex max-w-2xl flex-wrap items-baseline justify-center gap-x-3 gap-y-1 border-t border-paper/20 pt-6"
+          >
+            <span className="kicker text-paper/50">
+              Laatste verslag · {formatDutchDate(featureArticle.date)}
+            </span>
+            <span className="text-[1.0625rem] font-medium text-paper underline decoration-paper/40 decoration-1 underline-offset-4 transition-colors group-hover:decoration-paper">
+              {featureArticle.title}
+            </span>
+          </Link>
+        )}
       </div>
     </section>
   );
