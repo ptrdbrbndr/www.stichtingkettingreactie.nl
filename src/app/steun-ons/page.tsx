@@ -31,8 +31,8 @@ export default function SteunOnsPage() {
       <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 border-t-2 border-rule pt-12 lg:grid-cols-12">
           <div className="lg:col-span-6 lg:col-start-2">
-            <p className="kicker text-madder">Overmaken</p>
-            <p className="mt-4 font-serif text-[clamp(1.75rem,4vw,2.75rem)] font-medium tracking-wide text-ink">
+            <p className="kicker text-magenta">Overmaken</p>
+            <p className="mt-4 font-display text-[clamp(1.75rem,4vw,2.75rem)] font-medium tracking-wide text-ink">
               NL87 INGB 0005313860
             </p>
             <p className="mt-2 font-serif text-lg text-ink-2">
@@ -85,8 +85,8 @@ export default function SteunOnsPage() {
         <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-10 border-t-2 border-rule pt-10 lg:grid-cols-12">
             <div className="lg:col-span-4 lg:col-start-2">
-              <p className="kicker text-madder">Online doneren</p>
-              <h2 className="mt-3 font-serif text-2xl font-medium text-ink">
+              <p className="kicker text-magenta">Online doneren</p>
+              <h2 className="mt-3 font-display text-2xl font-medium text-ink">
                 Via iDEAL
               </h2>
               <p className="mt-3 font-serif text-[1.0625rem] leading-relaxed text-ink-2">
@@ -108,11 +108,11 @@ export default function SteunOnsPage() {
       {/* Andere manieren — als katernregels, geen kaarten */}
       <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
         <div className="folio">
-          <p className="kicker text-madder">Andere manieren om te steunen</p>
+          <p className="kicker text-magenta">Andere manieren om te steunen</p>
         </div>
         <ul>
           <li className="grid grid-cols-1 gap-4 border-b border-rule-soft py-8 lg:grid-cols-12 lg:gap-8">
-            <h3 className="font-serif text-xl font-medium text-ink lg:col-span-3">
+            <h3 className="font-display text-xl font-semibold text-ink lg:col-span-3">
               SponsorKliks
             </h3>
             <div className="lg:col-span-6">
@@ -142,7 +142,7 @@ export default function SteunOnsPage() {
             </div>
           </li>
           <li className="grid grid-cols-1 gap-4 border-b border-rule-soft py-8 lg:grid-cols-12 lg:gap-8">
-            <h3 className="font-serif text-xl font-medium text-ink lg:col-span-3">
+            <h3 className="font-display text-xl font-semibold text-ink lg:col-span-3">
               Wilde Ganzen
             </h3>
             <div className="lg:col-span-6">
@@ -155,7 +155,7 @@ export default function SteunOnsPage() {
             </div>
           </li>
           <li className="grid grid-cols-1 gap-4 py-8 lg:grid-cols-12 lg:gap-8">
-            <h3 className="font-serif text-xl font-medium text-ink lg:col-span-3">
+            <h3 className="font-display text-xl font-semibold text-ink lg:col-span-3">
               Tijd en kennis
             </h3>
             <div className="lg:col-span-6">

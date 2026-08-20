@@ -42,7 +42,7 @@ export default function OverOnsPage() {
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
           <div className="lg:col-span-7 lg:col-start-2">
-            <h2 className="font-serif text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
+            <h2 className="font-display text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
               Hoe het begon
             </h2>
             <div className="mt-7 space-y-6 font-serif text-lg leading-relaxed text-ink">
@@ -71,13 +71,14 @@ export default function OverOnsPage() {
               </p>
             </div>
 
-            <h2 className="mt-14 border-t-2 border-rule pt-8 font-serif text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
+            <h2 className="mt-14 border-t-2 border-rule pt-8 font-display text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
               De drie projecten
             </h2>
             <ul className="mt-6">
               {[
                 {
                   nummer: "I",
+                  kleur: "text-azure-bright",
                   title: "Abayashram",
                   omschrijving:
                     "Opvanghuis voor circa 45 vrouwen met psychische problemen, Hoskote.",
@@ -85,6 +86,7 @@ export default function OverOnsPage() {
                 },
                 {
                   nummer: "II",
+                  kleur: "text-[#2f2483]",
                   title: "UWA Working Women's Hostel",
                   omschrijving:
                     "Veilige huisvesting voor jonge werkende vrouwen, Bangalore.",
@@ -92,6 +94,7 @@ export default function OverOnsPage() {
                 },
                 {
                   nummer: "III",
+                  kleur: "text-magenta-bright",
                   title: "ASHA Foundation",
                   omschrijving:
                     "ART-medicatie en PMTCT-programma voor HIV-positieve vrouwen, Bangalore.",
@@ -105,12 +108,12 @@ export default function OverOnsPage() {
                   >
                     <span
                       aria-hidden="true"
-                      className="col-span-1 font-serif text-2xl font-medium text-madder"
+                      className={`col-span-1 font-display text-2xl font-bold ${p.kleur}`}
                     >
                       {p.nummer}
                     </span>
                     <span className="col-span-11 sm:col-span-4">
-                      <span className="font-serif text-xl font-medium text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink">
+                      <span className="font-display text-xl font-semibold text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink">
                         {p.title}
                       </span>
                     </span>
@@ -149,7 +152,7 @@ export default function OverOnsPage() {
               </ul>
               <p className="mt-7 border-t border-rule-soft pt-4 font-serif text-[0.9375rem] leading-relaxed text-ink-2">
                 Statutair gevestigd in Amsterdam.{" "}
-                <span className="mark-turmeric text-ink">
+                <span className="mark-azure text-ink">
                   ANBI, RSIN 821887300.
                 </span>
               </p>

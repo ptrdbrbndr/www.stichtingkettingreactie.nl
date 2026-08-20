@@ -24,13 +24,13 @@ export default function ContactPage() {
       <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
         <dl className="border-t-2 border-rule">
           <div className="grid grid-cols-1 gap-3 border-b border-rule-soft py-8 lg:grid-cols-12 lg:gap-8">
-            <dt className="font-serif text-xl font-medium text-ink lg:col-span-3">
+            <dt className="font-display text-xl font-semibold text-ink lg:col-span-3">
               E-mail
             </dt>
             <dd className="lg:col-span-7">
               <a
                 href="mailto:info@stichtingkettingreactie.nl"
-                className="link-editorial font-serif text-2xl"
+                className="link-editorial font-display text-2xl"
               >
                 info@stichtingkettingreactie.nl
               </a>
@@ -42,7 +42,7 @@ export default function ContactPage() {
           </div>
 
           <div className="grid grid-cols-1 gap-3 border-b border-rule-soft py-8 lg:grid-cols-12 lg:gap-8">
-            <dt className="font-serif text-xl font-medium text-ink lg:col-span-3">
+            <dt className="font-display text-xl font-semibold text-ink lg:col-span-3">
               Vestiging
             </dt>
             <dd className="lg:col-span-7">
@@ -55,11 +55,11 @@ export default function ContactPage() {
           </div>
 
           <div className="grid grid-cols-1 gap-3 border-b border-rule-soft py-8 lg:grid-cols-12 lg:gap-8">
-            <dt className="font-serif text-xl font-medium text-ink lg:col-span-3">
+            <dt className="font-display text-xl font-semibold text-ink lg:col-span-3">
               Bankgegevens
             </dt>
             <dd className="lg:col-span-7">
-              <p className="font-serif text-2xl tracking-wide text-ink">
+              <p className="font-display text-2xl tracking-wide text-ink">
                 NL87 INGB 0005313860
               </p>
               <p className="mt-1 font-serif text-lg text-ink-2">
@@ -69,7 +69,7 @@ export default function ContactPage() {
           </div>
 
           <div className="grid grid-cols-1 gap-3 py-8 lg:grid-cols-12 lg:gap-8">
-            <dt className="font-serif text-xl font-medium text-ink lg:col-span-3">
+            <dt className="font-display text-xl font-semibold text-ink lg:col-span-3">
               Meedenken of meehelpen
             </dt>
             <dd className="lg:col-span-7">

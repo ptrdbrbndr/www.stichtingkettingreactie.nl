@@ -97,7 +97,7 @@ export default function Header() {
           <p className="kicker text-ink-2">Amsterdam · Bangalore · sinds 2007</p>
           <p className="kicker hidden text-ink-2 sm:block">
             ANBI · RSIN 821887300 ·{" "}
-            <span className="mark-turmeric text-ink">
+            <span className="mark-azure text-ink">
               elke euro naar de projecten
             </span>
           </p>
@@ -120,9 +120,9 @@ export default function Header() {
               priority
               className="h-12 w-12 shrink-0 object-contain sm:h-16 sm:w-16"
             />
-            <span className="flex flex-col">
-              <span className="kicker text-madder">Stichting</span>
-              <span className="font-serif text-3xl leading-none tracking-tight text-ink sm:text-4xl">
+            <span className="flex flex-col gap-1">
+              <span className="kicker text-magenta">Stichting</span>
+              <span className="font-display text-xl font-bold uppercase leading-none tracking-[0.12em] text-ink sm:text-2xl">
                 Kettingreactie
               </span>
             </span>
@@ -139,7 +139,7 @@ export default function Header() {
             <Link
               href="/steun-ons"
               data-testid="doneer-button"
-              className="kicker bg-madder px-5 py-3 text-paper transition-colors hover:bg-madder-deep"
+              className="kicker bg-magenta px-5 py-3 text-paper transition-colors hover:bg-magenta-deep"
             >
               Doneer
             </Link>
@@ -194,14 +194,14 @@ export default function Header() {
                   href={item.href}
                   data-testid={testId}
                   className={`kicker relative px-4 py-3.5 transition-colors first:pl-0 ${
-                    active ? "text-madder" : "text-ink hover:text-madder"
+                    active ? "text-magenta" : "text-ink hover:text-magenta"
                   }`}
                 >
                   {item.label}
                   {active && (
                     <span
                       aria-hidden="true"
-                      className="absolute inset-x-4 bottom-0 h-[3px] bg-madder first:left-0"
+                      className="absolute inset-x-4 bottom-0 h-[3px] bg-magenta first:left-0"
                     />
                   )}
                 </Link>
@@ -220,7 +220,7 @@ export default function Header() {
                   href={item.href}
                   data-testid={testId}
                   className={`kicker relative flex items-center gap-1.5 px-4 py-3.5 transition-colors ${
-                    active ? "text-madder" : "text-ink hover:text-madder"
+                    active ? "text-magenta" : "text-ink hover:text-magenta"
                   }`}
                   aria-haspopup="menu"
                   aria-expanded={isOpen}
@@ -235,7 +235,7 @@ export default function Header() {
                   {active && (
                     <span
                       aria-hidden="true"
-                      className="absolute inset-x-4 bottom-0 h-[3px] bg-madder"
+                      className="absolute inset-x-4 bottom-0 h-[3px] bg-magenta"
                     />
                   )}
                 </Link>
@@ -256,8 +256,8 @@ export default function Header() {
                               role="menuitem"
                               className={`block px-5 py-2 font-serif text-[1.0625rem] leading-snug transition-colors ${
                                 childActive
-                                  ? "text-madder"
-                                  : "text-ink hover:text-madder"
+                                  ? "text-magenta"
+                                  : "text-ink hover:text-magenta"
                               }`}
                             >
                               {child.label}
@@ -294,7 +294,7 @@ export default function Header() {
                       <Link
                         href={item.href}
                         className={`kicker block py-3.5 ${
-                          active ? "text-madder" : "text-ink"
+                          active ? "text-magenta" : "text-ink"
                         }`}
                       >
                         {item.label}
@@ -310,7 +310,7 @@ export default function Header() {
                       <Link
                         href={item.href}
                         className={`kicker block flex-1 py-3.5 ${
-                          active ? "text-madder" : "text-ink"
+                          active ? "text-magenta" : "text-ink"
                         }`}
                       >
                         {item.label}
@@ -340,7 +340,7 @@ export default function Header() {
                               href={child.href}
                               className={`block py-2 font-serif text-lg ${
                                 isActive(child.href)
-                                  ? "text-madder"
+                                  ? "text-magenta"
                                   : "text-ink"
                               }`}
                             >
@@ -357,7 +357,7 @@ export default function Header() {
             <div className="mt-4 flex items-center gap-6 border-t-2 border-rule pt-4">
               <Link
                 href="/steun-ons"
-                className="kicker bg-madder px-5 py-3 text-paper"
+                className="kicker bg-magenta px-5 py-3 text-paper"
               >
                 Doneer
               </Link>

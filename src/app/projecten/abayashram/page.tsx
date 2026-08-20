@@ -44,7 +44,7 @@ export default function AbayashramPage() {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
           {/* Leeskolom */}
           <div className="lg:col-span-7 lg:col-start-2">
-            <h2 className="font-serif text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
+            <h2 className="font-display text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
               Onderdak voor vrouwen die nergens anders terechtkunnen
             </h2>
             <div className="mt-7 space-y-6 font-serif text-lg leading-relaxed text-ink">
@@ -120,7 +120,7 @@ export default function AbayashramPage() {
           {/* Kantlijn */}
           <aside className="lg:col-span-3 lg:col-start-10">
             <div className="border-t-2 border-rule pt-5">
-              <p className="kicker text-madder">Wat uw gift hier doet</p>
+              <p className="kicker text-magenta">Wat uw gift hier doet</p>
               <dl className="mt-5 space-y-5 font-serif">
                 <div>
                   <dt className="kicker text-ink-2">Vervoer</dt>
@@ -139,12 +139,12 @@ export default function AbayashramPage() {
               </dl>
               <Link
                 href="/steun-ons"
-                className="kicker mt-7 inline-block bg-madder px-6 py-3.5 text-paper transition-colors hover:bg-madder-deep"
+                className="kicker mt-7 inline-block bg-magenta px-6 py-3.5 text-paper transition-colors hover:bg-magenta-deep"
               >
                 Doneer
               </Link>
               <p className="mt-5 border-t border-rule-soft pt-4 font-serif text-[0.9375rem] leading-relaxed text-ink-2">
-                <span className="mark-turmeric text-ink">
+                <span className="mark-azure text-ink">
                   Elke euro gaat naar de projecten.
                 </span>{" "}
                 ANBI, RSIN 821887300.

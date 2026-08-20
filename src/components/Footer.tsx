@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import Schakel from "@/components/Schakel";
 
 const katernen = [
   { label: "Over Ons", href: "/over-ons" },
@@ -36,14 +37,14 @@ export default function Footer() {
               Stichting Kettingreactie is een ANBI (RSIN 821887300). Het
               bestuur werkt onbetaald en betaalt reizen naar Bangalore uit
               eigen zak.{" "}
-              <span className="mark-turmeric">
+              <span className="mark-azure">
                 Elke gedoneerde euro gaat naar de drie projecten.
               </span>
             </p>
           </div>
           <Link
             href="/financieel-overzicht-2012"
-            className="kicker shrink-0 text-madder underline decoration-1 underline-offset-4 hover:decoration-2"
+            className="kicker shrink-0 text-magenta underline decoration-1 underline-offset-4 hover:decoration-2"
           >
             Jaarcijfers inzien
           </Link>
@@ -56,9 +57,14 @@ export default function Footer() {
           <div className="grid grid-cols-1 gap-12 border-b border-paper/20 pb-12 sm:grid-cols-2 lg:grid-cols-4">
             <div>
               <p className="kicker text-paper/60">Stichting</p>
-              <p className="mt-2 font-serif text-3xl leading-none">
+              <p className="mt-2 font-display text-xl font-bold uppercase leading-none tracking-[0.12em]">
                 Kettingreactie
               </p>
+              <span className="mt-4 flex items-center gap-1.5" aria-hidden="true">
+                <Schakel className="h-4 w-auto -rotate-45 text-azure-bright" />
+                <Schakel className="h-4 w-auto -rotate-45 text-[#8b83e0]" />
+                <Schakel className="h-4 w-auto -rotate-45 text-magenta-bright" />
+              </span>
               <p className="mt-5 font-serif text-[0.9375rem] leading-relaxed text-paper/80">
                 Steunt sinds 2007 drie projecten voor vrouwen in en rondom
                 Bangalore, met fondsenwerving vanuit Nederland.

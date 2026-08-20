@@ -44,7 +44,7 @@ export default function AshaFoundationPage() {
         {/* Cijferregel van dit hoofdstuk */}
         <div className="grid grid-cols-1 gap-x-8 gap-y-8 border-t-2 border-rule pt-8 sm:grid-cols-3">
           <div>
-            <p className="font-serif text-5xl font-medium text-madder">
+            <p className="font-display text-5xl font-medium text-magenta">
               ± 100
             </p>
             <p className="kicker mt-3 text-ink-2">
@@ -52,13 +52,13 @@ export default function AshaFoundationPage() {
             </p>
           </div>
           <div>
-            <p className="font-serif text-5xl font-medium text-ink">± 5.000</p>
+            <p className="font-display text-5xl font-medium text-ink">± 5.000</p>
             <p className="kicker mt-3 text-ink-2">
               Zwangere vrouwen getest per half jaar
             </p>
           </div>
           <div>
-            <p className="font-serif text-5xl font-medium text-ink">± 1%</p>
+            <p className="font-display text-5xl font-medium text-ink">± 1%</p>
             <p className="kicker mt-3 text-ink-2">
               Test positief en wordt direct behandeld
             </p>
@@ -67,7 +67,7 @@ export default function AshaFoundationPage() {
 
         <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-12">
           <div className="lg:col-span-7 lg:col-start-2">
-            <h2 className="font-serif text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
+            <h2 className="font-display text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
               Behandeling voor wie er anders geen toegang toe heeft
             </h2>
             <div className="mt-7 space-y-6 font-serif text-lg leading-relaxed text-ink">
@@ -141,7 +141,7 @@ export default function AshaFoundationPage() {
 
           <aside className="lg:col-span-3 lg:col-start-10">
             <div className="border-t-2 border-rule pt-5">
-              <p className="kicker text-madder">Wat uw gift hier doet</p>
+              <p className="kicker text-magenta">Wat uw gift hier doet</p>
               <dl className="mt-5 space-y-5 font-serif">
                 <div>
                   <dt className="kicker text-ink-2">ART-medicatie</dt>
@@ -160,12 +160,12 @@ export default function AshaFoundationPage() {
               </dl>
               <Link
                 href="/steun-ons"
-                className="kicker mt-7 inline-block bg-madder px-6 py-3.5 text-paper transition-colors hover:bg-madder-deep"
+                className="kicker mt-7 inline-block bg-magenta px-6 py-3.5 text-paper transition-colors hover:bg-magenta-deep"
               >
                 Doneer
               </Link>
               <p className="mt-5 border-t border-rule-soft pt-4 font-serif text-[0.9375rem] leading-relaxed text-ink-2">
-                <span className="mark-turmeric text-ink">
+                <span className="mark-azure text-ink">
                   Elke euro gaat naar de projecten.
                 </span>{" "}
                 ANBI, RSIN 821887300.

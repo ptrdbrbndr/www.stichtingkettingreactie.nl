@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import Hero from "@/components/Hero";
+import Schakel from "@/components/Schakel";
 
 export const metadata: Metadata = {
   title: "De drie projecten",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 const projecten = [
   {
     nummer: "I",
+    kleur: "text-azure-bright",
     title: "Abayashram",
     plaats: "Hoskote, bij Bangalore",
     organisatie: "Vision India, Joby Varghese",
@@ -23,6 +25,7 @@ const projecten = [
   },
   {
     nummer: "II",
+    kleur: "text-[#2f2483]",
     title: "UWA Working Women's Hostel",
     plaats: "Bangalore",
     organisatie: "University Women's Association Bangalore",
@@ -34,6 +37,7 @@ const projecten = [
   },
   {
     nummer: "III",
+    kleur: "text-magenta-bright",
     title: "ASHA Foundation",
     plaats: "Bangalore",
     organisatie: "Dr. Glory Alexander",
@@ -96,11 +100,14 @@ export default function ProjectenPage() {
                 >
                   <p
                     aria-hidden="true"
-                    className="font-serif text-7xl font-medium leading-none text-madder"
+                    className={`flex items-center gap-3 ${project.kleur}`}
                   >
-                    {project.nummer}
+                    <Schakel className="h-6 w-auto -rotate-45" />
+                    <span className="font-display text-6xl font-bold leading-none">
+                      {project.nummer}
+                    </span>
                   </p>
-                  <h2 className="mt-4 font-serif text-3xl font-medium leading-tight tracking-tight text-ink">
+                  <h2 className="mt-4 font-display text-3xl font-medium leading-tight tracking-tight text-ink">
                     {project.title}
                   </h2>
                   <p className="kicker mt-3 text-ink-2">

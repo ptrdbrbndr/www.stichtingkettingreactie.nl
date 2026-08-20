@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Newsreader, Libre_Franklin } from "next/font/google";
+import { Newsreader, Schibsted_Grotesk } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "./globals.css";
 
 /*
- * Typografie van het redesign (2026):
- * - Newsreader: krantenserif met optische maten — scherp en karaktervol op
- *   displayformaat, rustige leesletter op tekstformaat. Eén familie voor
- *   koppen én broodtekst, het optische-maat-as doet het werk.
- * - Libre Franklin: Franklin Gothic-erfgoed, de klassieke Amerikaanse
- *   krantengrotesk. Alleen voor labels, meta en navigatie in kapitaal.
+ * Typografie van het redesign (2026, v2):
+ * - Schibsted Grotesk: moderne krantengrotesk met geometrische inslag, sluit
+ *   aan op het kapitale KETTINGREACTIE-woordmerk. Voor koppen, nummering,
+ *   labels, meta en navigatie.
+ * - Newsreader: krantenserif met optische maten als rustige leesletter voor
+ *   broodtekst en verslagen.
  */
 const newsreader = Newsreader({
   variable: "--font-newsreader",
@@ -20,8 +20,8 @@ const newsreader = Newsreader({
   axes: ["opsz"],
 });
 
-const franklin = Libre_Franklin({
-  variable: "--font-franklin",
+const grotesk = Schibsted_Grotesk({
+  variable: "--font-grotesk",
   subsets: ["latin"],
   display: "swap",
 });
@@ -43,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="nl">
       <body
-        className={`${newsreader.variable} ${franklin.variable} bg-paper text-ink antialiased`}
+        className={`${newsreader.variable} ${grotesk.variable} bg-paper text-ink antialiased`}
       >
         <Header />
         <main id="inhoud" className="min-h-screen">

@@ -48,7 +48,7 @@ export default function Hero({
       <section data-testid="page-hero" className="bg-paper">
         <div className="mx-auto max-w-7xl px-4 pb-10 pt-6 sm:px-6 sm:pb-14 lg:px-8">
           <div className="folio">
-            <p className="kicker text-madder">{eyebrow ?? "Stichting Kettingreactie"}</p>
+            <p className="kicker text-magenta">{eyebrow ?? "Stichting Kettingreactie"}</p>
             {breadcrumb && breadcrumb.length > 1 && (
               <nav aria-label="Kruimelpad" className="hidden sm:block">
                 <ol className="flex flex-wrap items-baseline gap-1.5">
@@ -63,7 +63,7 @@ export default function Hero({
                           {item.label}
                         </span>
                       ) : (
-                        <Link href={item.href} className="hover:text-madder">
+                        <Link href={item.href} className="hover:text-magenta">
                           {item.label}
                         </Link>
                       )}
@@ -73,7 +73,7 @@ export default function Hero({
               </nav>
             )}
           </div>
-          <h1 className="mt-7 max-w-4xl font-serif text-[clamp(2.5rem,6vw,4.25rem)] font-medium leading-[1.04] tracking-tight text-ink">
+          <h1 className="mt-7 max-w-4xl font-display text-[clamp(2.5rem,6vw,4.25rem)] font-medium leading-[1.04] tracking-tight text-ink">
             {title}
           </h1>
           {subtitle && (
@@ -93,12 +93,12 @@ export default function Hero({
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-8">
             <div className="folio reveal reveal-1">
-              <p className="kicker text-madder">Voorpagina</p>
+              <p className="kicker text-magenta">Voorpagina</p>
               <p className="kicker hidden text-ink-2 sm:block">
                 Drie projecten in Bangalore
               </p>
             </div>
-            <h1 className="reveal reveal-2 mt-8 font-serif text-[clamp(2.75rem,7vw,5.25rem)] font-medium leading-[0.98] tracking-tight text-ink">
+            <h1 className="reveal reveal-2 mt-8 font-display text-[clamp(2.75rem,7vw,5.25rem)] font-medium leading-[0.98] tracking-tight text-ink">
               {title}
             </h1>
             {subtitle && (
@@ -110,14 +110,14 @@ export default function Hero({
               <Link
                 href={ctaHref}
                 data-testid="hero-primary-cta"
-                className="kicker bg-madder px-7 py-4 text-paper transition-colors hover:bg-madder-deep"
+                className="kicker bg-magenta px-7 py-4 text-paper transition-colors hover:bg-magenta-deep"
               >
                 {ctaText}
               </Link>
               <Link
                 href="/projecten"
                 data-testid="hero-secondary-cta"
-                className="font-serif text-lg text-ink underline decoration-1 underline-offset-4 transition-colors hover:text-madder"
+                className="font-serif text-lg text-ink underline decoration-1 underline-offset-4 transition-colors hover:text-magenta"
               >
                 De drie projecten
               </Link>
@@ -135,11 +135,11 @@ export default function Hero({
                 data-testid="hero-feature-article"
                 className="group mt-5 block"
               >
-                <p className="kicker text-madder">
+                <p className="kicker text-magenta">
                   {featureArticle.category ?? "Nieuws"} ·{" "}
                   {formatDutchDate(featureArticle.date)}
                 </p>
-                <h2 className="mt-3 font-serif text-2xl font-medium leading-snug text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink">
+                <h2 className="mt-3 font-display text-2xl font-medium leading-snug text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink">
                   {featureArticle.title}
                 </h2>
                 {featureArticle.excerpt && (

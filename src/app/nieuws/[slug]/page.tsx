@@ -85,12 +85,12 @@ export default async function NieuwsDetailPage({
       <section className="bg-paper">
         <div className="mx-auto max-w-7xl px-4 pb-8 pt-6 sm:px-6 lg:px-8">
           <div className="folio">
-            <p className="kicker text-madder">{categoryName}</p>
-            <Link href="/nieuws" className="kicker text-ink-2 hover:text-madder">
+            <p className="kicker text-magenta">{categoryName}</p>
+            <Link href="/nieuws" className="kicker text-ink-2 hover:text-magenta">
               Alle verslagen
             </Link>
           </div>
-          <h1 className="mt-7 max-w-4xl font-serif text-[clamp(2.25rem,5.5vw,3.75rem)] font-medium leading-[1.05] tracking-tight text-ink">
+          <h1 className="mt-7 max-w-4xl font-display text-[clamp(2.25rem,5.5vw,3.75rem)] font-medium leading-[1.05] tracking-tight text-ink">
             {articleTitle}
           </h1>
           {articleExcerpt && (
@@ -154,7 +154,7 @@ export default async function NieuwsDetailPage({
               <p className="mt-3 font-serif text-[0.9375rem] leading-relaxed text-ink-2">
                 Bestuursleden bezoeken de projecten op eigen kosten;
                 verslagen zoals dit komen uit die bezoeken.{" "}
-                <span className="mark-turmeric text-ink">
+                <span className="mark-azure text-ink">
                   Elke gedoneerde euro gaat naar de projecten.
                 </span>
               </p>
@@ -172,7 +172,7 @@ export default async function NieuwsDetailPage({
         {related.length > 0 && (
           <div className="mt-20">
             <div className="folio">
-              <p className="kicker text-madder">Verder lezen</p>
+              <p className="kicker text-magenta">Verder lezen</p>
             </div>
             <ul className="mt-2">
               {related.map((item) => (
@@ -184,7 +184,7 @@ export default async function NieuwsDetailPage({
                     <p className="kicker text-ink-2 sm:col-span-3 lg:col-span-2">
                       {formatDutchDate(item.published_at ?? item.created_at)}
                     </p>
-                    <h3 className="font-serif text-xl font-medium leading-snug text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink sm:col-span-9">
+                    <h3 className="font-display text-xl font-semibold leading-snug text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink sm:col-span-9">
                       {decodeEntities(item.title)}
                     </h3>
                   </Link>

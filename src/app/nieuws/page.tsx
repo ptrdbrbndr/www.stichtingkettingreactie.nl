@@ -78,12 +78,12 @@ export default async function NieuwsPage() {
                 )}
               </div>
               <div className="lg:col-span-5 lg:pl-4">
-                <p className="kicker text-madder">
+                <p className="kicker text-magenta">
                   Uitgelicht ·{" "}
                   {decodeEntities(featured.category?.name) || "Verslag"}
                 </p>
                 <Link href={`/nieuws/${featured.slug}`} className="group block">
-                  <h2 className="mt-3 font-serif text-3xl font-medium leading-[1.08] tracking-tight text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink sm:text-4xl">
+                  <h2 className="mt-3 font-display text-3xl font-medium leading-[1.08] tracking-tight text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink sm:text-4xl">
                     {decodeEntities(featured.title)}
                   </h2>
                 </Link>
@@ -103,7 +103,7 @@ export default async function NieuwsPage() {
           {/* Archief — chronologische lijst */}
           <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
             <div className="folio">
-              <p className="kicker text-madder">Archief</p>
+              <p className="kicker text-magenta">Archief</p>
               <p className="kicker text-ink-2">{articles.length} berichten</p>
             </div>
             <ul className="mt-2">
@@ -127,10 +127,10 @@ export default async function NieuwsPage() {
                             article.published_at ?? article.created_at,
                           )}
                         </p>
-                        <p className="kicker mt-1 text-madder">{category}</p>
+                        <p className="kicker mt-1 text-magenta">{category}</p>
                       </div>
                       <div className="sm:col-span-7 lg:col-span-8">
-                        <h3 className="font-serif text-2xl font-medium leading-snug tracking-tight text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink">
+                        <h3 className="font-display text-2xl font-medium leading-snug tracking-tight text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink">
                           {title}
                         </h3>
                         {excerpt && (

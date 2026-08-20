@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import Hero from "@/components/Hero";
+import Schakel from "@/components/Schakel";
 import { createClient } from "@/lib/supabase/server";
 import { getHomepageConfig, getArticles } from "@ptrdbrbndr/cms";
 import { decodeEntities } from "@/lib/text";
@@ -77,6 +78,7 @@ export default async function HomePage() {
     {
       nummer: "I",
       slug: "01",
+      kleur: "text-azure-bright",
       title: "Abayashram",
       plaats: "Hoskote, bij Bangalore",
       organisatie: "Vision India, Joby Varghese",
@@ -92,6 +94,7 @@ export default async function HomePage() {
     {
       nummer: "II",
       slug: "02",
+      kleur: "text-[#2f2483]",
       title: "UWA Working Women's Hostel",
       plaats: "Bangalore",
       organisatie: "University Women's Association Bangalore",
@@ -107,6 +110,7 @@ export default async function HomePage() {
     {
       nummer: "III",
       slug: "03",
+      kleur: "text-magenta-bright",
       title: "ASHA Foundation",
       plaats: "Bangalore",
       organisatie: "Dr. Glory Alexander",
@@ -157,25 +161,25 @@ export default async function HomePage() {
       >
         <div className="grid grid-cols-2 gap-x-8 gap-y-10 border-t-2 border-rule pt-8 lg:grid-cols-4">
           <div>
-            <p className="font-serif text-6xl font-medium text-ink">3</p>
+            <p className="font-display text-6xl font-medium text-ink">3</p>
             <p className="kicker mt-3 text-ink-2">
               Projecten in en rondom Bangalore
             </p>
           </div>
           <div>
-            <p className="font-serif text-6xl font-medium text-madder">100%</p>
+            <p className="font-display text-6xl font-medium text-magenta">100%</p>
             <p className="kicker mt-3 text-ink-2">
               Van elke gift naar de projecten
             </p>
           </div>
           <div>
-            <p className="font-serif text-6xl font-medium text-ink">2007</p>
+            <p className="font-display text-6xl font-medium text-ink">2007</p>
             <p className="kicker mt-3 text-ink-2">
               Opgericht, sindsdien ANBI-erkend
             </p>
           </div>
           <div>
-            <p className="font-serif text-6xl font-medium text-ink">€ 0</p>
+            <p className="font-display text-6xl font-medium text-ink">€ 0</p>
             <p className="kicker mt-3 text-ink-2">
               Bestuursvergoeding; reizen op eigen kosten
             </p>
@@ -191,9 +195,9 @@ export default async function HomePage() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <div className="folio">
-              <p className="kicker text-madder">Waarom deze stichting</p>
+              <p className="kicker text-magenta">Waarom deze stichting</p>
             </div>
-            <h2 className="mt-6 font-serif text-4xl font-medium leading-[1.06] tracking-tight text-ink sm:text-5xl">
+            <h2 className="mt-6 font-display text-4xl font-medium leading-[1.06] tracking-tight text-ink sm:text-5xl">
               {missionTitle}
             </h2>
           </div>
@@ -241,7 +245,7 @@ export default async function HomePage() {
       >
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
           <div className="folio border-t-0 pt-0">
-            <p className="kicker text-madder">Katern · De drie projecten</p>
+            <p className="kicker text-magenta">Katern · De drie projecten</p>
             <p className="kicker hidden text-ink-2 sm:block">
               In en rondom Bangalore
             </p>
@@ -287,11 +291,14 @@ export default async function HomePage() {
                   >
                     <p
                       aria-hidden="true"
-                      className="font-serif text-7xl font-medium leading-none text-madder"
+                      className={`flex items-center gap-3 ${project.kleur}`}
                     >
-                      {project.nummer}
+                      <Schakel className="h-6 w-auto -rotate-45" />
+                      <span className="font-display text-6xl font-bold leading-none">
+                        {project.nummer}
+                      </span>
                     </p>
-                    <h3 className="mt-4 font-serif text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
+                    <h3 className="mt-4 font-display text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
                       {project.title}
                     </h3>
                     <p className="kicker mt-3 text-ink-2">
@@ -333,7 +340,7 @@ export default async function HomePage() {
         className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8"
       >
         <div className="folio">
-          <p className="kicker text-madder">{newsTitle}</p>
+          <p className="kicker text-magenta">{newsTitle}</p>
           <p className="kicker hidden text-ink-2 sm:block">
             Bezoekverslagen en berichten
           </p>
@@ -361,7 +368,7 @@ export default async function HomePage() {
                   </figure>
                 </Link>
               )}
-              <p className="kicker mt-6 text-madder">
+              <p className="kicker mt-6 text-magenta">
                 {decodeEntities(newsFeatured?.category?.name) || "Verslag"} ·{" "}
                 {formatDutchDate(
                   newsFeatured?.published_at ?? newsFeatured?.created_at,
@@ -372,7 +379,7 @@ export default async function HomePage() {
                 data-testid="nieuws-featured-link"
                 className="group block"
               >
-                <h3 className="mt-3 font-serif text-3xl font-medium leading-[1.1] tracking-tight text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink sm:text-4xl">
+                <h3 className="mt-3 font-display text-3xl font-medium leading-[1.1] tracking-tight text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink sm:text-4xl">
                   {decodeEntities(newsFeatured?.title)}
                 </h3>
               </Link>
@@ -396,7 +403,7 @@ export default async function HomePage() {
                           article.published_at ?? article.created_at,
                         )}
                       </p>
-                      <h4 className="mt-1.5 font-serif text-xl font-medium leading-snug text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink">
+                      <h4 className="mt-1.5 font-display text-xl font-semibold leading-snug text-ink underline decoration-transparent decoration-1 underline-offset-4 transition-colors group-hover:decoration-ink">
                         {decodeEntities(article.title)}
                       </h4>
                     </Link>
@@ -423,8 +430,8 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
             <div className="lg:col-span-5">
-              <p className="kicker text-madder">Steunen</p>
-              <h2 className="mt-4 font-serif text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
+              <p className="kicker text-magenta">Steunen</p>
+              <h2 className="mt-4 font-display text-3xl font-medium leading-tight tracking-tight text-ink sm:text-4xl">
                 Een gift komt zonder omwegen aan
               </h2>
               <p className="mt-4 font-serif text-lg leading-relaxed text-ink-2">
@@ -436,7 +443,7 @@ export default async function HomePage() {
             <div className="lg:col-span-6 lg:col-start-7">
               <div className="border-t-2 border-rule pt-5">
                 <p className="kicker text-ink-2">Rekeningnummer</p>
-                <p className="mt-2 font-serif text-3xl tracking-wide text-ink sm:text-4xl">
+                <p className="mt-2 font-display text-3xl tracking-wide text-ink sm:text-4xl">
                   {donateIban}
                 </p>
                 <p className="mt-1 font-serif text-[1.0625rem] text-ink-2">
@@ -447,7 +454,7 @@ export default async function HomePage() {
                 <Link
                   href="/steun-ons"
                   data-testid="donatie-cta-button"
-                  className="kicker bg-madder px-7 py-4 text-paper transition-colors hover:bg-madder-deep"
+                  className="kicker bg-magenta px-7 py-4 text-paper transition-colors hover:bg-magenta-deep"
                 >
                   Doneer
                 </Link>

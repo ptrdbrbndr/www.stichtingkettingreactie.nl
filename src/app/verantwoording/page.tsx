@@ -70,19 +70,19 @@ export default function VerantwoordingPage() {
         {/* Kerngegevens als cijferregel */}
         <div className="grid grid-cols-1 gap-x-8 gap-y-8 border-t-2 border-rule pt-8 sm:grid-cols-3">
           <div>
-            <p className="font-serif text-5xl font-medium text-ink">ANBI</p>
+            <p className="font-display text-5xl font-medium text-ink">ANBI</p>
             <p className="kicker mt-3 text-ink-2">
               Algemeen Nut Beogende Instelling
             </p>
           </div>
           <div>
-            <p className="font-serif text-5xl font-medium text-ink">
+            <p className="font-display text-5xl font-medium text-ink">
               821887300
             </p>
             <p className="kicker mt-3 text-ink-2">RSIN / fiscaal nummer</p>
           </div>
           <div>
-            <p className="font-serif text-5xl font-medium text-madder">€ 0</p>
+            <p className="font-display text-5xl font-medium text-magenta">€ 0</p>
             <p className="kicker mt-3 text-ink-2">
               Beloning voor bestuur en medewerkers
             </p>
@@ -96,7 +96,7 @@ export default function VerantwoordingPage() {
               key={regel.term}
               className="grid grid-cols-1 gap-3 border-b border-rule-soft py-8 first:border-t-2 first:border-t-rule lg:grid-cols-12 lg:gap-8"
             >
-              <dt className="font-serif text-xl font-medium text-ink lg:col-span-3">
+              <dt className="font-display text-xl font-semibold text-ink lg:col-span-3">
                 {regel.term}
               </dt>
               <dd className="lg:col-span-7">

@@ -174,7 +174,7 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
                           aria-current={isActive ? "page" : undefined}
                           className={`font-serif text-[1.0625rem] underline decoration-1 underline-offset-4 transition-colors ${
                             isActive
-                              ? "text-madder decoration-madder"
+                              ? "text-magenta decoration-magenta"
                               : "text-ink decoration-transparent hover:decoration-ink"
                           }`}
                         >
@@ -185,7 +185,7 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
                   })}
                 </ul>
                 <p className="mt-7 border-t border-rule-soft pt-4 font-serif text-[0.9375rem] leading-relaxed text-ink-2">
-                  <span className="mark-turmeric text-ink">
+                  <span className="mark-azure text-ink">
                     Elke euro gaat naar de projecten.
                   </span>{" "}
                   ANBI, RSIN 821887300.{" "}
