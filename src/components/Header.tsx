@@ -113,16 +113,16 @@ export default function Header() {
             className="flex shrink-0 items-center gap-3"
           >
             <Image
-              src="/logo-skr.png"
+              src="/logo-skr-mark.png"
               alt=""
-              width={96}
-              height={96}
+              width={126}
+              height={155}
               priority
-              className="h-11 w-11 shrink-0 object-contain sm:h-14 sm:w-14"
+              className="h-14 w-auto shrink-0 object-contain sm:h-[4.5rem]"
             />
             <span className="flex flex-col gap-0.5">
               <span className="kicker text-magenta">Stichting</span>
-              <span className="font-display text-lg font-bold uppercase leading-none tracking-[0.12em] text-ink sm:text-xl">
+              <span className="font-display text-xl font-bold uppercase leading-none tracking-[0.12em] text-ink sm:text-2xl">
                 Kettingreactie
               </span>
             </span>
