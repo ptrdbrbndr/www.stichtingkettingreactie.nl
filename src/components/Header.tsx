@@ -116,7 +116,7 @@ export default function Header() {
               src="/logo-skr-mark.png"
               alt=""
               width={126}
-              height={159}
+              height={163}
               priority
               className="h-14 w-auto shrink-0 object-contain sm:h-[4.5rem]"
             />
