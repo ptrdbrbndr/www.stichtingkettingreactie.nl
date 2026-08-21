@@ -8,15 +8,23 @@
  * 2. Haalt WP-categorieën en -tags op, upsert ze in `categories`/`tags` en
  *    schrijft de wp_id->uuid mapping naar TAX_MAPPING_PATH.
  *
+ * Zet UPLOADS_DIR naar een lokale spiegel van wp-content/uploads (gemaakt met
+ * mirror-wp-uploads.mjs) om de bestanden lokaal te lezen in plaats van ze per
+ * stuk van de site te downloaden — bulk-downloads over HTTPS triggeren de
+ * mijn.host-WAF, die dan het hele IP blokkeert (incident 19-21 aug 2026).
+ *
  * Run:
  *   SUPABASE_URL=https://... SUPABASE_SERVICE_KEY=... \
+ *   UPLOADS_DIR=c:/tmp/skr-uploads \
  *   TAX_MAPPING_PATH=/pad/skr-tax-mapping.json node scripts/premigrate-wp-media.mjs
  */
 
 import fs from "node:fs";
+import path from "node:path";
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+const UPLOADS_DIR = process.env.UPLOADS_DIR;
 const TAX_MAPPING_PATH =
   process.env.TAX_MAPPING_PATH ?? "c:/tmp/skr-tax-mapping.json";
 if (!SUPABASE_URL || !SERVICE_KEY) {
@@ -56,10 +64,21 @@ function relPath(url) {
   return decodeURIComponent(url.slice(i + UPLOADS_MARKER.length).split("?")[0]);
 }
 
-async function uploadFile(rel, srcUrl, mime) {
+// Leest uit de lokale UPLOADS_DIR-spiegel als die er is; alleen bestanden die
+// daar ontbreken komen nog per HTTP van de site (WAF-risico, dus log het).
+async function readUpload(rel, srcUrl) {
+  if (UPLOADS_DIR) {
+    const local = path.join(UPLOADS_DIR, rel);
+    if (fs.existsSync(local)) return fs.readFileSync(local);
+    console.warn(`  ~ ${rel}: niet in UPLOADS_DIR, val terug op HTTP`);
+  }
   const dl = await fetch(srcUrl);
   if (!dl.ok) throw new Error(`download ${srcUrl}: ${dl.status}`);
-  const buf = Buffer.from(await dl.arrayBuffer());
+  return Buffer.from(await dl.arrayBuffer());
+}
+
+async function uploadFile(rel, srcUrl, mime) {
+  const buf = await readUpload(rel, srcUrl);
   const up = await fetch(
     `${SUPABASE_URL}/storage/v1/object/${BUCKET}/${encodeURI(rel)}`,
     {

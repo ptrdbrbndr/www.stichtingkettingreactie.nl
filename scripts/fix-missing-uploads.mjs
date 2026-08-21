@@ -8,11 +8,20 @@
  * Nodig omdat deze WP-site bestanden plat in /uploads bewaart en content naar
  * size-varianten en PDF's verwijst die niet in de media-API geregistreerd staan.
  *
- * Run: SUPABASE_URL=... SUPABASE_SERVICE_KEY=... node scripts/fix-missing-uploads.mjs
+ * Zet UPLOADS_DIR naar een lokale spiegel van wp-content/uploads (gemaakt met
+ * mirror-wp-uploads.mjs) om lokaal te lezen in plaats van per bestand te
+ * downloaden — bulk-downloads over HTTPS triggeren de mijn.host-WAF (IP-ban).
+ *
+ * Run: SUPABASE_URL=... SUPABASE_SERVICE_KEY=... UPLOADS_DIR=c:/tmp/skr-uploads \
+ *      node scripts/fix-missing-uploads.mjs
  */
+
+import fs from "node:fs";
+import path from "node:path";
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+const UPLOADS_DIR = process.env.UPLOADS_DIR;
 if (!SUPABASE_URL || !SERVICE_KEY) {
   console.error("SUPABASE_URL en SUPABASE_SERVICE_KEY env vars vereist");
   process.exit(1);
@@ -81,11 +90,18 @@ async function main() {
   let ok = 0, fail = 0;
   for (const rel of wanted) {
     try {
-      const dl = await fetch(
-        `https://stichtingkettingreactie.nl/wp-content/uploads/${encodeURI(rel)}`,
-      );
-      if (!dl.ok) throw new Error(`WP download: ${dl.status}`);
-      const buf = Buffer.from(await dl.arrayBuffer());
+      let buf;
+      const local = UPLOADS_DIR ? path.join(UPLOADS_DIR, rel) : null;
+      if (local && fs.existsSync(local)) {
+        buf = fs.readFileSync(local);
+      } else {
+        if (local) console.warn(`  ~ ${rel}: niet in UPLOADS_DIR, val terug op HTTP`);
+        const dl = await fetch(
+          `https://stichtingkettingreactie.nl/wp-content/uploads/${encodeURI(rel)}`,
+        );
+        if (!dl.ok) throw new Error(`WP download: ${dl.status}`);
+        buf = Buffer.from(await dl.arrayBuffer());
+      }
       const mime = MIME[extOf(rel)] ?? "application/octet-stream";
       const key = sanitizeKey(rel);
       const up = await fetch(
