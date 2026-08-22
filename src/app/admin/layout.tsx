@@ -50,12 +50,22 @@ export default function AdminLayout({
       return;
     }
     const supabase = createClient();
-    supabase.auth.getUser().then(({ data: { user } }) => {
+    supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) {
         router.replace("/admin/login");
-      } else {
-        setLoading(false);
+        return;
       }
+      // Tweede slot naast de middleware: alleen de rol 'admin' mag in het CMS
+      const { data } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      if (data?.role !== "admin") {
+        router.replace("/leden?geen-beheerrechten=1");
+        return;
+      }
+      setLoading(false);
     });
   }, [router, pathname]);
 

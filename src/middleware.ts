@@ -69,6 +69,17 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
+  // Het CMS is alleen voor accounts met de rol 'admin' in user_roles.
+  // De RLS-policy user_roles_self_read laat iedereen alleen de eigen rij zien.
+  const isAdmin = async (userId: string) => {
+    const { data } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", userId)
+      .maybeSingle();
+    return data?.role === "admin";
+  };
+
   // Protect /admin routes (except /admin/login)
   if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/login")) {
     if (!user) {
@@ -76,13 +87,20 @@ export async function middleware(request: NextRequest) {
       loginUrl.pathname = "/admin/login";
       return NextResponse.redirect(loginUrl);
     }
+    if (!(await isAdmin(user.id))) {
+      // Ingelogd, maar geen beheerder: terug naar het ledenportaal
+      const ledenUrl = request.nextUrl.clone();
+      ledenUrl.pathname = "/leden";
+      ledenUrl.search = "?geen-beheerrechten=1";
+      return NextResponse.redirect(ledenUrl);
+    }
   }
 
   // If user is authenticated and visits /admin/login, redirect to /admin
   if (pathname.startsWith("/admin/login") && user) {
-    const adminUrl = request.nextUrl.clone();
-    adminUrl.pathname = "/admin";
-    return NextResponse.redirect(adminUrl);
+    const target = request.nextUrl.clone();
+    target.pathname = (await isAdmin(user.id)) ? "/admin" : "/leden";
+    return NextResponse.redirect(target);
   }
 
   return supabaseResponse;

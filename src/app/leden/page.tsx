@@ -23,6 +23,13 @@ export default function LedenDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [showIssues, setShowIssues] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [geenRechten, setGeenRechten] = useState(false);
+
+  useEffect(() => {
+    setGeenRechten(
+      new URLSearchParams(window.location.search).has("geen-beheerrechten")
+    );
+  }, []);
 
   useEffect(() => {
     const supabase = createClient();
@@ -158,6 +165,15 @@ export default function LedenDashboardPage() {
               </button>
             </div>
           </div>
+          {geenRechten && (
+            <p
+              data-testid="geen-beheerrechten"
+              className="mt-6 rounded-2xl border border-line bg-white px-5 py-3 text-sm text-ink-soft"
+            >
+              U heeft geen beheerrechten voor het CMS. Vraag een beheerder om
+              toegang.
+            </p>
+          )}
           {lidSinds && (
             <p className="mt-6 text-lg text-ink-soft">
               Uw persoonlijke ledenpagina van Stichting Kettingreactie · lid
