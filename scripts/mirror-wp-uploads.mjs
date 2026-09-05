@@ -22,6 +22,14 @@ import fs from "node:fs";
 import path from "node:path";
 
 const HOST = "h57.mijn.host";
+// LET OP: h57 draait niet alleen deze WordPress-site, maar ook de mailbox
+// pieter@debrabander.com. Imunify360 op die server blokkeert bij een piek in
+// gelijktijdige verbindingen het HELE thuis-IP, op alle poorten. Een te snelle
+// run hier kost dus je mail, en dat is een keer twee weken onopgemerkt gebleven
+// (blokkade eind aug tot 5 sep 2026). Zes parallelle verbindingen bleek te veel.
+// Verhoog dit getal niet zonder reden; de spiegel is idempotent, dus een
+// langzame run die je herstart is goedkoper dan een geblokkeerd IP.
+const PARALLEL_MAX = Number(process.env.SKR_PARALLEL_MAX ?? 2);
 const REMOTE_BASE = "public_html/wp-content/uploads";
 const FTP_USER = process.env.SKR_FTP_USER;
 const FTP_PASS = process.env.SKR_FTP_PASS;
@@ -87,9 +95,12 @@ function main() {
   const ascii = todo.filter((f) => /^[\x20-\x7e]+$/.test(f.rel));
   const unicode = todo.filter((f) => !/^[\x20-\x7e]+$/.test(f.rel));
   console.log(`=== downloaden naar ${DEST} (${ascii.length} bulk + ${unicode.length} los) ===`);
+  console.log(`    ${PARALLEL_MAX} parallelle verbindingen naar ${HOST}, die ook de mail van`);
+  console.log(`    debrabander.com draait. Valt je mail na deze run uit, dan heeft`);
+  console.log(`    Imunify360 het IP geblokkeerd: mail dan support@mijn.host.`);
 
   if (ascii.length) {
-    const lines = ["--parallel", "--parallel-max 6", "-s", "--insecure", "--create-dirs", `--user "${USERPASS}"`];
+    const lines = ["--parallel", `--parallel-max ${PARALLEL_MAX}`, "-s", "--insecure", "--create-dirs", `--user "${USERPASS}"`];
     for (const f of ascii) {
       const q = (s) => `"${s.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
       lines.push(`url = ${q(`sftp://${HOST}/${REMOTE_BASE}/${encPath(f.rel)}`)}`);
